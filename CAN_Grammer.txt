@@ -1,0 +1,84 @@
+=== Header ===
+date <WeekDay> <Month> <Date> <Fulltime> <Year>
+base <hex|dec> timestamps <absolute|relative>
+<""|no> internal events logged
+=== Version number ===
+// version <major>.<minor>.<patch>
+=== Split information ===
+// <time> previous log file: <filename>
+=== CAN Events on a Classic CAN bus ===
+==== CAN Message Event ====
+<Time> <Channel> <ID> <Dir> d <DLC> <D0> <D1>...<D8> <MessageFlags>
+<Time> <Channel> <ID> <Dir> d <DLC> <D0> <D1>...<D8> Length = <MessageDuration> BitCount = <MessageLength> <MessageFlags>
+<Time> <Channel> <ID> <Dir> d <DLC> <D0> <D1>...<D8> Length = <MessageDuration> BitCount = <MessageLength> ID = <IDnum> <MessageFlags>
+==== CAN Extended Message Event ====
+<Time> <Channel> <ID>x <Dir> d <DLC> <D0> <D1>...<D8> <MessageFlags>
+<Time> <Channel> <ID>x <Dir> d <DLC> <D0> <D1>...<D8> Length = <MessageDuration> BitCount = <MessageLength> <MessageFlags>
+<Time> <Channel> <ID>x <Dir> d <DLC> <D0> <D1>...<D8> Length = <MessageDuration> BitCount = <MessageLength> ID = <IDnum>x <MessageFlags>
+==== CAN Remote Frame Event ====
+<Time> <Channel> <ID> <Dir> r
+<Time> <Channel> <ID> <Dir> r Length = <MessageDuration> BitCount = <MessageLength> ID = <IDnum>x
+<Time> <Channel> <ID> <Dir> r <DLC> Length = <MessageDuration> BitCount = <MessageLength> ID = <IDnum>x
+==== CAN Error Frame ====
+<Time> <Channel> ErrorFrame
+<Time> <Channel> ErrorFrame ECC:<ECC>
+<Time> <Channel> ErrorFrame Flags = <flags> CodeExt = <codeExt> Code = <code> ID = <ID> DLC = <DLC> Position = <Position> Length = <Length>
+==== CAN Bus Statistics Event ====
+<Time> <Channel> Statistic: D <StatNumber> R <StatNumber> XD <StatNumber> XR <StatNumber> E <StatNumber> O <StatNumber> B <StatPercent>%
+==== CAN Error Event ====
+<Time> CAN <Channel> Status:<Error>
+<Time> CAN <Channel> Status:<Error> - TxErr: <TxCount> RxErr: <RxCount>
+==== CAN Error Event ====
+<Time> <Channel> OverloadFrame
+=== CAN FD ===
+==== CAN Events on CAN FD channel ====
+===== CAN Message Event =====
+<Time> CANFD <Channel> <Dir> <ID> <SymbolicName> <BRS> <ESI> <DLC> <DataLength> <D1> … <D8> <MessageDuration> <MessageLength> <Flags> <CRC> <BitTimingConfArb> <BitTimingConfData> <BitTimingConfExtArb> <BitTimingConfExtData>
+===== CAN Extended Message Event =====
+<Time> CANFD <Channel> <Dir> <ID> <SymbolicName> <BRS> <ESI> <DLC> <DataLength> <D1> … <D8> <MessageDuration> <MessageLength> <Flags> <CRC> <BitTimingConfArb> <BitTimingConfData>> <BitTimingConfData> <BitTimingConfExtArb> <BitTimingConfExtData>
+===== CAN Remote Frame Event =====
+<Time> CANFD <Channel> <Dir> <ID> <SymbolicName> <BRS> <ESI> <DLC> <DataLength> <MessageDuration> <MessageLength> <Flags> <CRC> <BitTimingConfArb> <BitTimingConfData>> <BitTimingConfData> <BitTimingConfExtArb> <BitTimingConfExtData>
+==== CAN FD Events on CAN FD channel ====
+===== CAN Message Event =====
+<Time> CANFD <Channel> <Dir> <ID> <SymbolicName> <BRS> <ESI> <DLC> <DataLength> <D1> … <D64> <MessageDuration> <MessageLength> <Flags> <CRC> <BitTimingConfArb> <BitTimingConfData> <BitTimingConfExtArb> <BitTimingConfExtData>
+===== CAN FD Extended Message Event =====
+<Time> CANFD <Channel> <Dir> <ID> <SymbolicName> <BRS> <ESI> <DLC> <DataLength> <D1> … <D64> <MessageDuration> <MessageLength> <Flags> <CRC> <BitTimingConfArb> <BitTimingConfData> <BitTimingConfExtArb> <BitTimingConfExtData>
+===== CAN FD Error Frame =====
+<Time> CANFD <Channel> <Dir> ErrorFrame <ErrorText> <flags> <code> <codeExt> <Phase> <Position> <ID> <BRS> <ESI> <DLC> <DataLength> <D1> … <D64> <MessageDuration> <extFlags> <CRC> <BitTimingConfArb> <BitTimingConfData> <BitTimingConfExtArb> <BitTimingConfExtData>
+=== Log and Trigger Events ===
+==== Log Trigger Event ===
+<Time> log trigger event
+=== Log Direct Start Event ====
+<Time> log direct start (<PreTrigger>ms)
+==== Log Direct Stop Event ====
+<Time> log direct stop (<PostTrigger>ms)
+==== Begin Triggerblock Event ====
+Begin Triggerblock <WeekDay> <Month> <Date> <FullTime> <Year>
+Begin Triggerblock
+==== End Triggerblock Event ====
+End TriggerBlock
+=== Environment variables ===
+==== Environment Variables Event ====
+<Time> <evname> := <value>
+=== System Variables ===
+==== System Variables Event ====
+<Time> SV: <svtype> <symbolic> <signed> <path> = <value>
+<Time> SV: <svtype> <symbolic> <signed> <path> = <valuetype><count> <value>
+=== Macros: Signalevents ===
+==== Macro Signal Event: CAN, LIN and FlexRay ====
+<Time> <bussystem> <channel> <node>::<message>::<signal> = <value>
+=== GPS events ===
+==== GPS Event ====
+<Time> GPS device: <channel> La:<latitude> Lo: <longitude> Alt: <altitude> Sp: <speed> Co: <course>
+=== Comment events ===
+==== Comment Event ====
+<Time> Comment: <type> <comment text>
+==== Global Marker Event ====
+<Time> <type> <background color> <foreground color> GMGroup: <group name> GMMarker: <marker name> GMDescription: <description>
+==== Test Structure Event ====
+===== TPS Begin Event =====
+<time> TFS: [<execID>,<elementID>] <event text>
+===== TPS End Event =====
+<time> TFS: [<execID>,<elementID>] <verdict> <event text>
+===== TPS Abort Event =====
+4.462292 TFS: [00000003,00000000] Failed: Test module 'Tester: Test execution aborted due to stop of the test module. Test is incomplete!
