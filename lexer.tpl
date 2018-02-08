@@ -3,6 +3,23 @@
 #include <stdlib.h>
 #include "lexer.h"
 
+#define TOKEN_UNKOWN 1
+
+#define TOKEN_WEEKDAY 2
+
+/*[[[cog
+import cog
+
+TOKEN_PREFIX = "TOKEN_"
+
+def ret_token(name, symbol, prefix=TOKEN_PREFIX):
+    cog.outl( "%s\t\t\t{ return %s%s; }"    % (name, prefix, symbol) )
+    
+def ret_string(name, symbol, prefix=TOKEN_PREFIX):
+    cog.outl( "\"%s\"\t\t\t{ return %s%s; }" % (name, prefix, symbol) )
+]]]*/
+/*[[[end]]]*/
+
 int lex(yyinput_t * input)
 {
 
@@ -14,7 +31,7 @@ int lex(yyinput_t * input)
             re2c:define:YYCURSOR     = input->cursor;
             re2c:define:YYLIMIT      = input->limit;
             re2c:define:YYMARKER     = input->marker;
-            re2c:define:YYFILL       = "if (fill(input, @@) == flase) return LEXER_FILL_ERROR;";
+            re2c:define:YYFILL       = "if (fill(input, @@) == false) return LEXER_FILL_ERROR;";
             re2c:define:YYFILL:naked = 1;
 
             end = "\x00";
@@ -22,8 +39,14 @@ int lex(yyinput_t * input)
             //[[[cog
             //  import cog
             //  import CogUtils as tools
-            //  cog.out( tools.readfiles(["Header.re", "Month.re", "Numerals.re", "Punctuation.re", "Weekday.re"]) )
+            //  #cog.out( tools.readfiles(["Header.re", "Month.re", "Numerals.re", "Punctuation.re", "Weekday.re"]) )
+            //  cog.out( tools.readfiles(["Weekday.re"]) )
+            //
+            //  ret_token("*",      "UNKOWN")
+            //  ret_token("end",     "exit_success(input)", prefix="")
+            //  ret_token("WeekDay", "WEEKDAY")
             //]]]
             //[[[end]]]
+            
         */
 }
