@@ -2,7 +2,7 @@
 // month = English | German
 jan = "Jan";
 feb = "Feb";
-mar = "Mar" | "M\u0228r;
+mar = "Mar" | "M\u0228r";
 apr = "Apr";
 may = "May" | "Mai";
 jun = "Jun";
