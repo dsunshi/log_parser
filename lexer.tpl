@@ -22,7 +22,7 @@ int lex(yyinput_t * input)
             //[[[cog
             //  import cog
             //  import CogUtils as tools
-            //  cog.out( tools.readfile("Weekday.re") )
+            //  cog.out( tools.readfiles(["Header.re", "Month.re", "Numerals.re", "Punctuation.re", "Weekday.re"]) )
             //]]]
             //[[[end]]]
         */
