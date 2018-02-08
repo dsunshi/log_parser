@@ -10,6 +10,6 @@ lexer.c: lexer.re
 	re2c -W -Werror -o lexer.c lexer.re
 
 clean:
-	rm -rf *.o lexer.c fasst lexer.re
+	rm -rf *.o *.pyc lexer.c fasst.exe lexer.re
 
 .PHONY: all clean
