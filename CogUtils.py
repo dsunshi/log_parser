@@ -1,5 +1,7 @@
 
 def readfile(filename):
+    text = ""
     file = open(filename, "r")
-    print( file.read() )
+    text = file.read()
     file.close()
+    return text

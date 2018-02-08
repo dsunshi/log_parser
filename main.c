@@ -95,8 +95,7 @@ int main(int argc, char **argv)
 
     yyinput_t * input = NULL;
 
-    unsigned int count;
-    unsigned int token;
+    int token;
 
     if (argc > 1)
     {
@@ -104,10 +103,10 @@ int main(int argc, char **argv)
 
            do
             {
-                token = lex(input, &count);
+                token = lex(input);
                 //printf("glorious %u lines!\n", count);
-                //printf("token: %d\n", token);
-                printf("%s ", TEST_LUT[token]);
+                printf("token: %d\n", token);
+                //printf("%s ", TEST_LUT[token]);
             } while(token > 0);
     }
     else

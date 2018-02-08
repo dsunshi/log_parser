@@ -1,21 +1,15 @@
-all: skii
+all: fasst
 
-skii: lexer_util.c lexer.c main.c
-	gcc -g -o skii lexer_util.c lexer.c main.c
+fasst: lexer_utils.c lexer.c main.c
+	gcc -g -o fasst lexer_utils.c lexer.c main.c
+
+lexer.re: lexer.tpl
+	python -m cogapp -d -o lexer.re lexer.tpl
 
 lexer.c: lexer.re
 	re2c -W -Werror -o lexer.c lexer.re
 
 clean:
-	rm -rf *.o lexer.c skii
+	rm -rf *.o lexer.c fasst lexer.re
 
-t:
-	./skii '/d/RBS_SIB_20.20.129_V1/Trace/SIB_MAC_M0162017-01-30_13-59-36.asc'
-
-./test/test: lexer_util.c lexer.c ./test/munit.c ./test/test.c
-	gcc -g -o ./test/test -I. -I./test/ lexer_util.c lexer.c ./test/test.c ./test/munit.c
-
-test: ./test/test
-	./test/test
-
-.PHONY: all clean test t
+.PHONY: all clean
