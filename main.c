@@ -15,6 +15,9 @@ int main(int argc, char **argv)
     {
         input = create_lexer(fopen(argv[1], "r"), 4096, YYMAXFILL);
 
+        printf("-------------------------------------------------\n");
+        printf("| file: %s\n", argv[1]);
+        printf("-------------------------------------------------\n");
            do
             {
                 token = lex(input);
@@ -22,12 +25,13 @@ int main(int argc, char **argv)
                 //printf("token: %d", token);
                 printf("%s ", get_token_name(token));
             } while(token > 0);
+            
+            printf("\n\n");
     }
     else
     {
         printf("no file provided!\n");
     }
-
     
     return 0;
 }

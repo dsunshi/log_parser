@@ -21,4 +21,27 @@ lexer_symbols.c: lexer_symbols.c.tpl
 clean:
 	rm -rf *.o *.pyc lexer.c fasst.exe lexer.re tokens.csv lexer.tpl.0 lexer_symbols.h lexer_symbols.c
 
-.PHONY: all clean
+lextest: fasst  
+	fasst samples/BASE_TS_00.txt
+	fasst samples/BEGIN_TRIGGER_00.txt
+	fasst samples/BEGIN_TRIGGER_01.txt
+	fasst samples/CAN_00.txt
+	fasst samples/CAN_01.txt
+	fasst samples/CAN_02.txt
+	fasst samples/CAN_STATUS_00.txt
+	fasst samples/CAN_STATUS_01.txt
+	fasst samples/COMMENT_00.txt
+	fasst samples/DATE_00.txt
+	fasst samples/END_TRIGGER_00.txt
+	fasst samples/ERROR_FRAME_00.txt
+	fasst samples/INTERNAL_EVENTS_00.txt
+	fasst samples/LOG_DIRECT_00.txt
+	fasst samples/NO_INTERNAL_EVENTS_00.txt
+	fasst samples/START_OF_MEASURE_00.txt
+	fasst samples/STATISTIC_00.txt
+	fasst samples/SV_00.txt
+	fasst samples/TFS_00.txt
+	fasst samples/WATERMARK_00.txt
+	fasst samples/WATERMARK_01.txt
+
+.PHONY: all clean lextest
