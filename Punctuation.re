@@ -1,12 +1,19 @@
 // Punctuation
-EQUALS      = "=";
-RBRACKET    = "]";
-LBRACKET    = "[";
-COLON       = ":";
-DOT         = ".";
-COMMA       = ",";
-RPAREN      = ")";
-LPARENT     = "(";
-EXCLAMATION = "!";
-PERCENT     = "%";
-HYPHEN      = "-";
+equals      = "=";
+rbracket    = "]";
+lbracket    = "[";
+colon       = ":";
+dot         = ".";
+comma       = ",";
+rparen      = ")";
+lparent     = "(";
+exclamation = "!";
+percent     = "%";
+hyphen      = "-";
+
+//[[[cog
+//  import CogUtils as tools
+//  tools.create_token("colon", "COLON")
+//  tools.create_token("dot",   "DOT")
+//]]]
+//[[[end]]]
