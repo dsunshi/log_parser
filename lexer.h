@@ -30,6 +30,7 @@ typedef struct input
 #define YYINVAILD 0x00
 
 #define LEXER_FILL_ERROR (-1)
+#define LEXER_EXIT_ERROR (-2)
 
 #ifdef __cplusplus
 extern "C" {
@@ -41,7 +42,7 @@ void destroy_lexer(yyinput_t * lexer);
 bool fill(yyinput_t * input, const size_t need);
 
 int  lex(yyinput_t * input);
-bool exit_success(yyinput_t * input);
+int  exit_success(yyinput_t * input);
 
 #ifdef __cplusplus
 } /* extern "C" */
