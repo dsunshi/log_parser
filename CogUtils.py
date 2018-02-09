@@ -7,13 +7,15 @@ TOKEN_FILE   = "tokens.csv"
 
 CSV_FIELD_NAMES = ["plain_text", "define"]
 
+csv.register_dialect('simple', delimiter=',', lineterminator='\n', quoting=csv.QUOTE_NONE)
+
 def write_token_info(token_info):
     if os.path.isfile(TOKEN_FILE):
         token_file = open(TOKEN_FILE, "a")
-        writer = csv.DictWriter(token_file, fieldnames=CSV_FIELD_NAMES)
+        writer = csv.DictWriter(token_file, fieldnames=CSV_FIELD_NAMES, dialect='simple')
     else:
         token_file = open(TOKEN_FILE, "w")
-        writer = csv.DictWriter(token_file, fieldnames=CSV_FIELD_NAMES)
+        writer = csv.DictWriter(token_file, fieldnames=CSV_FIELD_NAMES, dialect='simple')
         writer.writeheader()
     writer.writerow(token_info)
     token_file.close()
@@ -52,5 +54,5 @@ def create_table():
     with open(TOKEN_FILE, "r") as token_file:
         reader = csv.DictReader(token_file)
         for row in reader:
-            cog.outl( "\"%s\",\n" % row['plain_text'])
+            cog.outl( "\"%s\"," % row['plain_text'])
             
