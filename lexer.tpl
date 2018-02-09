@@ -2,10 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "lexer.h"
-
-#define TOKEN_UNKOWN 1
-
-#define TOKEN_WEEKDAY 2
+#include "lexer_symbols.h"
 
 /*[[[cog
 import cog
@@ -39,12 +36,14 @@ int lex(yyinput_t * input)
             //[[[cog
             //  import cog
             //  import CogUtils as tools
-            //  #cog.out( tools.readfiles(["Header.re", "Month.re", "Numerals.re", "Punctuation.re", "Weekday.re"]) )
-            //  cog.out( tools.readfiles(["Weekday.re"]) )
             //
             //  ret_token("*",      "UNKOWN")
             //  ret_token("end",     "exit_success(input)", prefix="")
-            //  ret_token("WeekDay", "WEEKDAY")
+            //  cog.out("\n")
+            //
+            //  cog.out( tools.readfiles(["Header.re", "Month.re", "Numerals.re", "Punctuation.re", "Weekday.re"]) )
+            //  #cog.out( tools.readfiles(["Weekday.re"]) )
+            //
             //]]]
             //[[[end]]]
             
