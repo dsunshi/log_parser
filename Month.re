@@ -13,3 +13,9 @@ oct = "Oct" | "Okt";
 nov = "Nov";
 dec = "Dec" | "Dez";
 Month = jan | feb | mar | apr | may | jun | jul | aug | sep | oct | nov | dec;
+
+//[[[cog
+//  import CogUtils as tools
+//  tools.create_token("Month", "MONTH")
+//]]]
+//[[[end]]]
