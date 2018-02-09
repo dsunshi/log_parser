@@ -187,16 +187,16 @@ bool fill(yyinput_t * input, const size_t need)
 //    return result;
 //}
 
-bool exit_success(yyinput_t * input)
+int exit_success(yyinput_t * input)
 {
-	bool result = false;
+	int result = LEXER_EXIT_ERROR;
 
 	if (input->maxfill == (input->limit - input->token))
 	{
         /* The current token is exaclty at the end of the input buffer. So if we have lexed to an end we have
          * sucessfully lexed the entire input.
          */
-		result = true;
+		result = 0;
         //input->eof = 0;
 	}
 	else

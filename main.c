@@ -2,93 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "lexer.h"
-
-const char * const TEST_LUT[] = {
-"XR",
-"XD",
-"WARNING",
-"TXERR",
-"TX",
-"TRIGGERBLOCK",
-"TRIGGER",
-"TRANSMERR",
-"TIMESTAMPS",
-"TFS",
-"TEST",
-"SV",
-"STOP",
-"STATUS",
-"STATISTIC",
-"STARTED",
-"START",
-"RXERR",
-"RX",
-"RELATIVE",
-"R",
-"QUEUE",
-"POSITION",
-"PM",
-"PASSIVE",
-"OF",
-"O",
-"NO",
-"MS",
-"MODULE",
-"MEASUREMENT",
-"LOWWATERMARK",
-"LOGGED",
-"LOG",
-"LI",
-"LEVEL",
-"LENGTH",
-"INTERNAL",
-"ID",
-"HIGHWATERMARK",
-"HEX",
-"FLAGS",
-"FINISHED",
-"FAILED",
-"EVENTS",
-"EVENT",
-"ERRORFRAME",
-"ERROR",
-"END",
-"ECC",
-"E",
-"DLC",
-"DIRECT",
-"DEC",
-"DATE",
-"DATA",
-"CODEEXT",
-"CODE",
-"CHIP",
-"CHECKSUM",
-"CASE",
-"CANFD",
-"CAN",
-"BITCOUNT",
-"BEGIN",
-"BASE",
-"B",
-"AM",
-"ACTIVE",
-"ABSOLUTE",
-"=",
-"]",
-"[",
-":",
-".",
-",",
-")",
-"(",
-"!",
-"%",
-"-",
-"CONST",
-" "
-};
-
+#include "lexer_symbols.h"
 
 int main(int argc, char **argv)
 {
@@ -105,8 +19,8 @@ int main(int argc, char **argv)
             {
                 token = lex(input);
                 //printf("glorious %u lines!\n", count);
-                printf("token: %d\n", token);
-                //printf("%s ", TEST_LUT[token]);
+                //printf("token: %d", token);
+                printf("%s ", get_token_name(token));
             } while(token > 0);
     }
     else
