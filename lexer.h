@@ -7,18 +7,20 @@
 #include <string.h>
 #include <stdbool.h>
 
+typedef unsigned char iutf8_t;
+
 typedef struct input
 {
-    char * buffer;      /* Character buffer of size: (size + maxfill) */
-    char * limit;       /* The end of the input */
-    char * cursor;      /* Current character - used during lexing */
-    char * token;       /* Current character - used for reading from the input stream */
-    char * marker;      /* Backtrack position - i.e. backup input position used to restore cursor */
-    bool   eof;         /* Flag indicating if the End Of File has been reached */
-    size_t size;        /* Size of the input buffer */
-    size_t maxfill;     /* Additional padding bytes for the input string */
-    int    state;       /* */
-    FILE * file;        /* File to lex */
+    iutf8_t * buffer;      /* Character buffer of size: (size + maxfill) */
+    iutf8_t * limit;       /* The end of the input */
+    iutf8_t * cursor;      /* Current character - used during lexing */
+    iutf8_t * token;       /* Current character - used for reading from the input stream */
+    iutf8_t * marker;      /* Backtrack position - i.e. backup input position used to restore cursor */
+    bool      eof;         /* Flag indicating if the End Of File has been reached */
+    size_t    size;        /* Size of the input buffer */
+    size_t    maxfill;     /* Additional padding bytes for the input string */
+    int       state;       /* */
+    FILE *    file;        /* File to lex */
 } yyinput_t;
 
 /* Additional padding bytes for the input string.

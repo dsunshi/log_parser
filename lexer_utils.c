@@ -16,7 +16,7 @@ yyinput_t * create_lexer(FILE * file, const size_t size, const size_t maxfill)
 	{
 		memset(input, 0x00, sizeof(yyinput_t));
 
-		input->buffer = (char *) malloc(sizeof(char) * (size + maxfill));
+		input->buffer = (iutf8_t *) malloc(sizeof(iutf8_t) * (size + maxfill));
 
 		if (input->buffer == NULL)
 		{
@@ -35,6 +35,8 @@ yyinput_t * create_lexer(FILE * file, const size_t size, const size_t maxfill)
     		input->file    = file;
 		}
 	}
+    
+    return input;
 }
 
 void destroy_lexer(yyinput_t * lexer)
@@ -191,7 +193,7 @@ int exit_success(yyinput_t * input)
 {
 	int result = LEXER_EXIT_ERROR;
 
-	if (input->maxfill == (input->limit - input->token))
+	if (input->maxfill == ((size_t) (input->limit - input->token)))
 	{
         /* The current token is exaclty at the end of the input buffer. So if we have lexed to an end we have
          * sucessfully lexed the entire input.

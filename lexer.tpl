@@ -24,7 +24,7 @@ int lex(yyinput_t * input)
         //printf("cursor: |%s|\n", input->cursor);
 
         /*!re2c
-            re2c:define:YYCTYPE      = "unsigned char";
+            re2c:define:YYCTYPE      = iutf8_t;
             re2c:define:YYCURSOR     = input->cursor;
             re2c:define:YYLIMIT      = input->limit;
             re2c:define:YYMARKER     = input->marker;

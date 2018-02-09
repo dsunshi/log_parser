@@ -1,7 +1,7 @@
 all: fasst
 
 fasst: lexer_utils.c lexer.c main.c lexer_symbols.h lexer_symbols.c
-	gcc -g -o fasst lexer_utils.c lexer_symbols.c lexer.c main.c
+	gcc -Wall -Wextra -g -o fasst lexer_utils.c lexer_symbols.c lexer.c main.c
 
 lexer.re: lexer.tpl.0
 	python -m cogapp -d -o lexer.re lexer.tpl.0
