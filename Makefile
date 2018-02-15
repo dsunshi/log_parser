@@ -18,7 +18,7 @@ lexer_symbols.h: lexer_symbols.h.tpl Header.re Month.re Numerals.re Punctuation.
 lexer_symbols.c: lexer_symbols.c.tpl Header.re Month.re Numerals.re Punctuation.re Weekday.re Whitespace.re parser.c
 	python -m cogapp -d -o lexer_symbols.c lexer_symbols.c.tpl
 
-parser.y: parser.y.tpl
+parser.y: parser.y.tpl date.y
 	python -m cogapp -d -o parser.y parser.y.tpl
 
 parser.c: parser.y lempar.c lemon.exe
