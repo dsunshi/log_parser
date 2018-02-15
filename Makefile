@@ -12,10 +12,10 @@ lexer.tpl.0: lexer.tpl Header.re Month.re Numerals.re Punctuation.re Weekday.re 
 lexer.c: lexer.re 
 	re2c -W -Werror --utf-8 -o lexer.c lexer.re
 
-lexer_symbols.h: lexer_symbols.h.tpl Header.re Month.re Numerals.re Punctuation.re Weekday.re Whitespace.re
+lexer_symbols.h: lexer_symbols.h.tpl Header.re Month.re Numerals.re Punctuation.re Weekday.re Whitespace.re parser.c
 	python -m cogapp -d -o lexer_symbols.h lexer_symbols.h.tpl
 
-lexer_symbols.c: lexer_symbols.c.tpl Header.re Month.re Numerals.re Punctuation.re Weekday.re Whitespace.re
+lexer_symbols.c: lexer_symbols.c.tpl Header.re Month.re Numerals.re Punctuation.re Weekday.re Whitespace.re parser.c
 	python -m cogapp -d -o lexer_symbols.c lexer_symbols.c.tpl
 
 parser.y: parser.y.tpl
