@@ -1,6 +1,10 @@
 %token_prefix TOKEN_
 
-%token_type { YYSTYPE }
+%token_type    { YYSTYPE }
+%type WEEKDAY  { YYSTYPE }
+%type MONTH    { YYSTYPE }
+%type NUM      { YYSTYPE }
+%type fulltime {YYSTYPE }
 
 %extra_argument { ParserState *state }
 
@@ -9,6 +13,7 @@
 #include "lemon_cfg.h"
 /* yy_pop_parser_stack requires assert */
 #include "assert.h"
+#include "stdlib.h"
 }
 
 %syntax_error {
