@@ -1,24 +1,10 @@
 import cog
 import csv
 import os.path
+import operator
 
-TOKEN_PREFIX = "TOKEN_"
-TOKEN_FILE   = "tokens.csv"
-
-CSV_FIELD_NAMES = ["plain_text", "define"]
-
-csv.register_dialect('simple', delimiter=',', lineterminator='\n', quoting=csv.QUOTE_NONE)
-
-def write_token_info(token_info):
-    if os.path.isfile(TOKEN_FILE):
-        token_file = open(TOKEN_FILE, "a")
-        writer = csv.DictWriter(token_file, fieldnames=CSV_FIELD_NAMES, dialect='simple')
-    else:
-        token_file = open(TOKEN_FILE, "w")
-        writer = csv.DictWriter(token_file, fieldnames=CSV_FIELD_NAMES, dialect='simple')
-        writer.writeheader()
-    writer.writerow(token_info)
-    token_file.close()
+from Token import Token
+import TokenManager as tm
 
 def readfile(filename):
     text = ""
@@ -34,25 +20,21 @@ def readfiles(filenames):
         text += "\n\n"
     return text
 
-def create_token(name, symbol, prefix=TOKEN_PREFIX):
-    token = "%s%s" % (prefix, symbol)
-    cog.outl( "%s\t\t\t\t\t{ return %s; }" % (name, token) )
-    
-    write_token_info({'plain_text' : name, 'define' : token})
+def create_token(name, symbol):
+    token = Token(name, symbol)
+    cog.outl( token.re2c() )
+    tm.add(token)
 
 def create_defines():
-    cog.outl( "#define\tTOKEN_UNKOWN\t1")
-    with open(TOKEN_FILE, "r") as token_file:
-        reader = csv.DictReader(token_file)
-        index  = 2
-        for row in reader:
-            cog.outl( "#define\t%s\t%s" % (row['define'], index))
-            index = index + 1
+    tm.update_values()
+    tokens = tm.read_tokens()
+    
+    for token in tokens:
+        cog.outl( token.c_define() )
+    cog.outl( "#define NUM_TOKENS %d" % len(tokens) )
 
 def create_table():
-    cog.outl( "\"?\",")
-    with open(TOKEN_FILE, "r") as token_file:
-        reader = csv.DictReader(token_file)
-        for row in reader:
-            cog.outl( "\"%s\"," % row['plain_text'])
-            
+    tokens = tm.read_tokens()
+    
+    for token in tokens:
+        cog.outl( token.table_entry() )
