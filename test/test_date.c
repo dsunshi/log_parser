@@ -106,6 +106,9 @@ MunitResult test_date_lex(const MunitParameter params[], void* user_data)
             day   = day_en[munit_rand_int_range(0, 6)];
             month = month_en[munit_rand_int_range(0, 11)];
             ampm  = munit_rand_int_range(0, 1) == 1 ? "am" : "pm";
+            
+            fprintf(file, "date %s %s %02d %02d:%02d:%02d.%03d %s %04d\n",
+                    day, month, date, hours, minutes, seconds, ms, ampm, year);
         }
         else
         {
@@ -114,9 +117,10 @@ MunitResult test_date_lex(const MunitParameter params[], void* user_data)
             day   = day_de[munit_rand_int_range(0, 6)];
             month = month_de[munit_rand_int_range(0, 11)];
             ampm  = "";
+            
+            fprintf(file, "date %s %s %02d %02d:%02d:%02d.%03d %04d\n",
+                    day, month, date, hours, minutes, seconds, ms, year);
         }
-        
-        fprintf(file, "date %s %s %02d %02d:%02d:%02d.%03d %s %04d\n", day, month, date, hours, minutes, seconds, ms, ampm, year);
     }
     
     fclose( file );
