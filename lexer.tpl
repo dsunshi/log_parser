@@ -37,7 +37,7 @@ int lex(yyinput_t * input)
             //  import cog
             //  import CogUtils as tools
             //
-            //  ret_token("*",      "UNKOWN")
+            //  tools.create_token("*", "UNKOWN")
             //  ret_token("end",     "exit_success(input)", prefix="")
             //  cog.out("\n")
             //

@@ -2,7 +2,13 @@
 #include "lexer.h"
 #include "lexer_symbols.h"
 
-static const char * const LEXER_SYMBOL_TABLE[] =
+typedef struct
+{
+    char * name;
+    int    id;
+} symbol_t;
+
+static symbol_t LEXER_SYMBOL_TABLE[NUM_TOKENS] =
 {
 /*[[[cog
 import CogUtils as tools
@@ -15,6 +21,8 @@ tools.create_table()
 
 const char * get_token_name(const int token_id)
 {
+    int index = 0;
+    
     if (token_id < 0)
     {
         return "ERROR";
@@ -25,6 +33,14 @@ const char * get_token_name(const int token_id)
     }
     else
     {
-        return LEXER_SYMBOL_TABLE[token_id - 1];
+        for (index = 0; index < NUM_TOKENS; index++)
+        {
+            if (LEXER_SYMBOL_TABLE[index].id == token_id)
+            {
+                return LEXER_SYMBOL_TABLE[index].name;
+            }
+        }
+        
+        return "OVERFLOW";
     }
 }
