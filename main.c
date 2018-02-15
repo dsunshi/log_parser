@@ -20,7 +20,7 @@ int main(int argc, char **argv)
     {
         input   = create_lexer(fopen(argv[1], "r"), 4096, YYMAXFILL);
         pParser = ParseAlloc(malloc);
-        yylval.buffer = (char *) malloc( sizeof(char) * 120 );
+//        yylval.buffer = (char *) malloc( sizeof(char) * 120 );
         
         printf("-------------------------------------------------\n");
         printf("| file: %s\n", argv[1]);
@@ -28,6 +28,7 @@ int main(int argc, char **argv)
         do
         {
             token = lex(input);
+            yylval.buffer = (char *) malloc( sizeof(char) * 120 );
             //printf("%d ", token);
             get_token_value(input, &yylval); 
             //printf("token value: %s ", yylval.buffer);
