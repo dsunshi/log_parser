@@ -36,9 +36,12 @@ int lex(yyinput_t * input)
             //[[[cog
             //  import cog
             //  import CogUtils as tools
+            //  import TokenManager as tm
+            //  from Token import Token
             //
             //  tools.create_token("*", "UNKOWN")
             //  ret_token("end",     "exit_success(input)", prefix="")
+            //  tm.add(Token("end", "END"))
             //  cog.out("\n")
             //
             //  cog.out( tools.readfiles(["Header.re", "Month.re", "Numerals.re", "Punctuation.re", "Weekday.re", "Whitespace.re"]) )
