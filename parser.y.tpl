@@ -6,6 +6,19 @@
 %type NUM      { YYSTYPE }
 %type fulltime {YYSTYPE }
 
+%nonassoc WEEKDAY.
+%nonassoc MONTH.
+%nonassoc NUM.
+%nonassoc END.
+%nonassoc NEWLINE.
+%nonassoc DATE.
+%nonassoc SPACE.
+%nonassoc DEC.
+%nonassoc COLON.
+%nonassoc DOT.
+%nonassoc AM.
+%nonassoc PM.
+
 %extra_argument { ParserState *state }
 
 %include {
@@ -48,6 +61,13 @@
     fprintf(stderr,"Giving up.  Parser is hopelessly lost...\n");
     //exit(-1);
 }
+
+%start_symbol log
+
+log ::= in END.
+in ::= in date.
+in ::= in NEWLINE.
+in ::= .
 
 /*[[[cog
   import cog

@@ -2,7 +2,7 @@
 /* Date 
  * Definition: date <WeekDay> <Month> <Date> <Fulltime> <Year>
 */
-line ::= DATE SPACE WEEKDAY(D) SPACE MONTH(M) SPACE DEC(T) SPACE fulltime(FT) DEC(Y).
+date ::= DATE SPACE WEEKDAY(D) SPACE MONTH(M) SPACE DEC(T) SPACE fulltime(FT) DEC(Y) NEWLINE.
 {
     /* Date line */
     printf("date: %s %s %s %s %s\n", D.buffer, M.buffer, T.buffer, FT.buffer, Y.buffer);
