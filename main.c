@@ -13,6 +13,8 @@ int main(int argc, char **argv)
     YYSTYPE yylval;
     void * pParser;
     ParserState state;
+    
+    FILE * err;
 
     int token;
 
@@ -21,7 +23,7 @@ int main(int argc, char **argv)
         input   = create_lexer(fopen(argv[1], "r"), 4096, YYMAXFILL);
         pParser = ParseAlloc(malloc);
 //        yylval.buffer = (char *) malloc( sizeof(char) * 120 );
-        
+        err = fopen("parser.err", "w");
         printf("-------------------------------------------------\n");
         printf("| file: %s\n", argv[1]);
         printf("-------------------------------------------------\n");
@@ -32,13 +34,10 @@ int main(int argc, char **argv)
             //printf("%d ", token);
             get_token_value(input, &yylval); 
             //printf("token value: %s ", yylval.buffer);
-            printf("%s(%d) ", get_token_name(token), token);
-            
-            if (token > 0)
-            {
-                Parse(pParser, token, yylval, &state);
-            }
-        } while(token > 0);
+            //printf("%s(%d) ", get_token_name(token), token);
+            Parse(pParser, token, yylval, &state);
+            ParseTrace(err, "");
+        } while ((token > 0) && (token != TOKEN_END));
          
         /* A value of 0 for the second argument is a special flag to the parser to
            indicate that the end of input has been reached.
