@@ -35,8 +35,12 @@ int main(int argc, char **argv)
             get_token_value(input, &yylval); 
             //printf("token value: %s ", yylval.buffer);
             //printf("%s(%d) ", get_token_name(token), token);
-            Parse(pParser, token, yylval, &state);
-            ParseTrace(err, "");
+            if (token > 0)
+            {
+                /* Only pass valid tokens to the parser - this provides a smoother exit */
+                Parse(pParser, token, yylval, &state);
+                ParseTrace(err, "");
+            }   
         } while ((token > 0) && (token != TOKEN_END));
          
         /* A value of 0 for the second argument is a special flag to the parser to

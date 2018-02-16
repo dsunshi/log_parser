@@ -58,8 +58,12 @@
 }
 
 %parse_failure {
-    fprintf(stderr,"Giving up.  Parser is hopelessly lost...\n");
+    fprintf(stderr, "Giving up.  Parser is hopelessly lost...\n");
     //exit(-1);
+}
+
+%stack_overflow {
+    fprintf(stderr, "Giving up.  Parser stack overflow\n");
 }
 
 %start_symbol log
