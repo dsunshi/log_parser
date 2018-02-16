@@ -28,7 +28,7 @@ lemon.exe: lemon_tool_src/lemon.c
 	gcc -Wall -Wextra -g -o lemon lemon_tool_src/lemon.c
 
 clean:
-	rm -rf *.o *.pyc lexer.c fasst.exe lemon.exe lexer.re tokens.dat lexer.tpl.0 lexer_symbols.h lexer_symbols.c parser.c parser.y parser.out parser.h
+	rm -rf *.o *.pyc lexer.c fasst.exe lemon.exe lexer.re tokens.dat lexer.tpl.0 lexer_symbols.h lexer_symbols.c parser.c parser.y parser.out parser.h parser.err
 
 lextest: fasst  
 	fasst samples/BASE_TS_00.txt
