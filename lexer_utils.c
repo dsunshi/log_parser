@@ -1,5 +1,6 @@
 
 #include "lexer.h"
+#include "parser.h"
 
 /* Create a lexer for the provided file */
 yyinput_t * create_lexer(FILE * file, const size_t size, const size_t maxfill)
@@ -206,15 +207,12 @@ int exit_success(yyinput_t * input)
         /* The current token is exaclty at the end of the input buffer. So if we have lexed to an end we have
          * sucessfully lexed the entire input.
          */
-		result = 0;
+		result = TOKEN_END;
         //input->eof = 0;
 	}
 	else
 	{
-        //if ((input->token - input->limit) == 1)
-        //{
-        //    result = 0;
-        //}
+        
 	}
 	
 	return result;
