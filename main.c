@@ -17,7 +17,6 @@ int main(int argc, char **argv)
     FILE * err;
 
     tok_t token;
-    int index;
 
     if (argc > 1)
     {

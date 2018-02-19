@@ -2,6 +2,9 @@
 #include "lexer.h"
 #include "parser.h"
 
+/* for get_token_name */
+#include "lexer_symbols.h"
+
 //#define NDEBUG
 #include <assert.h>
 
@@ -11,7 +14,7 @@ static const YYSTYPE BLANK = "";
 static inline YYSTYPE create_str(yyinput_t * input, size_t length)
 {
     YYSTYPE output = (YYSTYPE) malloc( sizeof(char) * length );
-    strncpy( output, input->token, length );
+    memcpy( output, input->token, length );
     output[length] = '\0';
     
     return output;

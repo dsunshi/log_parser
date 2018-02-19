@@ -10,6 +10,9 @@
 /* for size_t  */
 #include "stddef.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 /******************************** WARNING *************************************/
 /* These function prototypes depend on the lempar.c template file. If any
  * changes have been made to the template file than these will need to be
@@ -46,8 +49,17 @@ void Parse(
 );
 
 void ParseFree(
-  void *p,                     /* The parser to be deleted */
-  void (*freeProc)(void*)      /* Function used to reclaim memory */
+  void *p,                      /* The parser to be deleted */
+  void (*freeProc)(void*)       /* Function used to reclaim memory */
 );
+
+void ParseTrace(
+  FILE *TraceFILE,              /* File to which trace output should be written */
+  char *zTracePrompt            /* A prefix string written at the beginning of every line of trace output */
+);
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
 
 #endif
