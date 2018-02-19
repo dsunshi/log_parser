@@ -18,7 +18,7 @@ int main(int argc, char **argv)
     
     FILE * err;
 
-    int token;
+    tok_t token;
     int index;
     
     for (index = 0; index < 30; index++)
@@ -42,7 +42,7 @@ int main(int argc, char **argv)
         {
             token = lex(input);
             //printf("%d ", token);
-            get_token_value(input, token_values[index]);
+            get_token_value(input, token, token_values[index]);
             yylval = token_values[index];
             index++;
             //printf("token value: %s ", yylval.buffer);

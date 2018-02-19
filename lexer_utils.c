@@ -25,7 +25,7 @@ yyinput_t * create_lexer(FILE * file, const size_t size, const size_t maxfill)
 		}
 		else
 		{
-			memset(input->buffer, 0x00, (size + maxfill));
+			memset(input->buffer, YYINVAILD, (size + maxfill));
 
 	    	input->limit   = input->buffer + size;
    			input->cursor  = input->limit;
@@ -41,7 +41,7 @@ yyinput_t * create_lexer(FILE * file, const size_t size, const size_t maxfill)
 }
 
 /* Get the value of the current token from within the lexers buffer */
-void get_token_value(yyinput_t * input, YYSTYPE output)
+void get_token_value(yyinput_t * input, tok_t token, YYSTYPE output)
 {
     size_t length = input->cursor - input->token;
     strncpy( output, input->token, length );
@@ -100,107 +100,17 @@ bool fill(yyinput_t * input, const size_t need)
              * in both cases we're done here...
              */
             input->eof = true;
-            memset(input->limit, 0x00, input->maxfill);
+            memset(input->limit, YYINVAILD, input->maxfill);
             input->limit += input->maxfill;
         }
         
         return true;
     }
 }
-//unsigned char fill(yyinput_t * input, const size_t need)
-//{
-//    const size_t remaining = input->token - input->buffer;
-//    unsigned char result   = 0;
-//    size_t nread;
-//    static unsigned char comment_counter = 0;
-//
-//    //printf("filling %d\n", need);
-//
-//    if (input->file == NULL)
-//    {
-//    	printf("no open file\n");
-//    }
-//
-//    if ( (input->eof != 0) || (remaining < need) )
-//    {
-//        //printf("************ error *************\n");
-//        //printf("remaining: %d\n", remaining);
-//        //printf("need:      %d\n", need);
-//        //printf("limit: %d\n", input->limit);
-//        //printf("size: %d\n", input->buffer + input->size);
-//        //printf("eof: %d\n", input->eof);
-//        //printf("|%s|\n", input->buffer);
-//        //printf("|%s|\n", input->token);
-//        //printf("|%s|\n", input->cursor);
-//        //exit(-1);
-//        //input->limit += 1;
-//
-//        if (strlen(input->token)==0 && comment_counter > 0)
-//        {
-//            *input->cursor = '\00';
-//                result = 1;
-//        }
-//
-//        if ( (need == 1) && (remaining == 0) && (strncmp(input->buffer, input->token, strlen(input->buffer)) == 0) )
-//        {
-//
-//        //    *input->buffer= '\n';
-//        //    *input->token = '\n';
-//            if (comment_counter == 0)
-//            {
-//                //printf("NEWLINE\n");
-//                *input->cursor = '\n';
-//                result = 1;
-//            }
-//            if (comment_counter == 1)
-//            {
-//                //printf("NULL\n");
-//                *input->cursor = '\00';
-//                result = 1;
-//            }
-//
-//            comment_counter++;
-//        }
-//    }
-//    else
-//    {
-//        /* buffer is the entire memory buffer
-//           token  is the location of the current char within buffer
-//           (limit - token) is the number of remaining unprocessed data
-//           */
-//        memmove(input->buffer, input->token, input->limit - input->token);
-//
-//        input->limit  -= remaining;
-//        input->cursor -= remaining;
-//        input->token  -= remaining;
-//
-//        //printf("reading: %d\n", remaining);
-//        nread  = fread(input->limit, 1, remaining, input->file);
-//        input->limit += nread;      
-//
-//        //if (input->limit < (input->buffer + input->size))
-//        if (nread < remaining)
-//        {
-//
-//            //printf("limit: %d\n", input->limit);
-//            input->eof = 1;
-//            memset(input->limit , 0, input->maxfill);
-//            input->limit += input->maxfill;
-//        }
-//        else
-//        {
-//
-//        }
-//
-//        result = 1;
-//    }
-//
-//    return result;
-//}
 
-int exit_success(yyinput_t * input)
+tok_t exit_success(yyinput_t * input)
 {
-	int result = LEXER_EXIT_ERROR;
+	tok_t result = LEXER_EXIT_ERROR;
 
 	if (input->maxfill == ((size_t) (input->limit - input->token)))
 	{
@@ -208,7 +118,6 @@ int exit_success(yyinput_t * input)
          * sucessfully lexed the entire input.
          */
 		result = TOKEN_END;
-        //input->eof = 0;
 	}
 	else
 	{

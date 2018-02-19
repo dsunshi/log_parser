@@ -4,6 +4,9 @@
 /* for YYSTYPE */
 #include "lemon_cfg.h"
 
+/* for tok_t */
+#include "lexer.h"
+
 /* for size_t  */
 #include "stddef.h"
 
@@ -36,7 +39,7 @@ void *ParseAlloc(
 
 void Parse(
   void *yyp,                    /* The parser */
-  int yymajor,                  /* The major token code number */
+  tok_t yymajor,                /* The token type */
   YYSTYPE yyminor,              /* The value for the token */
   /* , ParseARG_PDECL  */       /* Optional %extra_argument parameter */
   ParserState *state
