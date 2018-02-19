@@ -1,10 +1,10 @@
 %token_prefix TOKEN_
 
 %token_type    { YYSTYPE }
-%type WEEKDAY  { YYSTYPE }
-%type MONTH    { YYSTYPE }
-%type NUM      { YYSTYPE }
-%type fulltime {YYSTYPE }
+%token_destructor { free($$); }
+
+%type fulltime { YYSTYPE }
+%destructor fulltime { free($$); }
 
 %nonassoc WEEKDAY.
 %nonassoc MONTH.
