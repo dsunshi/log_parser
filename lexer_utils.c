@@ -41,11 +41,11 @@ yyinput_t * create_lexer(FILE * file, const size_t size, const size_t maxfill)
 }
 
 /* Get the value of the current token from within the lexers buffer */
-void get_token_value(yyinput_t * input, YYSTYPE * output)
+void get_token_value(yyinput_t * input, YYSTYPE output)
 {
     size_t length = input->cursor - input->token;
-    strncpy( output->buffer, input->token, length );
-    output->buffer[length] = '\0';
+    strncpy( output, input->token, length );
+    output[length] = '\0';
 }
 
 void destroy_lexer(yyinput_t * lexer)

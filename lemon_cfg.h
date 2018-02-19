@@ -3,12 +3,7 @@
 
 //#include "lexer.h"
 
-typedef struct
-{
-    int token;
-    //iutf8_t * buffer;
-    char * buffer;
-} YYSTYPE;
+typedef char * YYSTYPE;
 
 typedef struct
 {

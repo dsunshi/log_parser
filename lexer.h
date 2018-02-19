@@ -47,7 +47,7 @@ void destroy_lexer(yyinput_t * lexer);
 bool fill(yyinput_t * input, const size_t need);
 
 int  lex(yyinput_t * input);
-void get_token_value(yyinput_t * input, YYSTYPE * output);
+void get_token_value(yyinput_t * input, YYSTYPE output);
 int  exit_success(yyinput_t * input);
 
 #ifdef __cplusplus
