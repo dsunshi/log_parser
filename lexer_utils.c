@@ -99,7 +99,7 @@ YYSTYPE get_token_value(yyinput_t * input, tok_t token)
 #ifndef NDEBUG
             fprintf(stderr, "Unkown token %s(%d)!\n", get_token_name(token), token);
 #endif
-            return create_str(input, 100);
+            return create_str(input, length);
         break;
     }
 }
