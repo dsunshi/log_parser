@@ -3,14 +3,14 @@ all: fasst
 fasst: lexer_utils.c lexer.c main.c lexer_symbols.h lexer_symbols.c parser.c
 	gcc -Wall -Wextra -g -o fasst lexer_utils.c lexer_symbols.c lexer.c main.c parser.c
 
-lexer.re: lexer.tpl.0
-	python -m cogapp -d -o lexer.re lexer.tpl.0
+lexer.c.re: lexer.c.tpl.0
+	python -m cogapp -d -o lexer.c.re lexer.c.tpl.0
 
-lexer.tpl.0: lexer.tpl Header.re Month.re Numerals.re Punctuation.re Weekday.re Whitespace.re
-	python -m cogapp -d -o lexer.tpl.0 lexer.tpl
+lexer.c.tpl.0: lexer.c.tpl Header.re Month.re Numerals.re Punctuation.re Weekday.re Whitespace.re
+	python -m cogapp -d -o lexer.c.tpl.0 lexer.c.tpl
 
-lexer.c: lexer.re 
-	re2c -W -Werror --utf-8 -o lexer.c lexer.re
+lexer.c: lexer.c.re 
+	re2c -W -Werror --utf-8 -o lexer.c lexer.c.re
 
 lexer_symbols.h: lexer_symbols.h.tpl Header.re Month.re Numerals.re Punctuation.re Weekday.re Whitespace.re parser.c
 	python -m cogapp -d -o lexer_symbols.h lexer_symbols.h.tpl
@@ -28,7 +28,7 @@ lemon.exe: lemon_tool_src/lemon.c
 	gcc -Wall -Wextra -g -o lemon lemon_tool_src/lemon.c
 
 clean:
-	rm -rf *.o *.pyc lexer.c fasst.exe lemon.exe lexer.re tokens.dat lexer.tpl.0 lexer_symbols.h lexer_symbols.c parser.c parser.y parser.out parser.h parser.err
+	rm -rf *.o *.pyc lexer.c fasst.exe lemon.exe lexer.c.re tokens.dat lexer.c.tpl.0 lexer_symbols.h lexer_symbols.c parser.c parser.y parser.out parser.h parser.err
 
 lextest: fasst  
 	fasst samples/BASE_TS_00.txt
