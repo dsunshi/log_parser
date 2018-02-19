@@ -6,8 +6,6 @@
 #include "lemon_cfg.h"
 #include "lexer_symbols.h"
 
-YYSTYPE token_values[30];
-
 int main(int argc, char **argv)
 {
 
@@ -20,14 +18,6 @@ int main(int argc, char **argv)
 
     tok_t token;
     int index;
-    
-    for (index = 0; index < 30; index++)
-    {
-        token_values[index] = (YYSTYPE) malloc( sizeof(char) * 120 );
-    }
-    
-    index = 0;
-    
 
     if (argc > 1)
     {
@@ -42,9 +32,7 @@ int main(int argc, char **argv)
         {
             token = lex(input);
             //printf("%d ", token);
-            get_token_value(input, token, token_values[index]);
-            yylval = token_values[index];
-            index++;
+            yylval = get_token_value(input, token);
             //printf("token value: %s ", yylval.buffer);
             //printf("%s(%d) ", get_token_name(token), token);
             if (token > 0)
@@ -61,11 +49,7 @@ int main(int argc, char **argv)
         Parse(pParser, 0, yylval, &state);
          
         ParseFree(pParser, free);
-        
-        for (index = 0; index < 30; index++)
-        {
-            //printf("%s\n", token_values[index]);
-        }
+        destroy_lexer(input);
         
         printf("\n\n");
     }

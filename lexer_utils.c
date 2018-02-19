@@ -2,6 +2,21 @@
 #include "lexer.h"
 #include "parser.h"
 
+//#define NDEBUG
+#include <assert.h>
+
+/* Empty or blank token value for tokens that don't have a real value */
+static const YYSTYPE BLANK = "";
+
+static inline YYSTYPE create_str(yyinput_t * input, size_t length)
+{
+    YYSTYPE output = (YYSTYPE) malloc( sizeof(char) * length );
+    strncpy( output, input->token, length );
+    output[length] = '\0';
+    
+    return output;
+}
+
 /* Create a lexer for the provided file */
 yyinput_t * create_lexer(FILE * file, const size_t size, const size_t maxfill)
 {
@@ -12,6 +27,9 @@ yyinput_t * create_lexer(FILE * file, const size_t size, const size_t maxfill)
 	if (input == NULL)
 	{
         /* Unable to allocate enough memory for the lexer */
+#ifndef NDEBUG
+        fprintf(stderr, "Unable to allocate enough memory for the lexer!\n");
+#endif
 	}
 	else
 	{
@@ -22,6 +40,9 @@ yyinput_t * create_lexer(FILE * file, const size_t size, const size_t maxfill)
 		if (input->buffer == NULL)
 		{
             /* Unable to allocate enough memory for the actual string buffer used by the lexer */
+#ifndef NDEBUG
+        fprintf(stderr, "Unable to allocate enough memory for the actual string buffer used by the lexer!\n");
+#endif
 		}
 		else
 		{
@@ -41,11 +62,46 @@ yyinput_t * create_lexer(FILE * file, const size_t size, const size_t maxfill)
 }
 
 /* Get the value of the current token from within the lexers buffer */
-void get_token_value(yyinput_t * input, tok_t token, YYSTYPE output)
+YYSTYPE get_token_value(yyinput_t * input, tok_t token)
 {
-    size_t length = input->cursor - input->token;
-    strncpy( output, input->token, length );
-    output[length] = '\0';
+    const size_t length = input->cursor - input->token;
+    
+    switch( token )
+    {
+        /* Whitespace or control characters */
+        case TOKEN_NEWLINE:
+        case TOKEN_SPACE:
+        case TOKEN_END:
+        /* Punctuation */
+        case TOKEN_COLON:
+        /* Symbols (value doesn't matter) */
+        case TOKEN_AM:
+        case TOKEN_PM:
+        case TOKEN_DATE:
+        case TOKEN_DOT:
+            return BLANK;
+            break;
+        /* Weekday - exactly 3 characters */
+        case TOKEN_WEEKDAY:
+            assert(length == 3);
+            return create_str(input, length);
+            break;
+        /* Month - exactly 3 characters */
+        case TOKEN_MONTH:
+            assert(length == 3);
+            return create_str(input, length);
+            break;
+        case TOKEN_DEC:
+            assert(length < 10); /* based on 32-bit decimal */
+            return create_str(input, length);
+            break;
+        default:
+#ifndef NDEBUG
+            fprintf(stderr, "Unkown token %s(%d)!\n", get_token_name(token), token);
+#endif
+            return create_str(input, 100);
+        break;
+    }
 }
 
 void destroy_lexer(yyinput_t * lexer)

@@ -7,3 +7,5 @@
 - [ ] Fix warnings
 - [ ] Code cleanup (names) and comments
 - [ ] Datatypes for events in log
+- [ ] Ensure lemon does not try to free() BLANK token
+- [ ] Auto-generate get_token_value, and create corresponding free_token_value
