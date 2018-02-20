@@ -20,6 +20,9 @@ def readfiles(filenames):
         text += "\n\n"
     return text
 
+def simple_token(name):
+    create_token(name, name.upper())
+
 def create_token(name, symbol):
     token = Token(name, symbol)
     cog.outl( token.re2c() )
