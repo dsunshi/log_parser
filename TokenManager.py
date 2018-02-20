@@ -58,6 +58,11 @@ def update_values():
             token.id = -1
     # 2. Create new values for lexer only tokens
     for token in lexer_tokens:
+        try:
+            hex = int(token.plain_text, 16)
+            print "** Warning token %s is valid hexadecimal number!" % token.plain_text
+        except ValueError as e:
+            pass
         if token.id < 0:
             token.id = get_max_value(lexer_tokens) + 1
     # 3. Save for later
