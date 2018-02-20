@@ -77,6 +77,7 @@ YYSTYPE get_token_value(yyinput_t * input, tok_t token)
         case TOKEN_END:
         /* Punctuation */
         case TOKEN_COLON:
+        case TOKEN_COMMENT:
         /* Symbols (value doesn't matter) */
         case TOKEN_AM:
         case TOKEN_PM:
@@ -92,6 +93,7 @@ YYSTYPE get_token_value(yyinput_t * input, tok_t token)
         case TOKEN_INTERNAL:
         case TOKEN_EVENTS:
         case TOKEN_LOGGED:
+        case TOKEN_VERSION:
             return BLANK;
             break;
         /* Weekday - exactly 3 characters */

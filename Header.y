@@ -43,3 +43,8 @@ logging ::= INTERNAL SPACE EVENTS SPACE LOGGED.
 {
     printf("internal events logged\n");
 }
+
+version ::= COMMENT SPACE VERSION SPACE DEC(major) DOT DEC(minor) DOT DEC(patch).
+{
+    printf("// version %s.%s.%s\n", major, minor, patch);
+}

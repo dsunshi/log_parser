@@ -1,10 +1,12 @@
 %token_prefix TOKEN_
 
-%token_type    { YYSTYPE }
+%token_type       {  YYSTYPE  }
 %token_destructor { free($$); }
 
-%type fulltime { YYSTYPE }
-%destructor fulltime { free($$); }
+%type fulltime            {  YYSTYPE  }
+%type time_and_date       {  YYSTYPE  }
+%destructor fulltime      { free($$); }
+%destructor time_and_date { free($$); }
 
 %nonassoc WEEKDAY.
 %nonassoc MONTH.
@@ -69,11 +71,12 @@
 %start_symbol log
 
 log ::= in END.
-in ::= in date.
-in ::= in base SPACE timestamps.
-in ::= in logging.
-in ::= in NEWLINE.
-in ::= .
+in  ::= in date.
+in  ::= in base SPACE timestamps.
+in  ::= in logging.
+in  ::= in version.
+in  ::= in NEWLINE.
+in  ::= .
 
 /*[[[cog
   import cog
