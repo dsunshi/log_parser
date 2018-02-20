@@ -9,10 +9,14 @@ hexadecimal = "hex";
 decimal     = "dec";
 // timestamps indicates whether the timestamps are written absolute to the start of the measurement
 // or relative to the preceding event.
-no       = "no";
-internal = "internal";
-events   = "events";
-logged   = "logged";
+timestamps  = "timestamps";
+absolute    = "absolute";
+relative    = "relative";
+// internal events logged indicate whether internal events were logged or not.
+no          = "no";
+internal    = "internal";
+events      = "events";
+logged      = "logged";
 
 //[[[cog
 //  import CogUtils as tools
@@ -22,6 +26,9 @@ logged   = "logged";
 //  tools.create_token("base",        "BASE")
 //  tools.create_token("hexadecimal", "HEXADECIMAL")
 //  tools.create_token("decimal",     "DECIMAL")
+//  tools.create_token("timestamps",  "TIMESTAMPS")
+//  tools.create_token("absolute",    "ABSOLUTE")
+//  tools.create_token("relative",    "RELATIVE")
 //  tools.create_token("no",          "NO")
 //  tools.create_token("internal",    "INTERNAL")
 //  tools.create_token("events",      "EVENTS")

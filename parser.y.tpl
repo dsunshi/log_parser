@@ -70,6 +70,8 @@
 
 log ::= in END.
 in ::= in date.
+in ::= in base SPACE timestamps.
+in ::= in logging.
 in ::= in NEWLINE.
 in ::= .
 
@@ -77,6 +79,6 @@ in ::= .
   import cog
   import CogUtils as tools
 
-  cog.out( tools.readfiles(["date.y"]) )
+  cog.out( tools.readfiles(["date.y", "Header.y"]) )
 ]]]*/
 /*[[[end]]]*/

@@ -82,6 +82,16 @@ YYSTYPE get_token_value(yyinput_t * input, tok_t token)
         case TOKEN_PM:
         case TOKEN_DATE:
         case TOKEN_DOT:
+        case TOKEN_BASE:
+        case TOKEN_TIMESTAMPS:
+        case TOKEN_DECIMAL:
+        case TOKEN_HEXADECIMAL:
+        case TOKEN_ABSOLUTE:
+        case TOKEN_RELATIVE:
+        case TOKEN_NO:
+        case TOKEN_INTERNAL:
+        case TOKEN_EVENTS:
+        case TOKEN_LOGGED:
             return BLANK;
             break;
         /* Weekday - exactly 3 characters */
@@ -100,7 +110,7 @@ YYSTYPE get_token_value(yyinput_t * input, tok_t token)
             break;
         default:
 #ifndef NDEBUG
-            fprintf(stderr, "Unkown token %s(%d)!\n", get_token_name(token), token);
+            fprintf(stderr, "Unkown token value: %s(%d)!\n", get_token_name(token), token);
 #endif
             return create_str(input, length);
         break;
