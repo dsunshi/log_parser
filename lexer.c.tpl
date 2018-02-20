@@ -30,8 +30,6 @@ int lex(yyinput_t * input)
             re2c:define:YYMARKER     = input->marker;
             re2c:define:YYFILL       = "if (fill(input, @@) == false) return LEXER_FILL_ERROR;";
             re2c:define:YYFILL:naked = 1;
-
-            end = "\x00";
             
             //[[[cog
             //  import cog
@@ -40,8 +38,8 @@ int lex(yyinput_t * input)
             //  from Token import Token
             //
             //  tools.create_token("*", "UNKOWN")
-            //  ret_token("end",     "exit_success(input)", prefix="")
-            //  tm.add(Token("end", "END"))
+            //  ret_token("\"\\x00\"",  "exit_success(input)", prefix="")
+            //  tm.add(Token("end_of_input_stream", "END_OF_INPUT_STREAM"))
             //  cog.out("\n")
             //
             //  cog.out( tools.readfiles(["Header.re", "Month.re", "Numerals.re", "Punctuation.re", "Weekday.re", "Whitespace.re"]) )

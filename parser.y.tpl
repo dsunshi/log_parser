@@ -70,11 +70,13 @@
 
 %start_symbol log
 
-log ::= in END.
+log ::= in END_OF_INPUT_STREAM.
 in  ::= in date.
 in  ::= in base SPACE timestamps.
 in  ::= in logging.
 in  ::= in version.
+in  ::= in begin_triggerblock.
+in  ::= in end_triggerblock.
 in  ::= in NEWLINE.
 in  ::= .
 
@@ -82,6 +84,6 @@ in  ::= .
   import cog
   import CogUtils as tools
 
-  cog.out( tools.readfiles(["date.y", "Header.y"]) )
+  cog.out( tools.readfiles(["date.y", "Header.y", "Triggerblock.y"]) )
 ]]]*/
 /*[[[end]]]*/

@@ -40,7 +40,7 @@ int main(int argc, char **argv)
                 Parse(pParser, token, yylval, &state);
                 ParseTrace(err, "");
             }   
-        } while ((token > 0) && (token != TOKEN_END));
+        } while ((token > 0) && (token != TOKEN_END_OF_INPUT_STREAM));
          
         /* A value of 0 for the second argument is a special flag to the parser to
            indicate that the end of input has been reached.

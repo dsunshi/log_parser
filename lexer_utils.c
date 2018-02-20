@@ -74,7 +74,7 @@ YYSTYPE get_token_value(yyinput_t * input, tok_t token)
         /* Whitespace or control characters */
         case TOKEN_NEWLINE:
         case TOKEN_SPACE:
-        case TOKEN_END:
+        case TOKEN_END_OF_INPUT_STREAM:
         /* Punctuation */
         case TOKEN_COLON:
         case TOKEN_COMMENT:
@@ -94,6 +94,9 @@ YYSTYPE get_token_value(yyinput_t * input, tok_t token)
         case TOKEN_EVENTS:
         case TOKEN_LOGGED:
         case TOKEN_VERSION:
+        case TOKEN_BEGIN:
+        case TOKEN_END:
+        case TOKEN_TRIGGERBLOCK:
             return BLANK;
             break;
         /* Weekday - exactly 3 characters */
@@ -188,7 +191,7 @@ tok_t exit_success(yyinput_t * input)
         /* The current token is exaclty at the end of the input buffer. So if we have lexed to an end we have
          * sucessfully lexed the entire input.
          */
-		result = TOKEN_END;
+		result = TOKEN_END_OF_INPUT_STREAM;
 	}
 	else
 	{
