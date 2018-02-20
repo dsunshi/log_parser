@@ -2,10 +2,16 @@
 /* Date 
  * Definition: date <WeekDay> <Month> <Date> <Fulltime> <Year>
 */
-date ::= DATE SPACE WEEKDAY(weekday) SPACE MONTH(month) SPACE DEC(day_of_month) SPACE fulltime(timestamp) DEC(year).
+date ::= DATE SPACE time_and_date(TD).
 {
     /* Date line */
-    printf("date %s %s %s %s %s\n", weekday, month, day_of_month, timestamp, year);
+    printf("date %s\n", TD);
+}
+
+time_and_date(TD) ::= WEEKDAY(weekday) SPACE MONTH(month) SPACE DEC(day_of_month) SPACE fulltime(timestamp) DEC(year).
+{
+    TD = (char *) malloc( sizeof(char) * 37 );
+    snprintf(TD, 37, "%s %s %s %s %s", weekday, month, day_of_month, timestamp, year);
 }
 
 /*
@@ -18,7 +24,6 @@ fulltime(FT) ::= DEC(hours) COLON DEC(minutes) COLON DEC(seconds) DOT DEC(millis
     //printf("de    fulltime: %s:%s:%s.%s\n", hours, minutes, seconds, milliseconds);
     FT = (char *) malloc( sizeof(char) * 13 );
     snprintf(FT, 12, "%s:%s:%s.%s", hours, minutes, seconds, milliseconds);
-    
 }
 
 fulltime(FT) ::= DEC(hours) COLON DEC(minutes) COLON DEC(seconds) DOT DEC(milliseconds) SPACE AM SPACE.
