@@ -42,7 +42,8 @@ int lex(yyinput_t * input)
             //  tm.add(Token("end_of_input_stream", "END_OF_INPUT_STREAM"))
             //  cog.out("\n")
             //
-            //  cog.out( tools.readfiles(["Header.re", "Month.re", "Numerals.re", "Punctuation.re", "Weekday.re", "Whitespace.re"]) )
+            //  cog.out( tools.readfiles(["Header.re", "Month.re", "Numerals.re", "Punctuation.re", "Weekday.re"]) )
+            //  cog.out( tools.readfiles(["Whitespace.re", "Events.re"]) )
             //
             //]]]
             //[[[end]]]

@@ -5,8 +5,10 @@
 
 %type fulltime            {  YYSTYPE  }
 %type time_and_date       {  YYSTYPE  }
+%type time                {  YYSTYPE  }
 %destructor fulltime      { free($$); }
 %destructor time_and_date { free($$); }
+%destructor time          { free($$); }
 
 %nonassoc WEEKDAY.
 %nonassoc MONTH.
@@ -56,7 +58,7 @@
             
     }
     fprintf(stderr, "\n");
-    exit(-1);
+    //exit(-1);
 }
 
 %parse_failure {
@@ -76,6 +78,7 @@ in  ::= in base SPACE timestamps.
 in  ::= in logging.
 in  ::= in version.
 in  ::= in begin_triggerblock.
+in  ::= in start_of_measurement.
 in  ::= in end_triggerblock.
 in  ::= in NEWLINE.
 in  ::= .
@@ -84,6 +87,6 @@ in  ::= .
   import cog
   import CogUtils as tools
 
-  cog.out( tools.readfiles(["date.y", "Header.y", "Triggerblock.y"]) )
+  cog.out( tools.readfiles(["date.y", "Header.y", "Triggerblock.y", "Events.y"]) )
 ]]]*/
 /*[[[end]]]*/

@@ -97,6 +97,11 @@ YYSTYPE get_token_value(yyinput_t * input, tok_t token)
         case TOKEN_BEGIN:
         case TOKEN_END:
         case TOKEN_TRIGGERBLOCK:
+        case TOKEN_START:
+        case TOKEN_OF:
+        case TOKEN_DER:
+        case TOKEN_MEASUREMENT:
+        case TOKEN_MESSUNG:
             return BLANK;
             break;
         /* Weekday - exactly 3 characters */
