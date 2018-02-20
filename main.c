@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 //        yylval.buffer = (char *) malloc( sizeof(char) * 120 );
         err = fopen("parser.err", "w");
         printf("-------------------------------------------------\n");
-        printf("| file: %s\n", argv[1]);
+        printf("| FILE: %s\n", argv[1]);
         printf("-------------------------------------------------\n");
         do
         {
@@ -50,7 +50,9 @@ int main(int argc, char **argv)
         ParseFree(pParser, free);
         destroy_lexer(input);
         
-        printf("\n\n");
+        printf("-------------------------------------------------\n");
+        printf("|                      EOF                       |\n");
+        printf("-------------------------------------------------\n");
     }
     else
     {
