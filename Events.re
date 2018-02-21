@@ -7,7 +7,7 @@ messung     = "Messung";
 
 // CAN Events
 can         = "CAN";
-can_fd      = "CAN FD";
+can_fd      = "CANFD";
 rx          = "rx";
 status      = "status" | "Status";
 

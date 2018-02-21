@@ -23,7 +23,7 @@ channel(C) ::= CAN SPACE DEC(id).
 channel(C) ::= CAN_FD SPACE DEC(id).
 {
     C = (char *) malloc( sizeof(char) * 11);
-    snprintf(C, 11, "CAN FD %s", id);
+    snprintf(C, 11, "CANFD %s", id);
 }
 
 start_of_measurement ::= time(T) SPACE START SPACE OF SPACE MEASUREMENT.
@@ -72,3 +72,15 @@ error_status(E) ::= CHIP SPACE STATUS SPACE ERROR SPACE ACTIVE.
     E = (char *) malloc( sizeof(char) * 30 );
     snprintf(E, 30, "chip status error active");
 }
+
+/* CAN Bus Statistics Event
+ * Description: CAN Statistic event, which contains statistic information about the CAN channels.
+ *  - "D"  stands for CAN Data Frames
+ *  - "R"  stands for CAN Remote Frames
+ *  - "XD" stands for CAN Extended Data Frames
+ *  - "XR" stands for CAN Extended Remote Frames
+ *  - "E"  stands for Error Frames
+ *  - "O"  stands for Overload Frames
+ *  - "B"  stands for Busload
+ * Definition: <Time> <Channel> Statistic: D <StatNumber> R <StatNumber> XD <StatNumber> XR <StatNumber> E <StatNumber> O <StatNumber> B <StatPercent>%
+ */
