@@ -23,7 +23,7 @@ fulltime(FT) ::= DEC(hours) COLON DEC(minutes) COLON DEC(seconds) DOT DEC(millis
     /* German fulltime (no am or pm) */
     //printf("de    fulltime: %s:%s:%s.%s\n", hours, minutes, seconds, milliseconds);
     FT = (char *) malloc( sizeof(char) * 13 );
-    snprintf(FT, 12, "%s:%s:%s.%s", hours, minutes, seconds, milliseconds);
+    snprintf(FT, 13, "%s:%s:%s.%s", hours, minutes, seconds, milliseconds);
 }
 
 fulltime(FT) ::= DEC(hours) COLON DEC(minutes) COLON DEC(seconds) DOT DEC(milliseconds) SPACE AM SPACE.
