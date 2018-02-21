@@ -48,6 +48,14 @@ def update_values():
     # dict of macro:id
     parser_tokens = read_parser_tokens()
     
+    for mname in parser_tokens:
+        parser_only = True
+        for token in lexer_tokens:
+            if token.macro_name == mname:
+                parser_only = False
+        if parser_only:
+            print "** Warning:\ttoken %s is only defined by the PARSER!" % mname
+    
     # 1. First get the values from the parser
     for token in lexer_tokens:
         try:
@@ -55,12 +63,13 @@ def update_values():
             token.id = parser_tokens[token.macro_name]
         except KeyError as e:
             # This token is only defined by the lexer
+            print "** Warning:\ttoken %s is only defined by the LEXER!" % token.plain_text
             token.id = -1
     # 2. Create new values for lexer only tokens
     for token in lexer_tokens:
         try:
             hex = int(token.plain_text, 16)
-            print "** Warning token %s is valid hexadecimal number!" % token.plain_text
+            print "** Warning:\ttoken %s is valid hexadecimal number!" % token.plain_text
         except ValueError as e:
             pass
         if token.id < 0:
