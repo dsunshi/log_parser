@@ -11,6 +11,6 @@ WeekDay = mon | tue | wed | thu | fri | sat | sun;
 
 //[[[cog
 //  import CogUtils as tools
-//  tools.create_token("WeekDay", "WEEKDAY")
+//  tools.create_token("WeekDay", "WEEKDAY", 3)
 //]]]
 //[[[end]]]

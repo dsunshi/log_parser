@@ -12,11 +12,14 @@ lexer.c.tpl.0: lexer.c.tpl Header.re Month.re Numerals.re Punctuation.re Weekday
 lexer.c: lexer.c.re 
 	re2c -W -Werror --utf-8 -o lexer.c lexer.c.re
 
-lexer_symbols.h: lexer_symbols.h.tpl Header.re Month.re Numerals.re Punctuation.re Weekday.re Whitespace.re parser.c
+lexer_symbols.h: lexer_symbols.h.tpl Header.re Month.re Numerals.re Punctuation.re Weekday.re Whitespace.re parser.c lexer.c
 	python -m cogapp -d -o lexer_symbols.h lexer_symbols.h.tpl
 
-lexer_symbols.c: lexer_symbols.c.tpl Header.re Month.re Numerals.re Punctuation.re Weekday.re Whitespace.re parser.c
+lexer_symbols.c: lexer_symbols.c.tpl Header.re Month.re Numerals.re Punctuation.re Weekday.re Whitespace.re parser.c lexer.c
 	python -m cogapp -d -o lexer_symbols.c lexer_symbols.c.tpl
+
+lexer_utils.c: lexer_utils.c.tpl lexer_symbols.c lexer_symbols.h
+	python -m cogapp -d -o lexer_utils.c lexer_utils.c.tpl
 
 parser.y: parser.y.tpl date.y
 	python -m cogapp -d -o parser.y parser.y.tpl
@@ -28,7 +31,7 @@ lemon.exe: lemon_tool_src/lemon.c
 	gcc -Wall -Wextra -g -o lemon lemon_tool_src/lemon.c
 
 clean:
-	rm -rf *.o *.pyc lexer.c logilizer.exe lemon.exe lexer.c.re tokens.dat lexer.c.tpl.0 lexer_symbols.h lexer_symbols.c parser.c parser.y parser.out parser.h parser.err
+	rm -rf *.o *.pyc lexer.c logilizer.exe lexer.c.re tokens.dat lexer.c.tpl.0 lexer_symbols.h lexer_symbols.c parser.c parser.y parser.out parser.h parser.err
 
 lextest: logilizer  
 	logilizer samples/BASE_TS_00.txt

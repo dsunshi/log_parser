@@ -6,6 +6,6 @@ H = [a-fA-F0-9]+;
 
 //[[[cog
 //  import CogUtils as tools
-//  tools.create_token("D", "DEC")
+//  tools.create_token("D", "DEC", 10)
 //]]]
 //[[[end]]]

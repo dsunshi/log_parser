@@ -4,7 +4,7 @@ newline = "\n";
 
 //[[[cog
 //  import CogUtils as tools
-//  tools.create_token("space",   "SPACE")
-//  tools.create_token("newline", "NEWLINE")
+//  tools.simple_token("space")
+//  tools.simple_token("newline")
 //]]]
 //[[[end]]]

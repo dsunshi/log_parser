@@ -1,5 +1,5 @@
 class Token:   
-    def __init__(self, text="", name="", prefix="TOKEN_", value=-1):
+    def __init__(self, text="", name="", size=0, prefix="TOKEN_", value=-1):
         """ Create a new token with the printable value text, macro name name, and macro value value """
         # plain_text is the string that appears in re2c as well as the printable name during symbol lookup
         self.plain_text = text
@@ -7,6 +7,8 @@ class Token:
         self.macro_name = prefix + name
         # id is the value of the macro_name
         self.id         = value
+        # size is the maximum width in characters that this tokens value can be
+        self.size       = size
     
     def c_define(self):
         """ Return a string valid for use in a c header file """

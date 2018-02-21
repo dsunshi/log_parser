@@ -14,8 +14,9 @@ comment     = "//";
 
 //[[[cog
 //  import CogUtils as tools
-//  tools.create_token("colon",   "COLON")
-//  tools.create_token("dot",     "DOT")
-//  tools.create_token("comment", "COMMENT")
+//  tools.simple_token("colon")
+//  tools.simple_token("dot")
+//  tools.simple_token("comment")
+//  tools.simple_token("hyphen")
 //]]]
 //[[[end]]]
