@@ -47,8 +47,11 @@ def create_value_switch():
     
     for token in tokens:
         if token.size == 0:
-            cog.outl( "case %s:\n\treturn BLANK;\n\tbreak;" % token.macro_name )
-        else:
+            cog.outl( "case %s:" % token.macro_name )
+    cog.outl("\treturn BLANK;")
+    cog.outl("\tbreak;")
+    for token in tokens:
+        if token.size > 0:
             cog.outl( "case %s:" % token.macro_name )
             cog.outl( "\tassert(length <= %d);" % token.size )
             cog.outl( "\treturn create_str(input, length);\n\tbreak;" )
