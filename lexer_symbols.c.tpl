@@ -10,12 +10,12 @@ typedef struct
 
 static symbol_t LEXER_SYMBOL_TABLE[NUM_TOKENS] =
 {
-/*[[[cog
-import CogUtils as tools
+    /*[[[cog
+    import CogUtils as tools
 
-tools.create_table()
-]]]*/
-/*[[[end]]]*/
+    tools.create_table()
+    ]]]*/
+    /*[[[end]]]*/
 };
 
 
