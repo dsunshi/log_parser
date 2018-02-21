@@ -6,13 +6,16 @@
 %type fulltime            {  YYSTYPE  }
 %type time_and_date       {  YYSTYPE  }
 %type time                {  YYSTYPE  }
+%type channel             {  YYSTYPE  }
+%type error_status        {  YYSTYPE  }
+%destructor channel       { free($$); }
+%destructor error_status  { free($$); }
 %destructor fulltime      { free($$); }
 %destructor time_and_date { free($$); }
 %destructor time          { free($$); }
 
 %nonassoc WEEKDAY.
 %nonassoc MONTH.
-%nonassoc NUM.
 %nonassoc END.
 %nonassoc NEWLINE.
 %nonassoc DATE.
@@ -79,6 +82,7 @@ in  ::= in logging.
 in  ::= in version.
 in  ::= in begin_triggerblock.
 in  ::= in start_of_measurement.
+in  ::= in can_error_event.
 in  ::= in end_triggerblock.
 in  ::= in NEWLINE.
 in  ::= .
