@@ -4,19 +4,6 @@
 #include "lexer.h"
 #include "lexer_symbols.h"
 
-/*[[[cog
-import cog
-
-TOKEN_PREFIX = "TOKEN_"
-
-def ret_token(name, symbol, prefix=TOKEN_PREFIX):
-    cog.outl( "%s\t\t\t{ return %s%s; }"    % (name, prefix, symbol) )
-    
-def ret_string(name, symbol, prefix=TOKEN_PREFIX):
-    cog.outl( "\"%s\"\t\t\t{ return %s%s; }" % (name, prefix, symbol) )
-]]]*/
-/*[[[end]]]*/
-
 int lex(yyinput_t * input)
 {
 
@@ -38,8 +25,10 @@ int lex(yyinput_t * input)
             //  from Token import Token
             //
             //  tools.create_token("*", "UNKOWN")
-            //  ret_token("\"\\x00\"",  "exit_success(input)", prefix="")
+            //
+            //  cog.outl("%s\t\t\t{ return %s; }" % ("\"\\x00\"", "exit_success(input)"))
             //  tm.add(Token("end_of_input_stream", "END_OF_INPUT_STREAM"))
+            //
             //  cog.out("\n")
             //
             //  cog.out( tools.readfiles(["Header.re", "Month.re", "Numerals.re", "Punctuation.re", "Weekday.re"]) )
@@ -48,5 +37,15 @@ int lex(yyinput_t * input)
             //]]]
             //[[[end]]]
             
+            // If the above imports don't find a keyword than we've found an identifer.
+            identifier = [a-zA-Z_][a-zA-Z_0-9]*;
+            //[[[cog
+            //  import cog
+            //  import CogUtils as tools
+            //
+            //  tools.create_token("identifier", "IDENTIFIER", 256)
+            //
+            //]]]
+            //[[[end]]]
         */
 }
