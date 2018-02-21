@@ -7,7 +7,8 @@ messung     = "Messung";
 
 // CAN Events
 can         = "CAN";
-can_fd      = "CANFD";
+can_fd      = "CAN FD";
+canfd       = "CANFD";
 rx          = "rx";
 status      = "status" | "Status";
 
@@ -38,5 +39,6 @@ active      = "active";
 //  tools.simple_token("level")
 //  tools.simple_token("active")
 //  tools.simple_token("can_fd")
+//  tools.simple_token("canfd")
 //]]]
 //[[[end]]]
