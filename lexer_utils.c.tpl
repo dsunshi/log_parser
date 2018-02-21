@@ -71,53 +71,12 @@ YYSTYPE get_token_value(yyinput_t * input, tok_t token)
     
     switch( token )
     {
-        /* Whitespace or control characters */
-        case TOKEN_NEWLINE:
-        case TOKEN_SPACE:
-        case TOKEN_END_OF_INPUT_STREAM:
-        /* Punctuation */
-        case TOKEN_COLON:
-        case TOKEN_COMMENT:
-        /* Symbols (value doesn't matter) */
-        case TOKEN_AM:
-        case TOKEN_PM:
-        case TOKEN_DATE:
-        case TOKEN_DOT:
-        case TOKEN_BASE:
-        case TOKEN_TIMESTAMPS:
-        case TOKEN_DECIMAL:
-        case TOKEN_HEXADECIMAL:
-        case TOKEN_ABSOLUTE:
-        case TOKEN_RELATIVE:
-        case TOKEN_NO:
-        case TOKEN_INTERNAL:
-        case TOKEN_EVENTS:
-        case TOKEN_LOGGED:
-        case TOKEN_VERSION:
-        case TOKEN_BEGIN:
-        case TOKEN_END:
-        case TOKEN_TRIGGERBLOCK:
-        case TOKEN_START:
-        case TOKEN_OF:
-        case TOKEN_DER:
-        case TOKEN_MEASUREMENT:
-        case TOKEN_MESSUNG:
-            return BLANK;
-            break;
-        /* Weekday - exactly 3 characters */
-        case TOKEN_WEEKDAY:
-            assert(length == 3);
-            return create_str(input, length);
-            break;
-        /* Month - exactly 3 characters */
-        case TOKEN_MONTH:
-            assert(length == 3);
-            return create_str(input, length);
-            break;
-        case TOKEN_DEC:
-            assert(length < 10); /* based on 32-bit decimal */
-            return create_str(input, length);
-            break;
+        /*[[[cog
+        import CogUtils as tools
+
+        tools.create_value_switch()
+        ]]]*/
+        /*[[[end]]]*/
         default:
 #ifndef NDEBUG
             fprintf(stderr, "Unkown token value: %s(%d)!\n", get_token_name(token), token);
