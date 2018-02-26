@@ -33,6 +33,9 @@ lemon.exe: lemon_tool_src/lemon.c
 clean:
 	rm -rf *.o *.pyc lexer.c logilizer.exe lexer.c.re tokens.dat lexer.c.tpl.0 lexer_symbols.h lexer_symbols.c parser.c parser.y parser.out parser.h parser.err log.txt lexer_utils.c
 
+debug:
+	gdb -ex=r --args logilizer.exe -i samples/MIXED.txt
+
 lextest: logilizer  
 	logilizer samples/BASE_TS_00.txt
 	logilizer samples/BEGIN_TRIGGER_00.txt
@@ -56,4 +59,4 @@ lextest: logilizer
 	logilizer samples/WATERMARK_00.txt
 	logilizer samples/WATERMARK_01.txt
 
-.PHONY: all clean lextest
+.PHONY: all clean lextest debug
