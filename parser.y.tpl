@@ -41,7 +41,7 @@
     int i;
     
     fprintf(stderr, "Syntax Error!\n");
-    
+#ifndef NDEBUG
     n = sizeof(yyTokenName) / sizeof(yyTokenName[0]);
     
     fprintf(stderr, "Expected: ");
@@ -61,6 +61,7 @@
             
     }
     fprintf(stderr, "\n");
+#endif
     //exit(-1);
 }
 
