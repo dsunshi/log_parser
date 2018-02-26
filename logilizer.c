@@ -94,7 +94,10 @@ void logilizer_destroy(logilizer_t * self)
 #ifndef NDEBUG
     fclose(self->parser_error_file);
 #endif
-    ParseFree(self->parser, free);
+    if (self->parser != NULL)
+    {
+        ParseFree(self->parser, free);
+    }
     lexer_destroy(self->lexer);
     free(self);
 }
