@@ -6,22 +6,22 @@ logilizer: lexer_utils.c lexer.c main.c lexer_symbols.h lexer_symbols.c parser.c
 lexer.c.re: lexer.c.tpl.0
 	python -m cogapp -d -o lexer.c.re lexer.c.tpl.0
 
-lexer.c.tpl.0: lexer.c.tpl Header.re Month.re Numerals.re Punctuation.re Weekday.re Whitespace.re
+lexer.c.tpl.0: lexer.c.tpl ./regex/*.re
 	python -m cogapp -d -o lexer.c.tpl.0 lexer.c.tpl
 
 lexer.c: lexer.c.re 
 	re2c -W -Werror --utf-8 -o lexer.c lexer.c.re
 
-lexer_symbols.h: lexer_symbols.h.tpl Header.re Month.re Numerals.re Punctuation.re Weekday.re Whitespace.re parser.c lexer.c
+lexer_symbols.h: lexer_symbols.h.tpl ./regex/*.re parser.c lexer.c
 	python -m cogapp -d -o lexer_symbols.h lexer_symbols.h.tpl
 
-lexer_symbols.c: lexer_symbols.c.tpl Header.re Month.re Numerals.re Punctuation.re Weekday.re Whitespace.re parser.c lexer.c
+lexer_symbols.c: lexer_symbols.c.tpl ./regex/*.re parser.c lexer.c
 	python -m cogapp -d -o lexer_symbols.c lexer_symbols.c.tpl
 
 lexer_utils.c: lexer_utils.c.tpl lexer_symbols.c lexer_symbols.h
 	python -m cogapp -d -o lexer_utils.c lexer_utils.c.tpl
 
-parser.y: parser.y.tpl date.y
+parser.y: parser.y.tpl ./grammar/*.y
 	python -m cogapp -d -o parser.y parser.y.tpl
 
 parser.c: parser.y lempar.c lemon.exe

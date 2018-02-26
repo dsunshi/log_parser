@@ -6,9 +6,15 @@ import operator
 from Token import Token
 import TokenManager as tm
 
+include_dirs = [".", "regex", "grammar"]
+
 def readfile(filename):
     text = ""
-    file = open(filename, "r")
+    for include_dir in include_dirs:
+        try:
+            file = open(os.path.join(include_dir, filename), "r")
+        except IOError:
+            pass
     text = file.read()
     file.close()
     return text
