@@ -38,12 +38,14 @@ typedef struct input
 #define LEXER_FILL_ERROR (-1)
 #define LEXER_EXIT_ERROR (-2)
 
+#define VALID_TOKEN(token)  (token > 0)
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-yyinput_t * create_lexer(FILE * file, const size_t size, const size_t maxfill);
-void destroy_lexer(yyinput_t * lexer);
+yyinput_t * lexer_new(FILE * file, const size_t size, const size_t maxfill);
+void lexer_destroy(yyinput_t * lexer);
 
 bool fill(yyinput_t * input, const size_t need);
 

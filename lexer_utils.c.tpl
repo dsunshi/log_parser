@@ -21,7 +21,7 @@ static inline YYSTYPE create_str(yyinput_t * input, size_t length)
 }
 
 /* Create a lexer for the provided file */
-yyinput_t * create_lexer(FILE * file, const size_t size, const size_t maxfill)
+yyinput_t * lexer_new(FILE * file, const size_t size, const size_t maxfill)
 {
 	yyinput_t * input = NULL;
 
@@ -86,7 +86,7 @@ YYSTYPE get_token_value(yyinput_t * input, tok_t token)
     }
 }
 
-void destroy_lexer(yyinput_t * lexer)
+void lexer_destroy(yyinput_t * lexer)
 {
     free(lexer->buffer);
     free(lexer);

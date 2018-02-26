@@ -1,7 +1,7 @@
 all: logilizer
 
-logilizer: lexer_utils.c lexer.c main.c lexer_symbols.h lexer_symbols.c parser.c
-	gcc -Wall -Wextra -g -o logilizer lexer_utils.c lexer_symbols.c lexer.c main.c parser.c
+logilizer: lexer_utils.c lexer.c main.c lexer_symbols.h lexer_symbols.c parser.c ./logging/log.c ./argparse/argparse.c logilizer.c
+	gcc -Wall -Wextra -g -o logilizer -I./argparse -I./logging lexer_utils.c lexer_symbols.c lexer.c main.c parser.c ./logging/log.c ./argparse/argparse.c logilizer.c
 
 lexer.c.re: lexer.c.tpl.0
 	python -m cogapp -d -o lexer.c.re lexer.c.tpl.0
@@ -31,7 +31,7 @@ lemon.exe: lemon_tool_src/lemon.c
 	gcc -Wall -Wextra -g -o lemon lemon_tool_src/lemon.c
 
 clean:
-	rm -rf *.o *.pyc lexer.c logilizer.exe lexer.c.re tokens.dat lexer.c.tpl.0 lexer_symbols.h lexer_symbols.c parser.c parser.y parser.out parser.h parser.err
+	rm -rf *.o *.pyc lexer.c logilizer.exe lexer.c.re tokens.dat lexer.c.tpl.0 lexer_symbols.h lexer_symbols.c parser.c parser.y parser.out parser.h parser.err log.txt lexer_utils.c
 
 lextest: logilizer  
 	logilizer samples/BASE_TS_00.txt

@@ -1,63 +1,60 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "log.h"
+#include "logilizer.h"
+#include "argparse.h"
 #include "lexer.h"
 #include "lemon.h"
 #include "lemon_cfg.h"
 #include "lexer_symbols.h"
 
+static const char * const usage[] =
+{
+    "test_argparse [options] [[--] args]",
+    "test_argparse [options]",
+    NULL,
+};
+
+char * infile  = NULL;
+char * outfile = NULL;
+
+struct argparse_option options[] =
+{
+    OPT_HELP(),
+    OPT_GROUP("Basic options"),
+    OPT_STRING('i', "input",  &infile,  "Input log file"),
+    OPT_STRING('o', "output", &outfile, "Output file"),
+    OPT_END(),
+};
+
 int main(int argc, char **argv)
 {
 
-    yyinput_t * input = NULL;
-    YYSTYPE yylval;
-    void * pParser;
-    ParserState state;
+    struct argparse argparse;
+    logilizer_t * log;
     
-    FILE * err;
-
-    tok_t token;
-
-    if (argc > 1)
+    argparse_init(&argparse, options, usage, 0);
+    argparse_describe(&argparse, "\nA brief description of what the program does and how it works.",
+        "\nAdditional description of the program after the description of the arguments.");
+    argc = argparse_parse(&argparse, argc, argv);
+    
+    log_set_fp(fopen("log.txt", "w"));
+    log_set_quiet(1);
+    
+    if (outfile != NULL)
     {
-        input   = create_lexer(fopen(argv[1], "r"), 4096, YYMAXFILL);
-        pParser = ParseAlloc(malloc);
-//        yylval.buffer = (char *) malloc( sizeof(char) * 120 );
-        err = fopen("parser.err", "w");
-        printf("-------------------------------------------------\n");
-        printf("| FILE: %s\n", argv[1]);
-        printf("-------------------------------------------------\n");
-        do
-        {
-            token = lex(input);
-            //printf("%d ", token);
-            yylval = get_token_value(input, token);
-            //printf("token value: %s ", yylval.buffer);
-            //printf("%s(%d) ", get_token_name(token), token);
-            if (token > 0)
-            {
-                /* Only pass valid tokens to the parser - this provides a smoother exit */
-                Parse(pParser, token, yylval, &state);
-                ParseTrace(err, "");
-            }   
-        } while ((token > 0) && (token != TOKEN_END_OF_INPUT_STREAM));
-         
-        /* A value of 0 for the second argument is a special flag to the parser to
-           indicate that the end of input has been reached.
-         */
-        Parse(pParser, 0, yylval, &state);
-         
-        ParseFree(pParser, free);
-        destroy_lexer(input);
-        
-        printf("-------------------------------------------------\n");
-        printf("|                      EOF                       |\n");
-        printf("-------------------------------------------------\n");
+        log = logilizer_new(infile, outfile);
     }
     else
     {
-        printf("no file provided!\n");
+        log = logilizer_new(infile, "");
     }
+    
+    logilizer_resolve(log);
+    
+    logilizer_destroy(log);
     
     return 0;
 }
