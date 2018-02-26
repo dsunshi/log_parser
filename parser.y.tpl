@@ -29,22 +29,25 @@
 %extra_argument { ParserState *state }
 
 %include {
-#include "stdio.h"
 #include "lemon_cfg.h"
+#include "log.h"
 /* yy_pop_parser_stack requires assert */
-#include "assert.h"
-#include "stdlib.h"
+//#include <assert.h>
+#define assert(x) ((void)0)
+#include <stdio.h>
+#include <stdlib.h>
 }
 
 %syntax_error {
+    /* Clear the stack so we can shift in 'error's until a NEWLINE and hopefully recover */
+    while( yypParser->yytos>yypParser->yystack ) yy_pop_parser_stack(yypParser);
+#ifndef NDEBUG
     int n;
     int i;
-    
-    fprintf(stderr, "Syntax Error!\n");
-#ifndef NDEBUG
+  
     n = sizeof(yyTokenName) / sizeof(yyTokenName[0]);
     
-    fprintf(stderr, "Expected: ");
+    log_error("Expected: ");
     
     for (i = 0; i < n; i++)
     {
@@ -52,26 +55,25 @@
             
             if (a < YYNSTATE + YYNRULE)
             {
-                fprintf(stderr, "%s ", yyTokenName[i]);
+                log_error("%s ", yyTokenName[i]);
                 if ((i > 0) && (n > 1) && (i < (n-2)))
                 {
-                        fprintf(stderr, "or ");
+                        log_error("or ");
                 }
             }
             
     }
-    fprintf(stderr, "\n");
+    log_error("\n");
 #endif
-    //exit(-1);
+    log_error("Syntax Error!\n");
 }
 
 %parse_failure {
-    fprintf(stderr, "Giving up.  Parser is hopelessly lost...\n");
-    //exit(-1);
+    log_error("Giving up. Parser is hopelessly lost...\n");
 }
 
 %stack_overflow {
-    fprintf(stderr, "Giving up.  Parser stack overflow\n");
+    log_error("Giving up. Stack overflow\n");
 }
 
 %start_symbol log
@@ -86,6 +88,7 @@ in  ::= in start_of_measurement.
 in  ::= in can_error_event.
 in  ::= in end_triggerblock.
 in  ::= in NEWLINE.
+in  ::= error NEWLINE.
 in  ::= .
 
 /*[[[cog
