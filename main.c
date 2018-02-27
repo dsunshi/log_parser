@@ -24,12 +24,12 @@ struct argparse_option options[] =
 {
     OPT_HELP(),
     OPT_GROUP("Basic options"),
-    OPT_STRING('i', "input",  &infile,  "Input log file"),
-    OPT_STRING('o', "output", &outfile, "Output file"),
+    OPT_STRING('i', "input",  &infile,  "Input log file", NULL, 0, 0),
+    OPT_STRING('o', "output", &outfile, "Output file", NULL, 0, 0),
     OPT_END(),
 };
 
-int main(int argc, char **argv)
+int main(int argc, const char **argv)
 {
 
     struct argparse argparse;
