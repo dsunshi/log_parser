@@ -14,8 +14,6 @@
 #include "lemon_cfg.h"
 #include "lexer_symbols.h"
 
-
-
 /* Lexer */
 #define CACHE_SIZE              8192
 #define STILL_LEXING(token)     (VALID_TOKEN(token) && (token != TOKEN_END_OF_INPUT_STREAM))
@@ -74,7 +72,10 @@ logilizer_t * logilizer_new(char * infile, char * outfile)
                 }
                 
                 assert(fp != NULL);
+                self->output = fp;
             }
+            
+            self->state.output = self->output;
         }
     }
     else
@@ -94,6 +95,8 @@ void logilizer_destroy(logilizer_t * self)
 #ifndef NDEBUG
     fclose(self->parser_error_file);
 #endif
+    fclose(self->output);
+    
     if (self->parser != NULL)
     {
         ParseFree(self->parser, free);

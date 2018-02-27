@@ -3,15 +3,15 @@
 
 begin_triggerblock ::= BEGIN SPACE TRIGGERBLOCK.
 {
-    printf("Begin Triggerblock\n");
+    fprintf(state->output, "Begin Triggerblock\n");
 }
 
 begin_triggerblock ::= BEGIN SPACE TRIGGERBLOCK SPACE time_and_date(TD).
 {
-    printf("Begin Triggerblock %s\n", TD);
+    fprintf(state->output, "Begin Triggerblock %s\n", TD);
 }
 
 end_triggerblock ::= END SPACE TRIGGERBLOCK.
 {
-    printf("End TriggerBlock\n");
+    fprintf(state->output, "End TriggerBlock\n");
 }

@@ -5,7 +5,7 @@
 date ::= DATE SPACE time_and_date(TD).
 {
     /* Date line */
-    printf("date %s\n", TD);
+    fprintf(state->output, "date %s\n", TD);
 }
 
 time_and_date(TD) ::= WEEKDAY(weekday) SPACE MONTH(month) SPACE DEC(day_of_month) SPACE fulltime(timestamp) DEC(year).

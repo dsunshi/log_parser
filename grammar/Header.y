@@ -16,35 +16,35 @@
 
 base ::= BASE SPACE HEXADECIMAL. 
 {
-    printf("base hex ");
+    fprintf(state->output, "base hex ");
 }
 
 base ::= BASE SPACE DECIMAL. 
 {
-    printf("base dec ");
+    fprintf(state->output, "base dec ");
 }
 
 timestamps ::= TIMESTAMPS SPACE ABSOLUTE.
 {
-    printf("timestamps absolute\n");
+    fprintf(state->output, "timestamps absolute\n");
 }
 
 timestamps ::= TIMESTAMPS SPACE RELATIVE.
 {
-    printf("timestamps relative\n");
+    fprintf(state->output, "timestamps relative\n");
 }
 
 logging ::= NO SPACE INTERNAL SPACE EVENTS SPACE LOGGED.
 {
-    printf("no internal events logged\n");
+    fprintf(state->output, "no internal events logged\n");
 }
 
 logging ::= INTERNAL SPACE EVENTS SPACE LOGGED.
 {
-    printf("internal events logged\n");
+    fprintf(state->output, "internal events logged\n");
 }
 
 version ::= COMMENT SPACE VERSION SPACE DEC(major) DOT DEC(minor) DOT DEC(patch).
 {
-    printf("// version %s.%s.%s\n", major, minor, patch);
+    fprintf(state->output, "// version %s.%s.%s\n", major, minor, patch);
 }

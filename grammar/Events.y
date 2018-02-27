@@ -28,12 +28,12 @@ channel(C) ::= CAN_FD SPACE DEC(id).
 
 start_of_measurement ::= time(T) SPACE START SPACE OF SPACE MEASUREMENT.
 {
-    printf("%s Start of measurement\n", T);
+    fprintf(state->output, "%s Start of measurement\n", T);
 }
 
 start_of_measurement ::= time(T) SPACE START SPACE DER SPACE MESSUNG.
 {
-    printf("%s Start der Messung\n", T);
+    fprintf(state->output, "%s Start der Messung\n", T);
 }
 
 /* CAN Error Event
@@ -46,12 +46,12 @@ start_of_measurement ::= time(T) SPACE START SPACE DER SPACE MESSUNG.
  */
 can_error_event ::= time(T) SPACE channel(C) SPACE STATUS COLON error_status(E).
 {
-    printf("%s %s Status:%s\n", T, C, E);
+    fprintf(state->output, "%s %s Status:%s\n", T, C, E);
 }
 
 can_error_event ::= time(T) SPACE channel(C) SPACE STATUS COLON error_status(E) SPACE HYPHEN SPACE TXERR COLON SPACE DEC(txcount) SPACE RXERR COLON SPACE DEC(rxcount).
 {
-    printf("%s %s Status:%s - TxErr: %s RxErr: %s\n", T, C, E, txcount, rxcount);
+    fprintf(state->output, "%s %s Status:%s - TxErr: %s RxErr: %s\n", T, C, E, txcount, rxcount);
 }
 
 /* The prefered name would be just "error", but it is used by lemon, so... */
