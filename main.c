@@ -43,18 +43,24 @@ int main(int argc, const char **argv)
     log_set_fp(fopen("log.txt", "w"));
     log_set_quiet(1);
     
-    if (outfile != NULL)
+    if (infile == NULL)
     {
-        log = logilizer_new(infile, outfile);
     }
     else
     {
-        log = logilizer_new(infile, "");
+        if (outfile != NULL)
+        {
+            log = logilizer_new(infile, outfile);
+        }
+        else
+        {
+            log = logilizer_new(infile, "");
+        }
+    
+        logilizer_resolve(log);
+        
+        logilizer_destroy(log);
     }
-    
-    logilizer_resolve(log);
-    
-    logilizer_destroy(log);
     
     return 0;
 }
