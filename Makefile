@@ -1,7 +1,7 @@
 all: logilizer
 
 logilizer: lexer_utils.c lexer.c main.c lexer_symbols.h lexer_symbols.c parser.c ./logging/log.c ./argparse/argparse.c logilizer.c
-	gcc -Wall -Wextra -g -o logilizer -I./argparse -I./logging lexer_utils.c lexer_symbols.c lexer.c main.c parser.c ./logging/log.c ./argparse/argparse.c logilizer.c
+	gcc -Wall -Wextra -ansi -std=c99 -g -o logilizer -I./argparse -I./logging lexer_utils.c lexer_symbols.c lexer.c main.c parser.c ./logging/log.c ./argparse/argparse.c logilizer.c
 
 lexer.c.re: lexer.c.tpl.0
 	python -m cogapp -d -o lexer.c.re lexer.c.tpl.0
