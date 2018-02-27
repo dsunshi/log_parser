@@ -34,11 +34,14 @@
 /* yy_pop_parser_stack requires assert */
 //#include <assert.h>
 #define assert(x) ((void)0)
+#define UNUSED(x) (void)(x)
 #include <stdio.h>
 #include <stdlib.h>
 }
 
 %syntax_error {
+    UNUSED(yymajor);
+    UNUSED(yyminor);
     /* Clear the stack so we can shift in 'error's until a NEWLINE and hopefully recover */
     while( yypParser->yytos>yypParser->yystack ) yy_pop_parser_stack(yypParser);
 #ifndef NDEBUG
