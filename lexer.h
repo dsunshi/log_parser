@@ -53,6 +53,8 @@ tok_t   lex(yyinput_t * input);
 YYSTYPE get_token_value(yyinput_t * input, tok_t token);
 tok_t   exit_success(yyinput_t * input);
 
+void free_token(YYSTYPE token);
+
 #ifdef __cplusplus
 } /* extern "C" */
 #endif

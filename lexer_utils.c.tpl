@@ -20,6 +20,18 @@ static inline YYSTYPE create_str(yyinput_t * input, size_t length)
     return output;
 }
 
+void free_token(YYSTYPE token)
+{
+    if (token == BLANK)
+    {
+        /* We don't want to call free on the static memory BLANK, so do nothing. */
+    }
+    else
+    {
+        free(token);
+    }
+}
+
 /* Create a lexer for the provided file */
 yyinput_t * lexer_new(FILE * file, const size_t size, const size_t maxfill)
 {

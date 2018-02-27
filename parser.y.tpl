@@ -1,7 +1,7 @@
 %token_prefix TOKEN_
 
-%token_type       {  YYSTYPE  }
-%token_destructor { free($$); }
+%token_type       {     YYSTYPE     }
+%token_destructor { free_token($$); }
 
 %type fulltime            {  YYSTYPE  }
 %type time_and_date       {  YYSTYPE  }
@@ -31,6 +31,7 @@
 %include {
 #include "lemon_cfg.h"
 #include "log.h"
+#include "lexer.h"
 /* yy_pop_parser_stack requires assert */
 //#include <assert.h>
 #define assert(x) ((void)0)
