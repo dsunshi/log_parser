@@ -1,11 +1,11 @@
 - [ ] Clean up Makefile
 - [ ] Add relationship betwen test and "normal" Makefile
-- [ ] Develop strategy for allocating/deallocating memory for token values
+- [x] Develop strategy for allocating/deallocating memory for token values
 - [ ] Write description of build process
 - [ ] Cleanup printing of %syntax_error (trailing "or")
 - [ ] Cleanup generation of lexer symbol table (trailing ",")
-- [ ] Fix warnings
+- [x] Fix warnings
 - [ ] Code cleanup (names) and comments
 - [ ] Datatypes for events in log
-- [ ] Ensure lemon does not try to free() BLANK token
-- [ ] Auto-generate get_token_value, and create corresponding free_token_value
+- [x] Ensure lemon does not try to free() BLANK token
+- [x] Auto-generate get_token_value, and create corresponding free_token_value
