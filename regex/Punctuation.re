@@ -6,7 +6,7 @@ colon       = ":";
 dot         = ".";
 comma       = ",";
 rparen      = ")";
-lparent     = "(";
+lparen      = "(";
 exclamation = "!";
 percent     = "%";
 hyphen      = "-";
@@ -19,5 +19,7 @@ comment     = "//";
 //  tools.simple_token("comment")
 //  tools.simple_token("hyphen")
 //  tools.simple_token("percent")
+//  tools.simple_token("lparen")
+//  tools.simple_token("rparen")
 //]]]
 //[[[end]]]

@@ -121,4 +121,20 @@ error_status(E) ::= CHIP STATUS SPACE ERROR SPACE ACTIVE.
 can_statistic_event ::= time(T) SPACE channel(C) STATISTIC COLON SPACE D SPACE DEC(num_d) SPACE R SPACE DEC(num_r) SPACE XD SPACE DEC(num_xd) SPACE XR SPACE DEC(num_xr) SPACE E SPACE DEC(num_e) SPACE O SPACE DEC(num_o) SPACE B SPACE DEC(p0) DOT DEC(p1) PERCENT.
 {
     fprintf(state->output, "%s %s Statistic: D %s R %s XD %s XR %s E %s O %s B %s.%s\%\n", T, C, num_d, num_r, num_xd, num_xr, num_e, num_o, p0, p1);
-} 
+}
+
+/* Log and Trigger Events */
+log_trigger_event ::= time(T) SPACE LOG TRIGGER EVENT.
+{
+    fprintf(state->output, "%s log trigger event\n", T);
+}
+
+log_direct_event ::= time(T) SPACE LOG SPACE DIRECT SPACE START SPACE LPAREN DEC(pretrigger) MS RPAREN.
+{
+    fprintf(state->output, "%s log direct start (%sms)\n", T, pretrigger);
+}
+
+log_direct_event ::= time(T) SPACE LOG SPACE DIRECT SPACE STOP SPACE LPAREN DEC(pretrigger) MS RPAREN.
+{
+    fprintf(state->output, "%s log direct stop (%sms)\n", T, pretrigger);
+}

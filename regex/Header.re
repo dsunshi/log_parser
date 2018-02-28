@@ -52,7 +52,7 @@ triggerblock = "TriggerBlock" | "Triggerblock";
 //  tools.simple_token("logged")
 //  tools.simple_token("version")
 //  #tools.simple_token("previous")
-//  #tools.simple_token("log")
+//  tools.simple_token("log")
 //  #tools.simple_token("file")
 //  tools.simple_token("begin")
 //  tools.simple_token("end")

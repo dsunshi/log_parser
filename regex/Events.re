@@ -1,5 +1,5 @@
 // Start of measurement | Start der Messung
-start       = "Start";
+start       = "Start" | "start"; // lowercase for log events
 of          = "of";
 der         = "der";
 measurement = "measurement";
@@ -34,6 +34,13 @@ e           = "E";
 o           = "O";
 b           = "B";
 
+// Log and Trigger Events
+ms          = "ms";
+trigger     = "trigger";
+event       = "event";
+stop        = "stop";
+direct      = "direct";
+
 //[[[cog
 //  import CogUtils as tools
 //  tools.simple_token("start")
@@ -63,5 +70,10 @@ b           = "B";
 //  tools.simple_token("e")
 //  tools.simple_token("o")
 //  tools.simple_token("b")
+//  tools.simple_token("ms")
+//  tools.simple_token("trigger")
+//  tools.simple_token("event")
+//  tools.simple_token("stop")
+//  tools.simple_token("direct")
 //]]]
 //[[[end]]]
