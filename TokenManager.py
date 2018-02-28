@@ -8,6 +8,12 @@ from Token import Token
 TOKEN_FILE  = "tokens.dat"
 PARSER_FILE = "parser.h"
 
+# Special lexer tokens that should NOT generate a warning
+no_lexer_only_warn = ["*"]
+
+# Special lexer tokens that should NOT warn about being a hexadecimal number
+no_lexer_hex_warn = ["D"]
+
 # Function only to read the token data
 def read_tokens():
     with open(TOKEN_FILE, "rb") as token_file:
@@ -63,13 +69,15 @@ def update_values():
             token.id = parser_tokens[token.macro_name]
         except KeyError as e:
             # This token is only defined by the lexer
-            print "** Warning:\ttoken %s is only defined by the LEXER!" % token.plain_text
+            if token.plain_text not in no_lexer_only_warn:
+                print "** Warning:\ttoken %s is only defined by the LEXER!" % token.plain_text
             token.id = -1
     # 2. Create new values for lexer only tokens
     for token in lexer_tokens:
         try:
             hex = int(token.plain_text, 16)
-            print "** Warning:\ttoken %s is valid hexadecimal number!" % token.plain_text
+            if token.plain_text not in no_lexer_hex_warn:
+                print "** Warning:\ttoken %s is valid hexadecimal number!" % token.plain_text
         except ValueError as e:
             pass
         if token.id < 0:
