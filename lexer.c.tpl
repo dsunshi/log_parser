@@ -8,7 +8,6 @@ int lex(yyinput_t * input)
 {
 
         input->token = input->cursor;
-        //printf("cursor: |%s|\n", input->cursor);
 
         /*!re2c
             re2c:define:YYCTYPE      = iutf8_t;
