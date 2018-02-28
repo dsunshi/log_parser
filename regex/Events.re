@@ -11,7 +11,8 @@ can_fd      = "CAN FD";
 canfd       = "CANFD";
 rx          = "rx";
 // TODO: This is a hack to resolve parser conflicts.
-status      = " status" | " Status";
+status      = [ ]+ "status" | [ ]+ "Status";
+statistic   = [ ]+ "Statistic";
 
 // CAN Error Event
 txerr       = "TxErr";
@@ -21,6 +22,17 @@ error       = "error";
 warning     = "warning";
 level       = "level";
 active      = "active";
+queue       = "queue";
+overrun     = "overrun";
+
+// CAN Bus Statistics
+d           = "D";
+r           = "R";
+xd          = "XD";
+xr          = "XR";
+e           = "E";
+o           = "O";
+b           = "B";
 
 //[[[cog
 //  import CogUtils as tools
@@ -40,6 +52,16 @@ active      = "active";
 //  tools.simple_token("level")
 //  tools.simple_token("active")
 //  tools.simple_token("can_fd")
-//  tools.simple_token("canfd")
+//  #tools.simple_token("canfd")
+//  tools.simple_token("statistic")
+//  tools.simple_token("queue")
+//  tools.simple_token("overrun")
+//  tools.simple_token("d")
+//  tools.simple_token("r")
+//  tools.simple_token("xd")
+//  tools.simple_token("xr")
+//  tools.simple_token("e")
+//  tools.simple_token("o")
+//  tools.simple_token("b")
 //]]]
 //[[[end]]]

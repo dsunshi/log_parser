@@ -24,24 +24,28 @@ channel(C) ::= CAN SPACE DEC(id).
 {
     C = (char *) malloc( sizeof(char) * 8);
     snprintf(C, 8, "CAN %s", id);
+    log_trace("Channel: %s\n", C);
 }
 
 channel(C) ::= CAN_FD SPACE DEC(id).
 {
     C = (char *) malloc( sizeof(char) * 11);
     snprintf(C, 11, "CANFD %s", id);
+    log_trace("Channel: %s\n", C);
 }
 
 channel(C) ::= DEC(id).
 {
     C = (char *) malloc( sizeof(char) * 4);
     snprintf(C, 4, "%s", id);
+    log_trace("Channel: %s\n", C);
 }
 
 channel(C) ::= channel_name(name).
 {
     C = (char *) malloc( sizeof(char) * 256);
     snprintf(C, 256, "%s", name);
+    log_trace("Channel: %s\n", C);
 }
 
 channel_name(name) ::= IDENTIFIER(existing).
@@ -114,3 +118,7 @@ error_status(E) ::= CHIP STATUS SPACE ERROR SPACE ACTIVE.
  *  - "B"  stands for Busload
  * Definition: <Time> <Channel> Statistic: D <StatNumber> R <StatNumber> XD <StatNumber> XR <StatNumber> E <StatNumber> O <StatNumber> B <StatPercent>%
  */
+can_statistic_event ::= time(T) SPACE channel(C) STATISTIC COLON SPACE D SPACE DEC(num_d) SPACE R SPACE DEC(num_r) SPACE XD SPACE DEC(num_xd) SPACE XR SPACE DEC(num_xr) SPACE E SPACE DEC(num_e) SPACE O SPACE DEC(num_o) SPACE B SPACE DEC(p0) DOT DEC(p1) PERCENT.
+{
+    fprintf(state->output, "%s %s Statistic: D %s R %s XD %s XR %s E %s O %s B %s.%s\%\n", T, C, num_d, num_r, num_xd, num_xr, num_e, num_o, p0, p1);
+} 

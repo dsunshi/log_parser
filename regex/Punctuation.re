@@ -18,5 +18,6 @@ comment     = "//";
 //  tools.simple_token("dot")
 //  tools.simple_token("comment")
 //  tools.simple_token("hyphen")
+//  tools.simple_token("percent")
 //]]]
 //[[[end]]]

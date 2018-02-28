@@ -31,8 +31,8 @@ int lex(yyinput_t * input)
             //
             //  cog.out("\n")
             //
-            //  cog.out( tools.readfiles(["Header.re", "Month.re", "Numerals.re", "Punctuation.re", "Weekday.re"]) )
-            //  cog.out( tools.readfiles(["Whitespace.re", "Events.re"]) )
+            //  cog.out( tools.readfiles(["Header.re", "Month.re", "Events.re", "Punctuation.re", "Weekday.re"]) )
+            //  cog.out( tools.readfiles(["Whitespace.re", "Numerals.re"]) )
             //
             //]]]
             //[[[end]]]

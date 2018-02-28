@@ -4,6 +4,7 @@
 %token_destructor  { free_token($$); }
 
 %fallback IDENTIFIER CAN.
+%fallback HEX D E B.
 
 %default_type       {  YYSTYPE  }
 %default_destructor { free($$); }
@@ -75,9 +76,22 @@ in  ::= in begin_triggerblock.
 in  ::= in start_of_measurement.
 in  ::= in can_error_event.
 in  ::= in end_triggerblock.
+in  ::= in can_statistic_event.
 in  ::= in NEWLINE.
 in  ::= error NEWLINE.
 in  ::= .
+
+//num(n) ::= DEC(d).
+//{
+//    n = (char *) malloc( sizeof(char) * strlen(d) );
+//    snprintf(n, strlen(d), "%s", d);
+//}
+//
+//num(n) ::= HEX(d).
+//{
+//    n = (char *) malloc( sizeof(char) * strlen(d) );
+//    snprintf(n, strlen(d), "%s", d);
+//}
 
 /*[[[cog
   import cog
