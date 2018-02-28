@@ -114,7 +114,7 @@ void logilizer_resolve(logilizer_t * self)
     {
         token  = lex(self->lexer);
         yylval = get_token_value(self->lexer, token);
-        log_trace("%s(%d) ", get_token_name(token), token);
+        log_trace("%s(%d): %s", get_token_name(token), token, yylval);
         
         if (VALID_TOKEN(token))
         {
