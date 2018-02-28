@@ -1,30 +1,14 @@
 %token_prefix TOKEN_
 
-%token_type       {     YYSTYPE     }
-%token_destructor { free_token($$); }
+%token_type        {     YYSTYPE     }
+%token_destructor  { free_token($$); }
 
-%type fulltime            {  YYSTYPE  }
-%type time_and_date       {  YYSTYPE  }
-%type time                {  YYSTYPE  }
-%type channel             {  YYSTYPE  }
-%type error_status        {  YYSTYPE  }
-%destructor channel       { free($$); }
-%destructor error_status  { free($$); }
-%destructor fulltime      { free($$); }
-%destructor time_and_date { free($$); }
-%destructor time          { free($$); }
+%fallback IDENTIFIER CAN.
 
-%nonassoc WEEKDAY.
-%nonassoc MONTH.
-%nonassoc END.
-%nonassoc NEWLINE.
-%nonassoc DATE.
-%nonassoc SPACE.
-%nonassoc DEC.
-%nonassoc COLON.
-%nonassoc DOT.
-%nonassoc AM.
-%nonassoc PM.
+%default_type       {  YYSTYPE  }
+%default_destructor { free($$); }
+
+%left SPACE.
 
 %extra_argument { ParserState *state }
 

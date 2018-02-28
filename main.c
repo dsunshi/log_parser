@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "log.h"
 #include "logilizer.h"
@@ -19,6 +20,7 @@ static const char * const usage[] =
 
 char * infile  = NULL;
 char * outfile = NULL;
+bool   verbose = false;
 
 struct argparse_option options[] =
 {
@@ -26,6 +28,7 @@ struct argparse_option options[] =
     OPT_GROUP("Basic options"),
     OPT_STRING('i', "input",  &infile,  "Input log file", NULL, 0, 0),
     OPT_STRING('o', "output", &outfile, "Output file", NULL, 0, 0),
+    OPT_BOOLEAN('v', "verbose", &verbose, "Verbose output", NULL, 0, 0),
     OPT_END(),
 };
 
@@ -41,7 +44,17 @@ int main(int argc, const char **argv)
     argc = argparse_parse(&argparse, argc, argv);
     
     log_set_fp(fopen("log.txt", "w"));
-    log_set_quiet(1);
+    
+    if (verbose != false)
+    {
+        /* print log to stdout */
+        log_set_quiet(0);
+    }
+    else
+    {
+        /* only print to the log file */
+        log_set_quiet(1);
+    }
     
     if (infile == NULL)
     {

@@ -10,7 +10,8 @@ can         = "CAN";
 can_fd      = "CAN FD";
 canfd       = "CANFD";
 rx          = "rx";
-status      = "status" | "Status";
+// TODO: This is a hack to resolve parser conflicts.
+status      = " status" | " Status";
 
 // CAN Error Event
 txerr       = "TxErr";
