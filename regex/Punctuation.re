@@ -21,5 +21,6 @@ comment     = "//";
 //  tools.simple_token("percent")
 //  tools.simple_token("lparen")
 //  tools.simple_token("rparen")
+//  tools.simple_token("equals")
 //]]]
 //[[[end]]]

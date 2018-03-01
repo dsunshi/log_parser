@@ -79,21 +79,22 @@ in  ::= in end_triggerblock.
 in  ::= in can_statistic_event.
 in  ::= in log_trigger_event.
 in  ::= in log_direct_event.
+in  ::= in can_message.
 in  ::= in NEWLINE.
 in  ::= error NEWLINE.
 in  ::= .
 
-//num(n) ::= DEC(d).
-//{
-//    n = (char *) malloc( sizeof(char) * strlen(d) );
-//    snprintf(n, strlen(d), "%s", d);
-//}
-//
-//num(n) ::= HEX(d).
-//{
-//    n = (char *) malloc( sizeof(char) * strlen(d) );
-//    snprintf(n, strlen(d), "%s", d);
-//}
+num(n) ::= DEC(d).
+{
+    n = (char *) malloc( sizeof(char) * strlen(d) );
+    snprintf(n, strlen(d), "%s", d);
+}
+
+num(n) ::= HEX(d).
+{
+    n = (char *) malloc( sizeof(char) * strlen(d) );
+    snprintf(n, strlen(d), "%s", d);
+}
 
 /*[[[cog
   import cog

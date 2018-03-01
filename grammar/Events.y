@@ -41,23 +41,11 @@ channel(C) ::= DEC(id).
     log_trace("Channel: %s\n", C);
 }
 
-channel(C) ::= channel_name(name).
+channel(C) ::= IDENTIFIER(name).
 {
     C = (char *) malloc( sizeof(char) * 256);
     snprintf(C, 256, "%s", name);
     log_trace("Channel: %s\n", C);
-}
-
-channel_name(name) ::= IDENTIFIER(existing).
-{
-    name = (char *) malloc( sizeof(char) * 256);
-    log_trace("existing: %s\n", existing);
-}
-
-channel_name(name) ::= channel_name(text) SPACE IDENTIFIER(existing).
-{
-    name = (char *) malloc( sizeof(char) * 256);
-    log_trace("existing: %s\ntext: %s\n", existing, text);
 }
 
 start_of_measurement ::= time(T) SPACE START SPACE OF SPACE MEASUREMENT.
@@ -78,18 +66,18 @@ start_of_measurement ::= time(T) SPACE START SPACE DER SPACE MESSUNG.
  *          rx queue overrun
  *          chip status error active
  */
-can_error_event ::= time(T) SPACE channel(C) STATUS COLON error_status(E).
+can_error_event ::= time(T) SPACE channel(C) SPACE STATUS COLON error_status(E).
 {
     fprintf(state->output, "%s %s Status:%s\n", T, C, E);
 }
 
-can_error_event ::= time(T) SPACE channel(C) STATUS COLON error_status(E) SPACE HYPHEN SPACE TXERR COLON SPACE DEC(txcount) SPACE RXERR COLON SPACE DEC(rxcount).
+can_error_event ::= time(T) SPACE channel(C) SPACE STATUS COLON error_status(E) SPACE HYPHEN SPACE TXERR COLON SPACE DEC(txcount) SPACE RXERR COLON SPACE DEC(rxcount).
 {
     fprintf(state->output, "%s %s Status:%s - TxErr: %s RxErr: %s\n", T, C, E, txcount, rxcount);
 }
 
 /* The prefered name would be just "error", but it is used by lemon, so... */
-error_status(E) ::= CHIP STATUS SPACE WARNING SPACE LEVEL.
+error_status(E) ::= CHIP SPACE STATUS SPACE WARNING SPACE LEVEL.
 {
     E = (char *) malloc( sizeof(char) * 30 );
     snprintf(E, 30, "chip status warning level");
@@ -101,7 +89,7 @@ error_status(E) ::= RX SPACE QUEUE SPACE OVERRUN.
     snprintf(E, 20, "rx queue overrun");
 }
 
-error_status(E) ::= CHIP STATUS SPACE ERROR SPACE ACTIVE.
+error_status(E) ::= CHIP SPACE STATUS SPACE ERROR SPACE ACTIVE.
 {
     E = (char *) malloc( sizeof(char) * 30 );
     snprintf(E, 30, "chip status error active");
@@ -118,7 +106,7 @@ error_status(E) ::= CHIP STATUS SPACE ERROR SPACE ACTIVE.
  *  - "B"  stands for Busload
  * Definition: <Time> <Channel> Statistic: D <StatNumber> R <StatNumber> XD <StatNumber> XR <StatNumber> E <StatNumber> O <StatNumber> B <StatPercent>%
  */
-can_statistic_event ::= time(T) SPACE channel(C) STATISTIC COLON SPACE D SPACE DEC(num_d) SPACE R SPACE DEC(num_r) SPACE XD SPACE DEC(num_xd) SPACE XR SPACE DEC(num_xr) SPACE E SPACE DEC(num_e) SPACE O SPACE DEC(num_o) SPACE B SPACE DEC(p0) DOT DEC(p1) PERCENT.
+can_statistic_event ::= time(T) SPACE channel(C) SPACE STATISTIC COLON SPACE D SPACE DEC(num_d) SPACE R SPACE DEC(num_r) SPACE XD SPACE DEC(num_xd) SPACE XR SPACE DEC(num_xr) SPACE E SPACE DEC(num_e) SPACE O SPACE DEC(num_o) SPACE B SPACE DEC(p0) DOT DEC(p1) PERCENT.
 {
     fprintf(state->output, "%s %s Statistic: D %s R %s XD %s XR %s E %s O %s B %s.%s\%\n", T, C, num_d, num_r, num_xd, num_xr, num_e, num_o, p0, p1);
 }
@@ -138,3 +126,41 @@ log_direct_event ::= time(T) SPACE LOG SPACE DIRECT SPACE STOP SPACE LPAREN DEC(
 {
     fprintf(state->output, "%s log direct stop (%sms)\n", T, pretrigger);
 }
+
+/* CAN Events on a Classic CAN bus */
+dx ::= num(byte_x).
+{
+    UNUSED(byte_x);
+}
+
+dx ::= dx(bytes) SPACE num(byte_x).
+{
+    UNUSED(byte_x);
+    UNUSED(bytes);
+}
+
+dir ::= RX. {}
+dir ::= TX. {}
+dir ::= TXRQ. {}
+
+can_message_data ::= time SPACE channel SPACE num SPACE dir SPACE D SPACE num SPACE dx.
+{
+}
+
+can_message_info ::= LENGTH SPACE EQUALS SPACE num SPACE BITCOUNT SPACE EQUALS SPACE num SPACE ID SPACE EQUALS SPACE num.
+{
+}
+
+can_message_info ::= LENGTH SPACE EQUALS SPACE num SPACE BITCOUNT SPACE EQUALS SPACE num.
+{
+}
+
+can_message ::= can_message_data.
+{
+}
+
+can_message ::= can_message_data SPACE can_message_info.
+{
+}
+
+

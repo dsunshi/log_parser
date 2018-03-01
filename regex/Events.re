@@ -9,10 +9,12 @@ messung     = "Messung";
 can         = "CAN";
 can_fd      = "CAN FD";
 canfd       = "CANFD";
-rx          = "rx";
-// TODO: This is a hack to resolve parser conflicts.
-status      = [ ]+ "status" | [ ]+ "Status";
-statistic   = [ ]+ "Statistic";
+rx          = "rx" | "Rx";
+tx          = "tx" | "Tx";
+txrq        = "TxRq";
+
+status      = "status" | "Status";
+statistic   = "Statistic";
 
 // CAN Error Event
 txerr       = "TxErr";
@@ -40,6 +42,11 @@ trigger     = "trigger";
 event       = "event";
 stop        = "stop";
 direct      = "direct";
+
+// CAN Message Events
+length      = "Length";
+bitcount    = "BitCount";
+id          = "ID";
 
 //[[[cog
 //  import CogUtils as tools
@@ -75,5 +82,10 @@ direct      = "direct";
 //  tools.simple_token("event")
 //  tools.simple_token("stop")
 //  tools.simple_token("direct")
+//  tools.simple_token("tx")
+//  tools.simple_token("txrq")
+//  tools.simple_token("length")
+//  tools.simple_token("bitcount")
+//  tools.simple_token("id")
 //]]]
 //[[[end]]]
