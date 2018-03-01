@@ -3,21 +3,21 @@ all: logilizer
 logilizer: main.o parser.o lexer_symbols.o log.o argparse.o logilizer.o lexer.o lexer_utils.o
 	gcc -Wall -Wextra -ansi -std=c99 -g -o logilizer  main.o parser.o lexer_symbols.o log.o argparse.o logilizer.o lexer.o lexer_utils.o
 
-main.o: main.c lexer_symbols.h argparse.o log.o logilizer.o
+main.o: main.c logging/log.h logilizer.h lemon_cfg.h lexer.h argparse/argparse.h lemon.h lexer_symbols.h
 	gcc -Wall -Wextra -ansi -std=c99 -g -c -I./logging/ -I./argparse/ main.c
-parser.o: parser.c
+parser.o: parser.c lemon_cfg.h logging/log.h lexer.h
 	gcc -Wall -Wextra -ansi -std=c99 -g -c -I./logging/ parser.c
-lexer_symbols.o: lexer_symbols.c
+lexer_symbols.o: lexer_symbols.c lexer.h lemon_cfg.h lexer_symbols.h
 	gcc -Wall -Wextra -ansi -std=c99 -g -c lexer_symbols.c
 log.o: ./logging/log.c
 	gcc -Wall -Wextra -ansi -std=c99 -g -c ./logging/log.c
 argparse.o: ./argparse/argparse.c
 	gcc -Wall -Wextra -ansi -std=c99 -g -c ./argparse/argparse.c
-logilizer.o: logilizer.c
+logilizer.o: logilizer.c logilizer.h lemon_cfg.h lexer.h logging/log.h lemon.h lexer_symbols.h
 	gcc -Wall -Wextra -ansi -std=c99 -g -c -I./logging/ logilizer.c
-lexer.o: lexer.c
+lexer.o: lexer.c lexer.h lemon_cfg.h lexer_symbols.h
 	gcc -Wall -Wextra -ansi -std=c99 -g -c lexer.c
-lexer_utils.o: lexer_utils.c
+lexer_utils.o: lexer_utils.c lexer.h lemon_cfg.h parser.h lexer_symbols.h
 	gcc -Wall -Wextra -ansi -std=c99 -g -c lexer_utils.c
     
 lexer.c.re: lexer.c.tpl.0
