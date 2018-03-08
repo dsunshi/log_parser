@@ -53,7 +53,7 @@ def create_token(name, symbol, size=0, action=""):
 
 def create_defines():
     tm.update_values()
-    tokens = tm.read_tokens()
+    tokens = sorted(tm.read_tokens())
     max_len = longest_macro(tokens) + 1
     
     for token in tokens:

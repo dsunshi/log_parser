@@ -38,10 +38,10 @@ class Token:
         return self.macro_name == other.macro_name
         
     def __cmp__(self, other):
-        return self.macro_name == other.macro_name
+        return self.id == other.id
     
     def __lt__(self, other):
-        return self.macro_name < other.macro_name
+        return self.id < other.id
         
     def __hash__(self):
         return hash(self.macro_name)
