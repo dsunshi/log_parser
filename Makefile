@@ -48,10 +48,18 @@ lemon.exe: lemon_tool_src/lemon.c
 	gcc -Wall -Wextra -g -o lemon lemon_tool_src/lemon.c
 
 clean:
-	rm -rf *.o *.pyc lexer.c logilizer.exe lexer.c.re tokens.dat lexer.c.tpl.0 lexer_symbols.h lexer_symbols.c parser.c parser.y parser.out parser.h parser.err log.txt lexer_utils.c
+	rm -rf *.o *.pyc lexer.c logilizer.exe lexer.c.re tokens.dat lexer.c.tpl.0 lexer_symbols.h lexer_symbols.c parser.c parser.y parser.out parser.h parser.err log.txt lexer_utils.c SplintReport.txt
 
 debug:
 	gdb -ex=r --args logilizer.exe -i samples/MIXED.txt
+
+lint:
+	-splint -I./logging/ -I./argparse/ -systemdirerrors -preproc main.c > SplintReport.txt
+	-splint -I./logging/ -I./argparse/ -systemdirerrors -preproc lexer_symbols.c >> SplintReport.txt
+	-splint -I./logging/ -I./argparse/ -systemdirerrors -preproc lexer_utils.c >> SplintReport.txt
+	-splint -I./logging/ -I./argparse/ -systemdirerrors -preproc parser.c >> SplintReport.txt
+	-splint -I./logging/ -I./argparse/ -systemdirerrors -preproc logilizer.c >> SplintReport.txt
+	-splint -I./logging/ -I./argparse/ -systemdirerrors -preproc lexer.c >> SplintReport.txt
 
 lextest: logilizer  
 	logilizer samples/BASE_TS_00.txt
@@ -76,4 +84,4 @@ lextest: logilizer
 	logilizer samples/WATERMARK_00.txt
 	logilizer samples/WATERMARK_01.txt
 
-.PHONY: all clean lextest debug
+.PHONY: all clean lextest debug lint

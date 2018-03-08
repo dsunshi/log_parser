@@ -3,7 +3,7 @@
 - [x] Develop strategy for allocating/deallocating memory for token values
 - [ ] Write description of build process
 - [ ] Cleanup printing of %syntax_error (trailing "or")
-- [ ] Cleanup generation of lexer symbol table (trailing ",")
+- [x] Cleanup generation of lexer symbol table (trailing ",")
 - [x] Fix warnings
 - [ ] Code cleanup (names) and comments
 - [ ] Datatypes for events in log
