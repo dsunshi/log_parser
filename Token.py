@@ -17,9 +17,9 @@ class Token:
         """ Return a string valid for use in a c header file """
         return "#define\t%s\t%s" % (self.macro_name, self.id)
         
-    def table_entry(self, last=False):
+    def table_entry(self, width=1, last=False):
         """ Return a string valid for inclusion in a c table """
-        entry = "    {\"%s\", %s}" % (self.plain_text, self.macro_name)
+        entry = "    {\"%s\",%s%s}" % (self.plain_text, " " * width, self.macro_name)
         if last is False:
             entry = entry + ","
         return entry

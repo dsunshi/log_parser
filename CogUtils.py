@@ -8,6 +8,13 @@ import TokenManager as tm
 
 include_dirs = [".", "regex", "grammar"]
 
+def longest_name(tokens):
+    length = -1
+    for token in tokens:
+        if len(token.plain_text) > length:
+            length = len(token.plain_text)
+    return length
+
 def readfile(filename):
     text = ""
     for include_dir in include_dirs:
@@ -47,9 +54,14 @@ def create_defines():
 
 def create_table():
     tokens = tm.read_tokens()
+    max_len = longest_name(tokens) + 1
     
-    for token in tokens:
-        cog.outl( token.table_entry() )
+    for index, token in enumerate(tokens):
+        width = max_len - len(token.plain_text)
+        if index != len(tokens) - 1:
+            cog.outl( token.table_entry(width, False) )
+        else:
+            cog.outl( token.table_entry(width, True) )
 
 def create_value_switch():
     tokens = tm.read_tokens()
