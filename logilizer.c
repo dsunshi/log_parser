@@ -110,6 +110,9 @@ void logilizer_resolve(logilizer_t * self)
     tok_t   token;
     YYSTYPE yylval;
     
+    /* Start with line 1 */
+    self->lexer->line = 1;
+    
     do
     {
         token  = lex(self->lexer);
@@ -130,4 +133,6 @@ void logilizer_resolve(logilizer_t * self)
        indicate that the end of input has been reached.
     */
     Parse(self->parser, 0, yylval, &(self->state));
+    
+    log_trace("Processed %d lines.", self->lexer->line);
 }

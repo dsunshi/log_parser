@@ -25,6 +25,7 @@ typedef struct input
     size_t    maxfill;     /* Additional padding bytes for the input string */
     int       state;       /* */
     FILE *    file;        /* File to lex */
+    size_t    line;        /* Line number in the file */
 } yyinput_t;
 
 /* Additional padding bytes for the input string.

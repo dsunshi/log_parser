@@ -28,10 +28,13 @@ def readfiles(filenames):
 
 def simple_token(name):
     create_token(name, name.upper())
+    
+def simple_action(name, action):
+    create_token(name, name.upper(), 0, action)
 
-def create_token(name, symbol, size=0):
+def create_token(name, symbol, size=0, action=""):
     token = Token(name, symbol, size)
-    cog.outl( token.re2c() )
+    cog.outl( token.re2c(action) )
     tm.add(token)
 
 def create_defines():

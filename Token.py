@@ -1,4 +1,7 @@
-class Token:   
+# desired column minus the number of tabs and spaces per tab
+COL_WIDTH = 33 - (3 * 4)
+
+class Token:
     def __init__(self, text="", name="", size=0, prefix="TOKEN_", value=-1):
         """ Create a new token with the printable value text, macro name name, and macro value value """
         # plain_text is the string that appears in re2c as well as the printable name during symbol lookup
@@ -21,8 +24,12 @@ class Token:
             entry = entry + ","
         return entry
     
-    def re2c(self):
-        return "%s\t\t\t\t\t{ return %s; }" % (self.plain_text, self.macro_name)
+    def re2c(self, action=""):
+        spaces = " " * (COL_WIDTH - len(self.plain_text))
+        if len(action) == 0:
+            return "%s%s{ return %s; }" % (self.plain_text, spaces, self.macro_name)
+        else:
+            return "%s%s{ %s; return %s; }" % (self.plain_text, spaces, action, self.macro_name)
     
     def __str__(self):
         return "{plain: %s, macro: %s, ID: %d}" % (self.plain_text, self.macro_name, self.id)
