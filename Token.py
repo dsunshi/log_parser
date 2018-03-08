@@ -13,9 +13,9 @@ class Token:
         # size is the maximum width in characters that this tokens value can be
         self.size       = size
     
-    def c_define(self):
+    def c_define(self, width=1):
         """ Return a string valid for use in a c header file """
-        return "#define\t%s\t%s" % (self.macro_name, self.id)
+        return "#define\t%s%s%s" % (self.macro_name, " " * width, self.id)
         
     def table_entry(self, width=1, last=False):
         """ Return a string valid for inclusion in a c table """

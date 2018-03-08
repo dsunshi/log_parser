@@ -15,6 +15,13 @@ def longest_name(tokens):
             length = len(token.plain_text)
     return length
 
+def longest_macro(tokens):
+    length = -1
+    for token in tokens:
+        if len(token.macro_name) > length:
+            length = len(token.macro_name)
+    return length
+
 def readfile(filename):
     text = ""
     for include_dir in include_dirs:
@@ -47,10 +54,12 @@ def create_token(name, symbol, size=0, action=""):
 def create_defines():
     tm.update_values()
     tokens = tm.read_tokens()
+    max_len = longest_macro(tokens) + 1
     
     for token in tokens:
-        cog.outl( token.c_define() )
-    cog.outl( "#define NUM_TOKENS %d" % len(tokens) )
+        width = max_len - len(token.macro_name)
+        cog.outl( token.c_define(width) )
+    cog.outl( "#define NUM_TOKENS%s%d" % (" " * (max_len - len("NUM_TOKENS")), len(tokens)) )
 
 def create_table():
     tokens = tm.read_tokens()
