@@ -139,28 +139,40 @@ dx ::= dx(bytes) SPACE num(byte_x).
     UNUSED(bytes);
 }
 
-dir ::= RX. {}
-dir ::= TX. {}
+dir ::= RX.   {}
+dir ::= TX.   {}
 dir ::= TXRQ. {}
 
-can_message_data ::= time SPACE channel SPACE num SPACE dir SPACE D SPACE num SPACE dx.
+can_message_data ::= time(T) SPACE channel(C) SPACE num(message_id) SPACE dir SPACE D SPACE num(dlc) SPACE dx.
 {
+    UNUSED(T);
+    UNUSED(C);
+    UNUSED(message_id);
+    UNUSED(dlc);
 }
 
-can_message_info ::= LENGTH SPACE EQUALS SPACE num SPACE BITCOUNT SPACE EQUALS SPACE num SPACE ID SPACE EQUALS SPACE num.
+can_message_info ::= LENGTH SPACE EQUALS SPACE num(message_duration) SPACE BITCOUNT SPACE EQUALS SPACE num(message_length) SPACE ID SPACE EQUALS SPACE num(id_num).
 {
+    UNUSED(message_duration);
+    UNUSED(message_length);
+    UNUSED(id_num);
 }
 
-can_message_info ::= LENGTH SPACE EQUALS SPACE num SPACE BITCOUNT SPACE EQUALS SPACE num.
+can_message_info ::= LENGTH SPACE EQUALS SPACE num(message_duration) SPACE BITCOUNT SPACE EQUALS SPACE num(message_length).
 {
+    UNUSED(message_duration);
+    UNUSED(message_length);
 }
 
-can_message ::= can_message_data.
+can_message ::= can_message_data(message_data).
 {
+    UNUSED(message_data);
 }
 
-can_message ::= can_message_data SPACE can_message_info.
+can_message ::= can_message_data(message_data) SPACE can_message_info(message_info).
 {
+    UNUSED(message_data);
+    UNUSED(message_info);
 }
 
 

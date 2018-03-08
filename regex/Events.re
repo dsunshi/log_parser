@@ -28,7 +28,7 @@ queue       = "queue";
 overrun     = "overrun";
 
 // CAN Bus Statistics
-d           = "D";
+d           = "D" | "d";
 r           = "R";
 xd          = "XD";
 xr          = "XR";
