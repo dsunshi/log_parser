@@ -2,10 +2,16 @@
 - [ ] Add relationship betwen test and "normal" Makefile
 - [x] Develop strategy for allocating/deallocating memory for token values
 - [ ] Write description of build process
-- [ ] Cleanup printing of %syntax_error (trailing "or")
+- [x] Cleanup printing of %syntax_error (trailing "or")
 - [x] Cleanup generation of lexer symbol table (trailing ",")
 - [x] Fix warnings
 - [ ] Code cleanup (names) and comments
 - [ ] Datatypes for events in log
 - [x] Ensure lemon does not try to free() BLANK token
 - [x] Auto-generate get_token_value, and create corresponding free_token_value
+- [ ] Base IDENTIFIER on parser state, so if IDENTIFIER is not allowed UNKOWN token is returned
+- [ ] Parser utils to help reduce code in grammar
+- [ ] Split grammar files into smaller files
+- [ ] Rename files to imporve relationship with functionality
+- [ ] debug and release make targets
+- [ ] #define for DEV_ERROR detection (extra checking not desired in release)
