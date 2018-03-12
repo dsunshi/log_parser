@@ -33,28 +33,51 @@
 #ifndef NDEBUG
     int n;
     int i;
+    int a;
+    int possible;
+    int encountered;
   
     n = sizeof(yyTokenName) / sizeof(yyTokenName[0]);
-    
-    log_error("Expected: ");
+    possible = 0;
     
     for (i = 0; i < n; i++)
     {
-            int a = yy_find_shift_action(yypParser, (YYCODETYPE)i);
+        a = yy_find_shift_action(yypParser, (YYCODETYPE) i);
+        
+        if (a < YYNSTATE + YYNRULE)
+        {
+            if ((i > 0) && (n > 1) && (i < (n-2)))
+            {
+                possible++;
+            }
+        }
+    }
+    
+    if (possible > 0)
+    {
+        encountered = 0;
+        log_error("Expected: ");
+    
+        for (i = 0; i < n; i++)
+        {
+            a = yy_find_shift_action(yypParser, (YYCODETYPE)i);
             
             if (a < YYNSTATE + YYNRULE)
             {
                 log_error("%s ", yyTokenName[i]);
-                if ((i > 0) && (n > 1) && (i < (n-2)))
+                
+                if (encountered < possible)
                 {
-                        log_error("or ");
+                    log_error("or ");
+                    encountered++;
                 }
             }
-            
+        }
+        
+        log_error("\n");
     }
-    log_error("\n");
 #endif
-    log_error("Syntax Error!\n");
+    log_error("Syntax Error on line: %d!\n", state->line);
 }
 
 %parse_failure {
@@ -88,6 +111,7 @@ num(n) ::= DEC(d).
 {
     n = (char *) malloc( sizeof(char) * strlen(d) );
     snprintf(n, strlen(d), "%s", d);
+    log_trace("num: ", d);
 }
 
 num(n) ::= HEX(d).
