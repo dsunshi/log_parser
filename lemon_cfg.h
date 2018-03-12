@@ -8,6 +8,7 @@ typedef char * YYSTYPE;
 typedef struct
 {
     FILE * output;
+    size_t line;
 } ParserState;
 
 #endif // LEMON_CFG_H_
