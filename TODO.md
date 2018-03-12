@@ -15,3 +15,4 @@
 - [ ] Rename files to imporve relationship with functionality
 - [ ] debug and release make targets
 - [ ] #define for DEV_ERROR detection (extra checking not desired in release)
+- [ ] new folder structure: src, include, templates
