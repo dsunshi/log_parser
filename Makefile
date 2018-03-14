@@ -5,45 +5,60 @@ logilizer: main.o parser.o lexer_symbols.o log.o argparse.o logilizer.o lexer.o 
 
 main.o: main.c logging/log.h logilizer.h lemon_cfg.h lexer.h argparse/argparse.h lemon.h lexer_symbols.h
 	gcc -Wall -Wextra -ansi -std=c99 -g -c -I./logging/ -I./argparse/ main.c
+
 parser.o: parser.c lemon_cfg.h logging/log.h lexer.h
 	gcc -Wall -Wextra -ansi -std=c99 -g -c -I./logging/ parser.c
+
 lexer_symbols.o: lexer_symbols.c lexer.h lemon_cfg.h lexer_symbols.h
 	gcc -Wall -Wextra -ansi -std=c99 -g -c lexer_symbols.c
+
 log.o: ./logging/log.c
 	gcc -Wall -Wextra -ansi -std=c99 -g -c ./logging/log.c
+
 argparse.o: ./argparse/argparse.c
 	gcc -Wall -Wextra -ansi -std=c99 -g -c ./argparse/argparse.c
+
 logilizer.o: logilizer.c logilizer.h lemon_cfg.h lexer.h logging/log.h lemon.h lexer_symbols.h
 	gcc -Wall -Wextra -ansi -std=c99 -g -c -I./logging/ logilizer.c
+
 lexer.o: lexer.c lexer.h lemon_cfg.h lexer_symbols.h
 	gcc -Wall -Wextra -ansi -std=c99 -g -c lexer.c
+
 lexer_utils.o: lexer_utils.c lexer.h lemon_cfg.h parser.h lexer_symbols.h
 	gcc -Wall -Wextra -ansi -std=c99 -g -c lexer_utils.c
-    
+
 lexer.c.re: lexer.c.tpl.0
 	python -m cogapp -d -o lexer.c.re lexer.c.tpl.0
+	chmod 444 lexer.c.re
 
 lexer.c.tpl.0: lexer.c.tpl ./regex/*.re
 	python -m cogapp -d -o lexer.c.tpl.0 lexer.c.tpl
+	chmod 444 lexer.c.tpl.0
 
 lexer.c: lexer.c.re 
 	re2c -W -Werror --utf-8 -o lexer.c lexer.c.re
+	chmod 444 lexer.c
 
 lexer_symbols.h: lexer_symbols.h.tpl ./regex/*.re parser.c lexer.c
 	python -m cogapp -d -o lexer_symbols.h lexer_symbols.h.tpl
+	chmod 444 lexer_symbols.h
 
 lexer_symbols.c: lexer_symbols.c.tpl ./regex/*.re parser.c lexer.c
 	python -m cogapp -d -o lexer_symbols.c lexer_symbols.c.tpl
+	chmod 444 lexer_symbols.c
 
 lexer_utils.c: lexer_utils.c.tpl lexer_symbols.c lexer_symbols.h
 	python -m cogapp -d -o lexer_utils.c lexer_utils.c.tpl
+	chmod 444 lexer_utils.c
 
 parser.y: parser.y.tpl ./grammar/*.y
 	python -m cogapp -d -o parser.y parser.y.tpl
+	chmod 444 parser.y
 
 parser.c: parser.y lempar.c lemon.exe
 	lemon parser.y
-    
+	chmod 444 parser.c
+
 lemon.exe: lemon_tool_src/lemon.c
 	gcc -Wall -Wextra -g -o lemon lemon_tool_src/lemon.c
 
