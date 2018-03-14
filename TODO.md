@@ -16,3 +16,4 @@
 - [ ] debug and release make targets
 - [ ] #define for DEV_ERROR detection (extra checking not desired in release)
 - [ ] new folder structure: src, include, templates
+- [ ] correct makefile dependencies *.y -> *.tpl -> *.c
