@@ -130,6 +130,12 @@ void logilizer_resolve(logilizer_t * self)
             ParseTrace(self->parser_error_file, "");
 #endif
         }
+#ifndef NSANITY
+        else
+        {
+            log_error("Received illegal token: %d", token);
+        }
+#endif
     } while (STILL_LEXING(token));
     
     /* A value of 0 for the second argument is a special flag to the parser to

@@ -10,6 +10,9 @@
 /* Needed for YYSTYPE used by get_token_value */
 #include "lemon_cfg.h"
 
+/* Needed for NUM_TOKENS*/
+#include "lexer_symbols.h"
+
 typedef unsigned char iutf8_t;
 typedef int tok_t;
 
@@ -39,7 +42,7 @@ typedef struct input
 #define LEXER_FILL_ERROR (-1)
 #define LEXER_EXIT_ERROR (-2)
 
-#define VALID_TOKEN(token)  (token > 0)
+#define VALID_TOKEN(token)  ((token > 0) && (token <= NUM_TOKENS))
 
 #ifdef __cplusplus
 extern "C" {
