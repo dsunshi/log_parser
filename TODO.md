@@ -18,3 +18,4 @@
 - [ ] new folder structure: src, include, templates
 - [ ] correct makefile dependencies *.y -> *.tpl -> *.c
 - [ ] Fix bug that if there is a parser only token then the NUM_TOKEN define is incorrect.
+- [ ] Improve allocation strategy in grammar so that strlen is not used
