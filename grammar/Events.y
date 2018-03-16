@@ -30,7 +30,6 @@ channel(C) ::= CAN_FD SPACE NUM(id).
 {
     C = (char *) malloc( sizeof(char) * 11);
     snprintf(C, 11, "CANFD %s", id);
-    log_trace("Channel: %s\n", C);
 }
 
 channel(C) ::= NUM(id).
