@@ -4,7 +4,7 @@
 %token_destructor  { free_token($$); }
 
 %fallback IDENTIFIER CAN.
-%fallback HEX D E B.
+%fallback NUM D E B.
 
 %default_type       {  YYSTYPE  }
 %default_destructor { free($$); }
@@ -17,6 +17,7 @@
 #include "lemon_cfg.h"
 #include "log.h"
 #include "lexer.h"
+#include "lexer_symbols.h"
 /* yy_pop_parser_stack requires assert */
 //#include <assert.h>
 #define assert(x) ((void)0)
@@ -36,6 +37,8 @@
     int a;
     int possible;
     int encountered;
+    
+    log_trace("token: %s(%s)", get_token_name(yymajor), yyminor);
   
     n = sizeof(yyTokenName) / sizeof(yyTokenName[0]);
     possible = 0;
@@ -106,19 +109,6 @@ in  ::= in can_message.
 in  ::= in NEWLINE.
 in  ::= error NEWLINE.
 in  ::= .
-
-num(n) ::= DEC(d).
-{
-    n = (char *) malloc( sizeof(char) * strlen(d) );
-    snprintf(n, strlen(d), "%s", d);
-    log_trace("num: ", d);
-}
-
-num(n) ::= HEX(d).
-{
-    n = (char *) malloc( sizeof(char) * strlen(d) );
-    snprintf(n, strlen(d), "%s", d);
-}
 
 /*[[[cog
   import cog
