@@ -63,7 +63,7 @@ parser.y: parser.y.tpl ./grammar/*.y
 	chmod 444 parser.y
 
 parser.c: parser.y lempar.c lemon.exe
-	-chmod 666 parser.y
+	-chmod 666 parser.c
 	lemon parser.y
 	chmod 444 parser.c
 
