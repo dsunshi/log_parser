@@ -8,7 +8,7 @@ date ::= DATE SPACE time_and_date(TD).
     fprintf(state->output, "date %s\n", TD);
 }
 
-time_and_date(TD) ::= WEEKDAY(weekday) SPACE MONTH(month) SPACE DEC(day_of_month) SPACE fulltime(timestamp) DEC(year).
+time_and_date(TD) ::= WEEKDAY(weekday) SPACE MONTH(month) SPACE NUM(day_of_month) SPACE fulltime(timestamp) NUM(year).
 {
     TD = (char *) malloc( sizeof(char) * 37 );
     snprintf(TD, 37, "%s %s %s %s %s", weekday, month, day_of_month, timestamp, year);
@@ -18,7 +18,7 @@ time_and_date(TD) ::= WEEKDAY(weekday) SPACE MONTH(month) SPACE DEC(day_of_month
  * Definition:  fulltime
  * Description: HH:MM:SS.MILLIS (am|pm)
  */
-fulltime(FT) ::= DEC(hours) COLON DEC(minutes) COLON DEC(seconds) DOT DEC(milliseconds) SPACE.
+fulltime(FT) ::= NUM(hours) COLON NUM(minutes) COLON NUM(seconds) DOT NUM(milliseconds) SPACE.
 {
     /* German fulltime (no am or pm) */
     //printf("de    fulltime: %s:%s:%s.%s\n", hours, minutes, seconds, milliseconds);
@@ -26,7 +26,7 @@ fulltime(FT) ::= DEC(hours) COLON DEC(minutes) COLON DEC(seconds) DOT DEC(millis
     snprintf(FT, 13, "%s:%s:%s.%s", hours, minutes, seconds, milliseconds);
 }
 
-fulltime(FT) ::= DEC(hours) COLON DEC(minutes) COLON DEC(seconds) DOT DEC(milliseconds) SPACE AM SPACE.
+fulltime(FT) ::= NUM(hours) COLON NUM(minutes) COLON NUM(seconds) DOT NUM(milliseconds) SPACE AM SPACE.
 {
     /* English fulltime - am */
     //printf("en-am fulltime: %s:%s:%s.%s\n", hours, minutes, seconds, milliseconds);
@@ -34,7 +34,7 @@ fulltime(FT) ::= DEC(hours) COLON DEC(minutes) COLON DEC(seconds) DOT DEC(millis
     snprintf(FT, 16, "%s:%s:%s.%s am", hours, minutes, seconds, milliseconds);
 }
 
-fulltime(FT) ::= DEC(hours) COLON DEC(minutes) COLON DEC(seconds) DOT DEC(milliseconds) SPACE PM SPACE.
+fulltime(FT) ::= NUM(hours) COLON NUM(minutes) COLON NUM(seconds) DOT NUM(milliseconds) SPACE PM SPACE.
 {
     /* English fulltime - pm */
     //printf("en-pm fulltime: %s:%s:%s.%s\n", hours, minutes, seconds, milliseconds);

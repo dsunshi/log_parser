@@ -44,7 +44,7 @@ logging ::= INTERNAL SPACE EVENTS SPACE LOGGED.
     fprintf(state->output, "internal events logged\n");
 }
 
-version ::= COMMENT SPACE VERSION SPACE DEC(major) DOT DEC(minor) DOT DEC(patch).
+version ::= COMMENT SPACE VERSION SPACE NUM(major) DOT NUM(minor) DOT NUM(patch).
 {
     fprintf(state->output, "// version %s.%s.%s\n", major, minor, patch);
 }
