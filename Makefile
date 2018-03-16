@@ -1,31 +1,33 @@
 all: logilizer
 
+CCFLAGS = -Wall -Wextra -ansi -std=c99 -O3 -DNDEBUG -DNSANITY
+
 logilizer: main.o parser.o lexer_symbols.o log.o argparse.o logilizer.o lexer.o lexer_utils.o
-	gcc -Wall -Wextra -ansi -std=c99 -g -o logilizer  main.o parser.o lexer_symbols.o log.o argparse.o logilizer.o lexer.o lexer_utils.o
+	gcc $(CCFLAGS) -o logilizer  main.o parser.o lexer_symbols.o log.o argparse.o logilizer.o lexer.o lexer_utils.o
 
 main.o: main.c logging/log.h logilizer.h lemon_cfg.h lexer.h argparse/argparse.h lemon.h lexer_symbols.h
-	gcc -Wall -Wextra -ansi -std=c99 -g -c -I./logging/ -I./argparse/ main.c
+	gcc $(CCFLAGS) -c -I./logging/ -I./argparse/ main.c
 
 parser.o: parser.c lemon_cfg.h logging/log.h lexer.h
-	gcc -Wall -Wextra -ansi -std=c99 -g -c -I./logging/ parser.c
+	gcc $(CCFLAGS) -c -I./logging/ parser.c
 
 lexer_symbols.o: lexer_symbols.c lexer.h lemon_cfg.h lexer_symbols.h
-	gcc -Wall -Wextra -ansi -std=c99 -g -c lexer_symbols.c
+	gcc $(CCFLAGS) -c lexer_symbols.c
 
 log.o: ./logging/log.c
-	gcc -Wall -Wextra -ansi -std=c99 -g -c ./logging/log.c
+	gcc $(CCFLAGS) -c ./logging/log.c
 
 argparse.o: ./argparse/argparse.c
-	gcc -Wall -Wextra -ansi -std=c99 -g -c ./argparse/argparse.c
+	gcc $(CCFLAGS) -c ./argparse/argparse.c
 
 logilizer.o: logilizer.c logilizer.h lemon_cfg.h lexer.h logging/log.h lemon.h lexer_symbols.h
-	gcc -Wall -Wextra -ansi -std=c99 -g -c -I./logging/ logilizer.c
+	gcc $(CCFLAGS) -c -I./logging/ logilizer.c
 
 lexer.o: lexer.c lexer.h lemon_cfg.h lexer_symbols.h
-	gcc -Wall -Wextra -ansi -std=c99 -g -c lexer.c
+	gcc $(CCFLAGS) -c lexer.c
 
 lexer_utils.o: lexer_utils.c lexer.h lemon_cfg.h parser.h lexer_symbols.h
-	gcc -Wall -Wextra -ansi -std=c99 -g -c lexer_utils.c
+	gcc $(CCFLAGS) -c lexer_utils.c
 
 lexer.c.re: lexer.c.tpl.0
 	-chmod 666 lexer.c.re
@@ -114,6 +116,6 @@ lextest: logilizer
 
 .PHONY: all clean lextest debug lint
 
-.INTERMEDIATE: lexer.c.tpl.0
+.INTERMEDIATE: lexer.c.tpl.0 parser.y.tpl.0
 
-.DELETE_ON_ERROR: tokens.dat lexer.c.re
+.DELETE_ON_ERROR: tokens.dat lexer.c.re parser.y
