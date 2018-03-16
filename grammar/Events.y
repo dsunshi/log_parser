@@ -125,30 +125,34 @@ log_direct_event ::= time(T) SPACE LOG SPACE DIRECT SPACE STOP SPACE LPAREN NUM(
 }
 
 /* CAN Events on a Classic CAN bus */
-dir ::= RX.   {}
-dir ::= TX.   {}
-dir ::= TXRQ. {}
-
-can_message_data(message_data) ::= time(T) SPACE channel(C) SPACE NUM(message_id) SPACE dir SPACE D SPACE NUM(dlc) SPACE NUM(byte_0).
+dir(D) ::= RX.
 {
-    UNUSED(T);
-    UNUSED(C);
-    UNUSED(message_id);
-    UNUSED(dlc);
-    UNUSED(byte_0);
+    D = (char *) malloc( sizeof(char) * 3 );
+    snprintf(D, 3, "Rx");
+}
+
+dir(D) ::= TX.
+{
+    D = (char *) malloc( sizeof(char) * 3 );
+    snprintf(D, 3, "Tx");
+}
+
+dir(D) ::= TXRQ.
+{
+    D = (char *) malloc( sizeof(char) * 5 );
+    snprintf(D, 5, "TxRq");
+}
+
+can_message_data(message_data) ::= time(T) SPACE channel(C) SPACE NUM(message_id) SPACE dir(D) SPACE D SPACE NUM(dlc) SPACE NUM(byte_0).
+{
+    log_trace("%s %s %s %s %s %s", T, C, message_id, D, dlc, byte_0);
     message_data = (char *) malloc( sizeof(char) * 30 );
     snprintf(message_data, 30, "");
 }
 
-can_message_data(message_data) ::= time(T) SPACE channel(C) SPACE NUM(message_id) SPACE dir SPACE D SPACE NUM(dlc) SPACE NUM(byte_0) SPACE NUM(byte_1).
+can_message_data(message_data) ::= time(T) SPACE channel(C) SPACE NUM(message_id) SPACE dir(D) SPACE D SPACE NUM(dlc) SPACE NUM(byte_0) SPACE NUM(byte_1).
 {
-    UNUSED(T);
-    UNUSED(C);
-    UNUSED(message_id);
-    UNUSED(dlc);
-    UNUSED(byte_0);
-    UNUSED(byte_1);
-    log_trace("dlc: %s", dlc);
+    log_trace("%s %s %s %s %s %s %s", T, C, message_id, D, dlc, byte_0, byte_1);
     message_data = (char *) malloc( sizeof(char) * 30 );
     snprintf(message_data, 30, "");
 }

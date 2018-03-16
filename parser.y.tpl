@@ -9,7 +9,7 @@
 %default_type       {  YYSTYPE  }
 %default_destructor { free($$); }
 
-%left SPACE.
+%right SPACE.
 
 %extra_argument { ParserState *state }
 
