@@ -42,12 +42,12 @@ lexer.c: lexer.c.re
 	re2c -W -Werror --utf-8 -o lexer.c lexer.c.re
 	chmod 444 lexer.c
 
-lexer_symbols.h: lexer_symbols.h.tpl ./regex/*.re parser.c lexer.c
+lexer_symbols.h: lexer_symbols.h.tpl ./regex/*.re parser.h lexer.c
 	-chmod 666 lexer_symbols.h
 	python -m cogapp -d -o lexer_symbols.h lexer_symbols.h.tpl
 	chmod 444 lexer_symbols.h
 
-lexer_symbols.c: lexer_symbols.c.tpl ./regex/*.re parser.c lexer.c
+lexer_symbols.c: lexer_symbols.c.tpl ./regex/*.re parser.h lexer.c
 	-chmod 666 lexer_symbols.c
 	python -m cogapp -d -o lexer_symbols.c lexer_symbols.c.tpl
 	chmod 444 lexer_symbols.c
@@ -62,7 +62,7 @@ parser.y: parser.y.tpl ./grammar/*.y
 	python -m cogapp -d -o parser.y parser.y.tpl
 	chmod 444 parser.y
 
-parser.c: parser.y lempar.c lemon.exe
+parser.c parser.h: parser.y lempar.c lemon.exe
 	-chmod 666 parser.c
 	lemon parser.y
 	chmod 444 parser.c
@@ -108,3 +108,7 @@ lextest: logilizer
 	logilizer samples/WATERMARK_01.txt
 
 .PHONY: all clean lextest debug lint
+
+.INTERMEDIATE: lexer.c.tpl.0
+
+.DELETE_ON_ERROR: tokens.dat lexer.c.re parser.y
