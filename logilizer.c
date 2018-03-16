@@ -118,7 +118,9 @@ void logilizer_resolve(logilizer_t * self)
         token  = lex(self->lexer);
         yylval = get_token_value(self->lexer, token);
         
+#ifndef NDEBUG
         log_trace("%s(%d): %s", get_token_name(token), token, yylval);
+#endif
         
         self->state.line = self->lexer->line;
         
@@ -143,5 +145,7 @@ void logilizer_resolve(logilizer_t * self)
     */
     Parse(self->parser, 0, yylval, &(self->state));
     
+#ifndef NDEBUG
     log_trace("Processed %d lines.", self->lexer->line);
+#endif
 }
