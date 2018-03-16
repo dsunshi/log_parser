@@ -6,7 +6,7 @@ H = [a-fA-F0-9]+;
 
 //[[[cog
 //  import CogUtils as tools
-//  tools.create_token("D", "DEC", 10)
-//  tools.create_token("H", "HEX", 8)
+//  #tools.create_token("D", "DEC", 10)
+//  tools.create_token("H", "NUM", 10)
 //]]]
 //[[[end]]]
