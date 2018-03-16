@@ -28,34 +28,42 @@ lexer_utils.o: lexer_utils.c lexer.h lemon_cfg.h parser.h lexer_symbols.h
 	gcc -Wall -Wextra -ansi -std=c99 -g -c lexer_utils.c
 
 lexer.c.re: lexer.c.tpl.0
+	-chmod 666 lexer.c.re
 	python -m cogapp -d -o lexer.c.re lexer.c.tpl.0
 	chmod 444 lexer.c.re
 
 lexer.c.tpl.0: lexer.c.tpl ./regex/*.re
+	-chmod 666 lexer.c.tpl.0
 	python -m cogapp -d -o lexer.c.tpl.0 lexer.c.tpl
 	chmod 444 lexer.c.tpl.0
 
-lexer.c: lexer.c.re 
+lexer.c: lexer.c.re
+	-chmod 666 lexer.c
 	re2c -W -Werror --utf-8 -o lexer.c lexer.c.re
 	chmod 444 lexer.c
 
 lexer_symbols.h: lexer_symbols.h.tpl ./regex/*.re parser.c lexer.c
+	-chmod 666 lexer_symbols.h
 	python -m cogapp -d -o lexer_symbols.h lexer_symbols.h.tpl
 	chmod 444 lexer_symbols.h
 
 lexer_symbols.c: lexer_symbols.c.tpl ./regex/*.re parser.c lexer.c
+	-chmod 666 lexer_symbols.c
 	python -m cogapp -d -o lexer_symbols.c lexer_symbols.c.tpl
 	chmod 444 lexer_symbols.c
 
 lexer_utils.c: lexer_utils.c.tpl lexer_symbols.c lexer_symbols.h
+	-chmod 666 lexer_utils.c
 	python -m cogapp -d -o lexer_utils.c lexer_utils.c.tpl
 	chmod 444 lexer_utils.c
 
 parser.y: parser.y.tpl ./grammar/*.y
+	-chmod 666 parser.y
 	python -m cogapp -d -o parser.y parser.y.tpl
 	chmod 444 parser.y
 
 parser.c: parser.y lempar.c lemon.exe
+	-chmod 666 parser.y
 	lemon parser.y
 	chmod 444 parser.c
 
@@ -76,7 +84,7 @@ lint:
 	-splint -I./logging/ -I./argparse/ -systemdirerrors -preproc logilizer.c >> SplintReport.txt
 	-splint -I./logging/ -I./argparse/ -systemdirerrors -preproc lexer.c >> SplintReport.txt
 
-lextest: logilizer  
+lextest: logilizer
 	logilizer samples/BASE_TS_00.txt
 	logilizer samples/BEGIN_TRIGGER_00.txt
 	logilizer samples/BEGIN_TRIGGER_01.txt
