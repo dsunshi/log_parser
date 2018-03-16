@@ -57,10 +57,15 @@ lexer_utils.c: lexer_utils.c.tpl lexer_symbols.c lexer_symbols.h
 	python -m cogapp -d -o lexer_utils.c lexer_utils.c.tpl
 	chmod 444 lexer_utils.c
 
-parser.y: parser.y.tpl ./grammar/*.y
+parser.y: parser.y.tpl.0
 	-chmod 666 parser.y
-	python -m cogapp -d -o parser.y parser.y.tpl
+	python -m cogapp -d -o parser.y parser.y.tpl.0
 	chmod 444 parser.y
+    
+parser.y.tpl.0: parser.y.tpl ./grammar/*.y
+	-chmod 666 parser.y.tpl.0
+	python -m cogapp -d -o parser.y.tpl.0 parser.y.tpl
+	chmod 444 parser.y.tpl.0
 
 parser.c parser.h: parser.y lempar.c lemon.exe
 	-chmod 666 parser.c
@@ -111,4 +116,4 @@ lextest: logilizer
 
 .INTERMEDIATE: lexer.c.tpl.0
 
-.DELETE_ON_ERROR: tokens.dat lexer.c.re parser.y
+.DELETE_ON_ERROR: tokens.dat lexer.c.re
