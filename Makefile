@@ -1,6 +1,6 @@
 all: logilizer
 
-CCFLAGS = -Wall -Wextra -ansi -std=c99 -O3 -DNDEBUG -DNSANITY
+CCFLAGS = -Wall -Wextra -ansi -std=c99 -g -pg -DNDEBUG -DNSANITY
 
 logilizer: main.o parser.o lexer_symbols.o log.o argparse.o logilizer.o lexer.o lexer_utils.o
 	gcc $(CCFLAGS) -o logilizer  main.o parser.o lexer_symbols.o log.o argparse.o logilizer.o lexer.o lexer_utils.o
@@ -54,7 +54,7 @@ lexer_symbols.c: lexer_symbols.c.tpl ./regex/*.re parser.h lexer.c
 	python -m cogapp -d -o lexer_symbols.c lexer_symbols.c.tpl
 	chmod 444 lexer_symbols.c
 
-lexer_utils.c: lexer_utils.c.tpl lexer_symbols.c lexer_symbols.h
+lexer_utils.c: lexer_utils.c.tpl lexer_symbols.c lexer_symbols.h CogUtils.py
 	-chmod 666 lexer_utils.c
 	python -m cogapp -d -o lexer_utils.c lexer_utils.c.tpl
 	chmod 444 lexer_utils.c
@@ -79,6 +79,7 @@ lemon.exe: lemon_tool_src/lemon.c
 
 clean:
 	rm -rf *.o *.pyc lexer.c logilizer.exe lexer.c.re tokens.dat lexer.c.tpl.0 lexer_symbols.h lexer_symbols.c parser.c parser.y parser.out parser.h parser.err log.txt lexer_utils.c SplintReport.txt
+	rm -rf gmon.out parser.y.tpl.0
 
 debug:
 	gdb -ex=r --args logilizer.exe -i samples/MIXED.txt
