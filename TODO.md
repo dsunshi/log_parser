@@ -14,7 +14,7 @@
 - [ ] Split grammar files into smaller files
 - [ ] Rename files to imporve relationship with functionality
 - [ ] debug and release make targets
-- [ ] #define for DEV_ERROR detection (extra checking not desired in release)
+- [x] #define for NSANITY detection (extra checking not desired in release)
 - [ ] new folder structure: src, include, templates
 - [ ] correct makefile dependencies *.y -> *.tpl -> *.c
 - [ ] Fix bug that if there is a parser only token then the NUM_TOKEN define is incorrect.
