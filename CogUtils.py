@@ -72,16 +72,17 @@ def create_table():
         else:
             cog.outl( token.table_entry(width, True) )
 
-def create_value_switch():
+def create_value_switch(num=False):
     tokens = tm.read_tokens()
     
     for token in tokens:
-        if token.size == 0:
-            cog.outl( "case %s:" % token.macro_name )
-    cog.outl("\treturn BLANK;")
-    cog.outl("\tbreak;")
-    for token in tokens:
-        if token.size > 0:
-            cog.outl( "case %s:" % token.macro_name )
-            cog.outl( "\tassert(length <= %d);" % token.size )
-            cog.outl( "\treturn create_str(input, length);\n\tbreak;" )
+        if num == False:
+            if (token.size > 0) and (token.macro_name != "TOKEN_NUM"):
+                cog.outl( "case %s:" % token.macro_name )
+                cog.outl( "\tassert(length <= %d);" % token.size )
+                cog.outl( "\treturn create_str(input, length);\n\tbreak;" )
+        else:
+            if token.macro_name == "TOKEN_NUM":
+                cog.outl( "\tassert(length <= %d);" % token.size )
+                cog.outl( "\treturn create_str(input, length);" )
+        

@@ -43,7 +43,7 @@ yyinput_t * lexer_new(FILE * file, const size_t size, const size_t maxfill)
 	{
         /* Unable to allocate enough memory for the lexer */
 #ifndef NDEBUG
-        fprintf(stderr, "Unable to allocate enough memory for the lexer!\n");
+        //fprintf(stderr, "Unable to allocate enough memory for the lexer!\n");
 #endif
 	}
 	else
@@ -56,7 +56,7 @@ yyinput_t * lexer_new(FILE * file, const size_t size, const size_t maxfill)
 		{
             /* Unable to allocate enough memory for the actual string buffer used by the lexer */
 #ifndef NDEBUG
-        fprintf(stderr, "Unable to allocate enough memory for the actual string buffer used by the lexer!\n");
+        //fprintf(stderr, "Unable to allocate enough memory for the actual string buffer used by the lexer!\n");
 #endif
 		}
 		else
@@ -76,25 +76,41 @@ yyinput_t * lexer_new(FILE * file, const size_t size, const size_t maxfill)
     return input;
 }
 
-/* Get the value of the current token from within the lexers buffer */
+/* Get the value of the current token from within the lexers buffer.
+ * 
+ * This function is the main bottle neck for the *entire* application. It is called for each token, and as such is
+ * called *extremly often*. Therefore, the number of if statements and even the order in which items are checked can
+ * heavily influence the speed of the program.
+ *
+ * For this reason the function is tuned to check for the most common tokens first.
+ */
 YYSTYPE get_token_value(yyinput_t * input, tok_t token)
 {
     const size_t length = input->cursor - input->token;
     
-    switch( token )
+    if (token == TOKEN_NUM)
     {
         /*[[[cog
         import CogUtils as tools
 
-        tools.create_value_switch()
+        tools.create_value_switch(num=True)
         ]]]*/
-        /*[[[end]]]*/
-        default:
-#ifndef NDEBUG
-            fprintf(stderr, "Unkown token value: %s(%d)!\n", get_token_name(token), token);
-#endif
-            return create_str(input, length);
-            break;
+        /*[[[end]]]*/    
+    }
+    else
+    {
+        switch( token )
+        {
+            /*[[[cog
+            import CogUtils as tools
+
+            tools.create_value_switch()
+            ]]]*/
+            /*[[[end]]]*/
+            default:
+                return BLANK;
+                break;
+        }
     }
 }
 
