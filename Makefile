@@ -1,6 +1,14 @@
+
+
+CCFLAGS = -Wall -Wextra -ansi -std=c99
+
 all: logilizer
 
-CCFLAGS = -Wall -Wextra -ansi -std=c99 -g -pg -DNDEBUG -DNSANITY
+debug: CCFLAGS += -g -pg
+debug: logilizer
+
+release: CCFLAGS += -Ofast -DNDEBUG -DNSANITY
+release: logilizer
 
 logilizer: main.o parser.o lexer_symbols.o log.o argparse.o logilizer.o lexer.o lexer_utils.o
 	gcc $(CCFLAGS) -o logilizer  main.o parser.o lexer_symbols.o log.o argparse.o logilizer.o lexer.o lexer_utils.o
@@ -81,7 +89,7 @@ clean:
 	rm -rf *.o *.pyc lexer.c logilizer.exe lexer.c.re tokens.dat lexer.c.tpl.0 lexer_symbols.h lexer_symbols.c parser.c parser.y parser.out parser.h parser.err log.txt lexer_utils.c SplintReport.txt
 	rm -rf gmon.out parser.y.tpl.0
 
-debug:
+gdb:
 	gdb -ex=r --args logilizer.exe -i samples/MIXED.txt
 
 lint:
