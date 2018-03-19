@@ -108,7 +108,12 @@ can_statistic_event ::= time(T) SPACE channel(C) SPACE STATISTIC COLON SPACE D S
 }
 
 /* Log and Trigger Events */
-log_trigger_event ::= time(T) SPACE LOG TRIGGER EVENT.
+log_trigger_event ::= time(T) SPACE LOG SPACE TRIGGER SPACE EVENT.
+{
+    fprintf(state->output, "%s log trigger event\n", T);
+}
+
+log_trigger_event ::= time(T) SPACE LOG SPACE TRIGGER SPACE EVENT SPACE LPAREN plain_text RPAREN.
 {
     fprintf(state->output, "%s log trigger event\n", T);
 }
@@ -142,12 +147,24 @@ dir(D) ::= TXRQ.
     snprintf(D, 5, "TxRq");
 }
 
+id(ID) ::= NUM(msg_id).
+{
+    ID = (char *) malloc( sizeof(char) * 10 );
+    snprintf(ID, 10, "%s", msg_id);
+}
+
+id(ID) ::= EXTENDED(msg_id).
+{
+    ID = (char *) malloc( sizeof(char) * 10 );
+    snprintf(ID, 10, "%s", msg_id);
+}
+
 /*[[[cog
 import cog
 import CogUtils as tools
 
 for bytes_per_msg in range(0, 8):
-    cog.out( "can_message_data(message_data) ::= time(T) SPACE channel(C) SPACE NUM(message_id) SPACE dir(D) SPACE D SPACE NUM(dlc)" )
+    cog.out( "can_message_data(message_data) ::= time(T) SPACE channel(C) SPACE id(message_id) SPACE dir(D) SPACE D SPACE NUM(dlc)" )
     bytes = ""
     for byte_in_msg in range(0, bytes_per_msg + 1):
         cog.out(" SPACE NUM(byte_%s)" % byte_in_msg)
@@ -182,4 +199,7 @@ can_message ::= can_message_data(message_data) SPACE can_message_info(message_in
     fprintf(state->output, "%s %s\n", message_data, message_info);
 }
 
-
+can_error_frame ::= time(T) SPACE channel(C) SPACE ERRORFRAME.
+{
+    fprintf(state->output, "%s %s ErrorFrame\n", T, C);
+}

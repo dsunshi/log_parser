@@ -16,6 +16,9 @@ txrq        = "TxRq";
 status      = "status" | "Status";
 statistic   = "Statistic";
 
+// CAN Error Frame
+errorframe  = "ErrorFrame";
+
 // CAN Error Event
 txerr       = "TxErr";
 rxerr       = "RxErr";
@@ -87,5 +90,6 @@ id          = "ID";
 //  tools.simple_token("length")
 //  tools.simple_token("bitcount")
 //  tools.simple_token("id")
+//  tools.simple_token("errorframe")
 //]]]
 //[[[end]]]

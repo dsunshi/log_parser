@@ -10,6 +10,7 @@
 %default_destructor { free($$); }
 
 %right SPACE.
+%wildcard ANYTHING.
 
 %extra_argument { ParserState *state }
 
@@ -106,9 +107,13 @@ in  ::= in can_statistic_event.
 in  ::= in log_trigger_event.
 in  ::= in log_direct_event.
 in  ::= in can_message.
+in  ::= in can_error_frame.
 in  ::= in NEWLINE.
 in  ::= error NEWLINE.
 in  ::= .
+
+plain_text ::= IDENTIFIER. {}
+plain_text ::= IDENTIFIER SPACE IDENTIFIER. {}
 
 /*[[[cog
   import cog
