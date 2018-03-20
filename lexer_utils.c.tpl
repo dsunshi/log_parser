@@ -35,43 +35,43 @@ void free_token(YYSTYPE token)
 /* Create a lexer for the provided file */
 yyinput_t * lexer_new(FILE * file, const size_t size, const size_t maxfill)
 {
-	yyinput_t * input = NULL;
+    yyinput_t * input = NULL;
 
-	input = (yyinput_t *) malloc(sizeof(yyinput_t));
+    input = (yyinput_t *) malloc(sizeof(yyinput_t));
 
-	if (input == NULL)
-	{
+    if (input == NULL)
+    {
         /* Unable to allocate enough memory for the lexer */
 #ifndef NDEBUG
-        //fprintf(stderr, "Unable to allocate enough memory for the lexer!\n");
+        log_error("Unable to allocate enough memory for the lexer!\n");
 #endif
-	}
-	else
-	{
-		memset(input, 0x00, sizeof(yyinput_t));
+    }
+    else
+    {
+        memset(input, 0x00, sizeof(yyinput_t));
 
-		input->buffer = (iutf8_t *) malloc(sizeof(iutf8_t) * (size + maxfill));
+        input->buffer = (iutf8_t *) malloc(sizeof(iutf8_t) * (size + maxfill));
 
-		if (input->buffer == NULL)
-		{
+        if (input->buffer == NULL)
+        {
             /* Unable to allocate enough memory for the actual string buffer used by the lexer */
 #ifndef NDEBUG
-        //fprintf(stderr, "Unable to allocate enough memory for the actual string buffer used by the lexer!\n");
+            log_error(stderr, "Unable to allocate enough memory for the actual string buffer used by the lexer!\n");
 #endif
-		}
-		else
-		{
-			memset(input->buffer, YYINVAILD, (size + maxfill));
+        }
+        else
+        {
+            memset(input->buffer, YYINVAILD, (size + maxfill));
 
-	    	input->limit   = input->buffer + size;
-   			input->cursor  = input->limit;
-    		input->token   = input->limit;
-    		input->eof     = false;
-    		input->size    = size;
-    		input->maxfill = maxfill;
-    		input->file    = file;
-		}
-	}
+            input->limit   = input->buffer + size;
+            input->cursor  = input->limit;
+            input->token   = input->limit;
+            input->eof     = false;
+            input->size    = size;
+            input->maxfill = maxfill;
+            input->file    = file;
+        }
+    }
     
     return input;
 }
@@ -176,19 +176,19 @@ bool fill(yyinput_t * input, const size_t need)
 
 tok_t exit_success(yyinput_t * input)
 {
-	tok_t result = LEXER_EXIT_ERROR;
+    tok_t result = LEXER_EXIT_ERROR;
 
-	if (input->maxfill == ((size_t) (input->limit - input->token)))
-	{
+    if (input->maxfill == ((size_t) (input->limit - input->token)))
+    {
         /* The current token is exaclty at the end of the input buffer. So if we have lexed to an end we have
          * sucessfully lexed the entire input.
          */
-		result = TOKEN_END_OF_INPUT_STREAM;
-	}
-	else
-	{
+        result = TOKEN_END_OF_INPUT_STREAM;
+    }
+    else
+    {
         
-	}
-	
-	return result;
+    }
+    
+    return result;
 }
