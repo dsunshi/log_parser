@@ -35,14 +35,14 @@ lexer.o: lexer.c lexer.h lemon_cfg.h lexer_symbols.h
 	gcc $(CCFLAGS) -c lexer.c
 
 lexer_utils.o: lexer_utils.c lexer.h lemon_cfg.h parser.h lexer_symbols.h
-	gcc $(CCFLAGS) -c lexer_utils.c
+	gcc $(CCFLAGS) -c -I./logging/ lexer_utils.c
 
-lexer.c.re: lexer.c.tpl.0
+lexer.c.re: lexer.c.tpl.0 CogUtils.py Token.py TokenManager.py
 	-chmod 666 lexer.c.re
 	python -m cogapp -d -o lexer.c.re lexer.c.tpl.0
 	chmod 444 lexer.c.re
 
-lexer.c.tpl.0: lexer.c.tpl ./regex/*.re
+lexer.c.tpl.0: lexer.c.tpl ./regex/*.re CogUtils.py Token.py TokenManager.py
 	-chmod 666 lexer.c.tpl.0
 	python -m cogapp -d -o lexer.c.tpl.0 lexer.c.tpl
 	chmod 444 lexer.c.tpl.0
@@ -52,27 +52,27 @@ lexer.c: lexer.c.re
 	re2c -W -Werror --utf-8 -o lexer.c lexer.c.re
 	chmod 444 lexer.c
 
-lexer_symbols.h: lexer_symbols.h.tpl ./regex/*.re parser.h lexer.c
+lexer_symbols.h: lexer_symbols.h.tpl ./regex/*.re parser.h lexer.c CogUtils.py Token.py TokenManager.py
 	-chmod 666 lexer_symbols.h
 	python -m cogapp -d -o lexer_symbols.h lexer_symbols.h.tpl
 	chmod 444 lexer_symbols.h
 
-lexer_symbols.c: lexer_symbols.c.tpl ./regex/*.re parser.h lexer.c
+lexer_symbols.c: lexer_symbols.c.tpl ./regex/*.re parser.h lexer.c CogUtils.py Token.py TokenManager.py
 	-chmod 666 lexer_symbols.c
 	python -m cogapp -d -o lexer_symbols.c lexer_symbols.c.tpl
 	chmod 444 lexer_symbols.c
 
-lexer_utils.c: lexer_utils.c.tpl lexer_symbols.c lexer_symbols.h CogUtils.py
+lexer_utils.c: lexer_utils.c.tpl lexer_symbols.c lexer_symbols.h CogUtils.py Token.py TokenManager.py
 	-chmod 666 lexer_utils.c
 	python -m cogapp -d -o lexer_utils.c lexer_utils.c.tpl
 	chmod 444 lexer_utils.c
 
-parser.y: parser.y.tpl.0
+parser.y: parser.y.tpl.0 CogUtils.py Token.py TokenManager.py
 	-chmod 666 parser.y
 	python -m cogapp -d -o parser.y parser.y.tpl.0
 	chmod 444 parser.y
     
-parser.y.tpl.0: parser.y.tpl ./grammar/*.y
+parser.y.tpl.0: parser.y.tpl ./grammar/*.y CogUtils.py Token.py TokenManager.py Token.py TokenManager.py
 	-chmod 666 parser.y.tpl.0
 	python -m cogapp -d -o parser.y.tpl.0 parser.y.tpl
 	chmod 444 parser.y.tpl.0
@@ -101,27 +101,27 @@ lint:
 	-splint -I./logging/ -I./argparse/ -systemdirerrors -preproc lexer.c >> SplintReport.txt
 
 lextest: logilizer
-	logilizer samples/BASE_TS_00.txt
-	logilizer samples/BEGIN_TRIGGER_00.txt
-	logilizer samples/BEGIN_TRIGGER_01.txt
-	logilizer samples/CAN_00.txt
-	logilizer samples/CAN_01.txt
-	logilizer samples/CAN_02.txt
-	logilizer samples/CAN_STATUS_00.txt
-	logilizer samples/CAN_STATUS_01.txt
-	logilizer samples/COMMENT_00.txt
-	logilizer samples/DATE_00.txt
-	logilizer samples/END_TRIGGER_00.txt
-	logilizer samples/ERROR_FRAME_00.txt
-	logilizer samples/INTERNAL_EVENTS_00.txt
-	logilizer samples/LOG_DIRECT_00.txt
-	logilizer samples/NO_INTERNAL_EVENTS_00.txt
-	logilizer samples/START_OF_MEASURE_00.txt
-	logilizer samples/STATISTIC_00.txt
-	logilizer samples/SV_00.txt
-	logilizer samples/TFS_00.txt
-	logilizer samples/WATERMARK_00.txt
-	logilizer samples/WATERMARK_01.txt
+	logilizer -i samples/BASE_TS_00.txt
+	logilizer -i samples/BEGIN_TRIGGER_00.txt
+	logilizer -i samples/BEGIN_TRIGGER_01.txt
+	logilizer -i samples/CAN_00.txt
+	logilizer -i samples/CAN_01.txt
+	logilizer -i samples/CAN_02.txt
+	logilizer -i samples/CAN_STATUS_00.txt
+	logilizer -i samples/CAN_STATUS_01.txt
+	logilizer -i samples/COMMENT_00.txt
+	logilizer -i samples/DATE_00.txt
+	logilizer -i samples/END_TRIGGER_00.txt
+	logilizer -i samples/ERROR_FRAME_00.txt
+	logilizer -i samples/INTERNAL_EVENTS_00.txt
+	logilizer -i samples/LOG_DIRECT_00.txt
+	logilizer -i samples/NO_INTERNAL_EVENTS_00.txt
+	logilizer -i samples/START_OF_MEASURE_00.txt
+	logilizer -i samples/STATISTIC_00.txt
+	logilizer -i samples/SV_00.txt
+	logilizer -i samples/TFS_00.txt
+	logilizer -i samples/WATERMARK_00.txt
+	logilizer -i samples/WATERMARK_01.txt
 
 .PHONY: all clean lextest debug lint
 

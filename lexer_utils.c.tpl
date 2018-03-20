@@ -1,6 +1,7 @@
 
 #include "lexer.h"
 #include "parser.h"
+#include "log.h"
 
 /* for get_token_name */
 #include "lexer_symbols.h"
@@ -56,7 +57,7 @@ yyinput_t * lexer_new(FILE * file, const size_t size, const size_t maxfill)
         {
             /* Unable to allocate enough memory for the actual string buffer used by the lexer */
 #ifndef NDEBUG
-            log_error(stderr, "Unable to allocate enough memory for the actual string buffer used by the lexer!\n");
+            log_error("Unable to allocate enough memory for the actual string buffer used by the lexer!\n");
 #endif
         }
         else
