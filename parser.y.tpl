@@ -10,7 +10,6 @@
 %default_destructor { free($$); }
 
 %right SPACE.
-%wildcard ANYTHING.
 
 %extra_argument { ParserState *state }
 
@@ -28,8 +27,6 @@
 }
 
 %syntax_error {
-    UNUSED(yymajor);
-    UNUSED(yyminor);
     /* Clear the stack so we can shift in 'error's until a NEWLINE and hopefully recover */
     while( yypParser->yytos>yypParser->yystack ) yy_pop_parser_stack(yypParser);
 #ifndef NDEBUG
@@ -111,9 +108,6 @@ in  ::= in can_error_frame.
 in  ::= in NEWLINE.
 in  ::= error NEWLINE.
 in  ::= .
-
-plain_text ::= IDENTIFIER. {}
-plain_text ::= IDENTIFIER SPACE IDENTIFIER. {}
 
 /*[[[cog
   import cog

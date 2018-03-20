@@ -45,6 +45,7 @@ trigger     = "trigger";
 event       = "event";
 stop        = "stop";
 direct      = "direct";
+log_comment = "(" ([a-zA-Z_]+ | [a-zA-Z_][a-zA-Z_0-9 ]*) .* ")";
 
 // CAN Message Events
 length      = "Length";
@@ -91,5 +92,6 @@ id          = "ID";
 //  tools.simple_token("bitcount")
 //  tools.simple_token("id")
 //  tools.simple_token("errorframe")
+//  tools.simple_token("log_comment")
 //]]]
 //[[[end]]]

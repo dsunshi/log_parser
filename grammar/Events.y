@@ -113,7 +113,7 @@ log_trigger_event ::= time(T) SPACE LOG SPACE TRIGGER SPACE EVENT.
     fprintf(state->output, "%s log trigger event\n", T);
 }
 
-log_trigger_event ::= time(T) SPACE LOG SPACE TRIGGER SPACE EVENT SPACE LPAREN plain_text RPAREN.
+log_trigger_event ::= time(T) SPACE LOG SPACE TRIGGER SPACE EVENT SPACE LOG_COMMENT.
 {
     fprintf(state->output, "%s log trigger event\n", T);
 }
