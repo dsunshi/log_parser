@@ -275,3 +275,21 @@ tfs_event ::= time(S) SPACE TFS COLON SPACE LBRACKET NUM(execID) COMMA NUM(eleme
 {
     fprintf(state->output, "%s TFS: [%s,%s] %s", S, execID, elementID, T);  
 }
+
+frame_data(D) ::= frame_data(original) SPACE NUM(value).
+{
+    size_t length = strlen(original) + 10;
+    D = (char *) malloc( sizeof(char) * length);
+    snprintf(D, length, "%s %s", original, value);
+}
+
+frame_data(D) ::= NUM(value).
+{
+    D = (char *) malloc( sizeof(char) * 10);
+    snprintf(D, 10, "%s", value);
+}
+
+sv_event ::= time(S) SPACE SV COLON SPACE frame_data(info) SPACE COLON COLON IDENTIFIER(variable) SPACE EQUALS SPACE frame_data(values).
+{
+    fprintf(state->output, "%s SV: %s ::%s = %s", S, info, variable, values); 
+}

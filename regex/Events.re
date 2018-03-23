@@ -63,6 +63,7 @@ failed      = "failed" | "Failed";
 passed      = "passed" | "Passed";
 configuration = "configuration";
 unit        = "unit";
+sv          = "SV";
 
 //[[[cog
 //  import CogUtils as tools
@@ -115,5 +116,6 @@ unit        = "unit";
 //  tools.simple_token("passed")
 //  tools.simple_token("configuration")
 //  tools.simple_token("unit")
+//  tools.simple_token("sv")
 //]]]
 //[[[end]]]
