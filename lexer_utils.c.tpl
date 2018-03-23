@@ -6,17 +6,20 @@
 /* for get_token_name */
 #include "lexer_symbols.h"
 
-//#define NDEBUG
 #include <assert.h>
 
 /* Empty or blank token value for tokens that don't have a real value */
 static const YYSTYPE BLANK = "";
 
-static inline YYSTYPE create_str(yyinput_t * input, size_t length)
+static inline YYSTYPE create_str(iutf8_t * string, size_t length)
 {
-    YYSTYPE output = (YYSTYPE) malloc( sizeof(char) * length );
-    memcpy( output, input->token, length );
-    output[length] = '\0';
+    YYSTYPE output = (YYSTYPE) malloc( sizeof(iutf8_t) * length );
+    
+    if (output != NULL)
+    {
+        memcpy( output, string, length );
+        output[length] = '\0';
+    }
     
     return output;
 }
@@ -29,6 +32,16 @@ void free_token(YYSTYPE token)
     }
     else
     {
+#ifndef NSANITY
+        if (token == NULL)
+        {
+            log_error("Attempt to free a NULL token!");
+        }
+        if (strlen(token) == 0)
+        {
+            log_error("Attempt to free a token that is probably statically allocated!");
+        }
+#endif
         free(token);
     }
 }
