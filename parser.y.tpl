@@ -105,6 +105,7 @@ in  ::= in log_trigger_event.
 in  ::= in log_direct_event.
 in  ::= in can_message.
 in  ::= in can_error_frame.
+in  ::= in tfs_event.
 in  ::= in NEWLINE.
 in  ::= error NEWLINE.
 in  ::= .

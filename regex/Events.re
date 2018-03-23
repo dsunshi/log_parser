@@ -52,6 +52,18 @@ length      = "Length";
 bitcount    = "BitCount";
 id          = "ID";
 
+// TFS Event
+tfs         = "TFS";
+test        = "Test" | "test";
+module      = "module";
+case        = "case";
+started     = "started";
+finished    = "finished";
+failed      = "failed" | "Failed";
+passed      = "passed" | "Passed";
+configuration = "configuration";
+unit        = "unit";
+
 //[[[cog
 //  import CogUtils as tools
 //  tools.simple_token("start")
@@ -93,5 +105,15 @@ id          = "ID";
 //  tools.simple_token("id")
 //  tools.simple_token("errorframe")
 //  tools.simple_token("log_comment")
+//  tools.simple_token("tfs")
+//  tools.simple_token("test")
+//  tools.simple_token("module")
+//  tools.simple_token("case")
+//  tools.simple_token("started")
+//  tools.simple_token("finished")
+//  tools.simple_token("failed")
+//  tools.simple_token("passed")
+//  tools.simple_token("configuration")
+//  tools.simple_token("unit")
 //]]]
 //[[[end]]]

@@ -19,6 +19,9 @@ static inline YYSTYPE create_str(iutf8_t * string, size_t length)
     {
         memcpy( output, string, length );
         output[length] = '\0';
+#ifndef NSANITY
+        assert(strlen(output) == length);
+#endif
     }
     
     return output;

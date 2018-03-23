@@ -20,3 +20,4 @@
 - [ ] Fix bug that if there is a parser only token then the NUM_TOKEN define is incorrect.
 - [ ] Improve allocation strategy in grammar so that strlen is not used
 - [ ] Update to use strndup
+- [ ] Is it necessary to allocate memory for "fixed" strings. patterns that are matched but not variable.
