@@ -89,8 +89,8 @@ clean:
 	rm -rf *.o *.pyc lexer.c logilizer.exe lexer.c.re tokens.dat lexer.c.tpl.0 lexer_symbols.h lexer_symbols.c parser.c parser.y parser.out parser.h parser.err log.txt lexer_utils.c SplintReport.txt
 	rm -rf gmon.out parser.y.tpl.0
 
-gdb:
-	gdb -ex=r --args logilizer.exe -i samples/MIXED.txt
+gdb: debug
+	gdb -ex=r --args logilizer.exe -i samples/TFS_00.txt
 
 lint:
 	-splint -I./logging/ -I./argparse/ -systemdirerrors -preproc main.c > SplintReport.txt
