@@ -77,6 +77,9 @@
         
         log_error("\n");
     }
+#else
+    UNUSED(yymajor);
+    UNUSED(yyminor);
 #endif
     log_error("Syntax Error on line: %d!\n", state->line);
 }
