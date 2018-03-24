@@ -291,5 +291,16 @@ frame_data(D) ::= NUM(value).
 
 sv_event ::= time(S) SPACE SV COLON SPACE frame_data(info) SPACE COLON COLON IDENTIFIER(variable) SPACE EQUALS SPACE frame_data(values).
 {
-    fprintf(state->output, "%s SV: %s ::%s = %s", S, info, variable, values); 
+    fprintf(state->output, "%s SV: %s ::%s = %s\n", S, info, variable, values); 
 }
+
+watermark ::= time(S) SPACE EXCLAMATION SPACE QUEUE COLON SPACE LOWWATERMARK DOT.
+{
+    fprintf(state->output, "%s ! Queue: LowWaterMark.\n", S); 
+}
+
+watermark ::= time(S) SPACE EXCLAMATION SPACE QUEUE COLON SPACE HIGHWATERMARK DOT.
+{
+    fprintf(state->output, "%s ! Queue: HighWaterMark.\n", S); 
+}
+

@@ -27,7 +27,7 @@ error       = "error";
 warning     = "warning";
 level       = "level";
 active      = "active";
-queue       = "queue";
+queue       = "queue" | "Queue";
 overrun     = "overrun";
 
 // CAN Bus Statistics
@@ -64,6 +64,10 @@ passed      = "passed" | "Passed";
 configuration = "configuration";
 unit        = "unit";
 sv          = "SV";
+
+// Watermark
+highwatermark = "HighWaterMark";
+lowwatermark  = "LowWaterMark";
 
 //[[[cog
 //  import CogUtils as tools
@@ -117,5 +121,7 @@ sv          = "SV";
 //  tools.simple_token("configuration")
 //  tools.simple_token("unit")
 //  tools.simple_token("sv")
+//  tools.simple_token("highwatermark")
+//  tools.simple_token("lowwatermark")
 //]]]
 //[[[end]]]

@@ -32,5 +32,6 @@ dqstr = "\""  [^"]* "\"";
 //  tools.simple_token("lbracket")
 //  tools.simple_token("rbracket")
 //  tools.simple_token("comma")
+//  tools.simple_token("exclamation")
 //]]]
 //[[[end]]]
