@@ -13,16 +13,29 @@ static const YYSTYPE BLANK = "";
 
 static inline YYSTYPE create_str(iutf8_t * string, size_t length)
 {
-    YYSTYPE output = (YYSTYPE) malloc( sizeof(iutf8_t) * length );
+    YYSTYPE output = (YYSTYPE) malloc( sizeof(iutf8_t) * (length + 1) );
+    
+    assert(string != NULL);
     
     if (output != NULL)
     {
         memcpy( output, string, length );
         output[length] = '\0';
 #ifndef NSANITY
-        assert(strlen(output) == length);
+        if (strlen(output) != length)
+        {
+            log_error("output length %d, does not match input length %d!", strlen(output), length);
+        }
 #endif
     }
+#ifndef NSANITY
+    else
+    {
+        log_error("Failed to duplicate: %s, length: %d", string, length);
+    }
+#endif
+    
+    assert(output != NULL);
     
     return output;
 }
@@ -45,7 +58,7 @@ void free_token(YYSTYPE token)
             log_error("Attempt to free a token that is probably statically allocated!");
         }
 #endif
-        free(token);
+        //free(token);
     }
 }
 
