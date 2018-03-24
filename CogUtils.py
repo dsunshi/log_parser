@@ -80,7 +80,7 @@ def create_value_switch(num=False):
             if (token.size > 0) and (token.macro_name != "TOKEN_NUM"):
                 cog.outl( "case %s:" % token.macro_name )
                 cog.outl( "\tassert(length <= %d);" % token.size )
-                cog.outl( "\treturn create_str(input->token, length);\n\tbreak;" )
+                cog.outl( "\treturn create_str(input->token, length);" )
         else:
             if token.macro_name == "TOKEN_NUM":
                 cog.outl( "\tassert(length <= %d);" % token.size )
