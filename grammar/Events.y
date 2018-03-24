@@ -273,7 +273,7 @@ tfs_event_text(T) ::= test_module(M) SPACE SQSTR(module).
 
 tfs_event ::= time(S) SPACE TFS COLON SPACE LBRACKET NUM(execID) COMMA NUM(elementID) RBRACKET SPACE tfs_event_text(T).
 {
-    fprintf(state->output, "%s TFS: [%s,%s] %s", S, execID, elementID, T);  
+    fprintf(state->output, "%s TFS: [%s,%s] %s\n", S, execID, elementID, T);  
 }
 
 frame_data(D) ::= frame_data(original) SPACE NUM(value).
