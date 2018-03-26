@@ -38,47 +38,47 @@ lexer_utils.o: lexer_utils.c lexer.h lemon_cfg.h parser.h lexer_symbols.h
 	gcc $(CCFLAGS) -c -I./logging/ lexer_utils.c
 
 lexer.c.re: lexer.c.tpl.0 CogUtils.py Token.py TokenManager.py
-	-chmod 666 lexer.c.re
+	if [ -a lexer.c.re ]; then chmod 666 lexer.c.re; fi;
 	python -m cogapp -d -o lexer.c.re lexer.c.tpl.0
 	chmod 444 lexer.c.re
 
 lexer.c.tpl.0: lexer.c.tpl ./regex/*.re CogUtils.py Token.py TokenManager.py
-	-chmod 666 lexer.c.tpl.0
+	if [ -a lexer.c.tpl.0 ]; then chmod 666 lexer.c.tpl.0; fi;
 	python -m cogapp -d -o lexer.c.tpl.0 lexer.c.tpl
 	chmod 444 lexer.c.tpl.0
 
 lexer.c: lexer.c.re
-	-chmod 666 lexer.c
+	if [ -a lexer.c ]; then chmod 666 lexer.c; fi;
 	re2c -W -Werror --utf-8 -o lexer.c lexer.c.re
 	chmod 444 lexer.c
 
 lexer_symbols.h: lexer_symbols.h.tpl ./regex/*.re parser.h lexer.c CogUtils.py Token.py TokenManager.py
-	-chmod 666 lexer_symbols.h
+	if [ -a lexer_symbols.h ]; then chmod 666 lexer_symbols.h; fi;
 	python -m cogapp -d -o lexer_symbols.h lexer_symbols.h.tpl
 	chmod 444 lexer_symbols.h
 
 lexer_symbols.c: lexer_symbols.c.tpl ./regex/*.re parser.h lexer.c CogUtils.py Token.py TokenManager.py
-	-chmod 666 lexer_symbols.c
+	if [ -a lexer_symbols.c ]; then chmod 666 lexer_symbols.c; fi;
 	python -m cogapp -d -o lexer_symbols.c lexer_symbols.c.tpl
 	chmod 444 lexer_symbols.c
 
 lexer_utils.c: lexer_utils.c.tpl lexer_symbols.c lexer_symbols.h CogUtils.py Token.py TokenManager.py
-	-chmod 666 lexer_utils.c
+	if [ -a lexer_utils.c ]; then chmod 666 lexer_utils.c; fi;
 	python -m cogapp -d -o lexer_utils.c lexer_utils.c.tpl
 	chmod 444 lexer_utils.c
 
 parser.y: parser.y.tpl.0 CogUtils.py Token.py TokenManager.py
-	-chmod 666 parser.y
+	if [ -a parser.y ]; then chmod 666 parser.y; fi;
 	python -m cogapp -d -o parser.y parser.y.tpl.0
 	chmod 444 parser.y
     
 parser.y.tpl.0: parser.y.tpl ./grammar/*.y CogUtils.py Token.py TokenManager.py Token.py TokenManager.py
-	-chmod 666 parser.y.tpl.0
+	if [ -a parser.y.tpl.0 ]; then chmod 666 parser.y.tpl.0; fi;
 	python -m cogapp -d -o parser.y.tpl.0 parser.y.tpl
 	chmod 444 parser.y.tpl.0
 
 parser.c parser.h: parser.y lempar.c lemon.exe
-	-chmod 666 parser.c
+	if [ -a parser.c ]; then chmod 666 parser.c; fi;
 	lemon parser.y
 	chmod 444 parser.c
 
