@@ -1,12 +1,18 @@
+from __future__ import print_function
+
 import cog
 import csv
 import os.path
 import operator
+import sys
 
 from Token import Token
 import TokenManager as tm
 
 include_dirs = [".", "regex", "grammar"]
+
+def eprint(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
 
 def longest_name(tokens):
     length = -1
@@ -24,14 +30,20 @@ def longest_macro(tokens):
 
 def readfile(filename):
     text = ""
+    found = False
     for include_dir in include_dirs:
         try:
             file = open(os.path.join(include_dir, filename), "r")
+            found = True
         except IOError:
             pass
-    text = file.read()
-    file.close()
-    return text
+    if found:
+        text = file.read()
+        file.close()
+        return text
+    else:
+        eprint("*** Error: Failed to read in file: " + filename)
+        sys.exit(-1)
 
 def readfiles(filenames):
     text = ""

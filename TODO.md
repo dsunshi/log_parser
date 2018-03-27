@@ -21,4 +21,4 @@
 - [ ] Improve allocation strategy in grammar so that strlen is not used
 - [ ] Update to use strndup
 - [ ] Is it necessary to allocate memory for "fixed" strings. patterns that are matched but not variable.
-- [ ] Fix bug in Cogutils readfile that if the file doesn't exist at all it crashes
+- [x] Fix bug in Cogutils readfile that if the file doesn't exist at all it crashes

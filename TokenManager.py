@@ -60,7 +60,7 @@ def update_values():
             if token.macro_name == mname:
                 parser_only = False
         if parser_only:
-            print "** Warning:\ttoken %s is only defined by the PARSER!" % mname
+            print "*** Warning:\ttoken %s is only defined by the PARSER!" % mname
     
     # 1. First get the values from the parser
     for token in lexer_tokens:
@@ -70,14 +70,14 @@ def update_values():
         except KeyError as e:
             # This token is only defined by the lexer
             if token.plain_text not in no_lexer_only_warn:
-                print "** Warning:\ttoken %s is only defined by the LEXER!" % token.plain_text
+                print "*** Warning:\ttoken %s is only defined by the LEXER!" % token.plain_text
             token.id = -1
     # 2. Create new values for lexer only tokens
     for token in lexer_tokens:
         try:
             hex = int(token.plain_text, 16)
             if token.plain_text not in no_lexer_hex_warn:
-                print "** Warning:\ttoken %s is valid hexadecimal number!" % token.plain_text
+                print "*** Warning:\ttoken %s is valid hexadecimal number!" % token.plain_text
         except ValueError as e:
             pass
         if token.id < 0:
