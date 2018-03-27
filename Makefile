@@ -4,6 +4,7 @@ CCFLAGS = -Wall -Wextra -ansi -std=c99 -I./logging/ -I./argparse/ -I./include
 
 GRAMMAR = grammar/date.y grammar/Events.y grammar/Header.y grammar/Triggerblock.y grammar/CanError.y grammar/CanMessage.y grammar/CanStatistics.y grammar/LogEvents.y grammar/SystemVariables.y grammar/TestStructureEvents.y grammar/Watermark.y
 REGEX = regex/Events.re regex/Header.re regex/Month.re regex/Numerals.re regex/Punctuation.re regex/WeekDay.re regex/Whitespace.re
+SCRIPTS = CogUtils.py Token.py TokenManager.py
 
 vpath %.c src
 vpath %.h include
@@ -44,12 +45,12 @@ lexer.o: lexer.c lexer.h lemon_cfg.h lexer_symbols.h
 lexer_utils.o: lexer_utils.c lexer.h lemon_cfg.h parser.h lexer_symbols.h
 	$(CC) $(CCFLAGS) -c $<
 
-./templates/lexer.c.re: ./templates/lexer.c.tpl.0 CogUtils.py Token.py TokenManager.py
+./templates/lexer.c.re: ./templates/lexer.c.tpl.0 $(SCRIPTS)
 	if [ -a $@ ]; then chmod 666 $@; fi;
 	python -m cogapp -d -o $@ $<
 	chmod 444 $@
 
-./templates/lexer.c.tpl.0: ./templates/lexer.c.tpl ./regex/*.re CogUtils.py Token.py TokenManager.py
+./templates/lexer.c.tpl.0: ./templates/lexer.c.tpl $(REGEX) $(SCRIPTS)
 	if [ -a $@ ]; then chmod 666 $@; fi;
 	python -m cogapp -d -o $@ $<
 	chmod 444 $@
@@ -59,27 +60,27 @@ lexer_utils.o: lexer_utils.c lexer.h lemon_cfg.h parser.h lexer_symbols.h
 	re2c -W -Werror --utf-8 -o $@ $<
 	chmod 444 $@
 
-./include/lexer_symbols.h: ./templates/lexer_symbols.h.tpl $(REGEX) parser.h lexer.c CogUtils.py Token.py TokenManager.py
+./include/lexer_symbols.h: ./templates/lexer_symbols.h.tpl $(REGEX) $(SCRIPTS) parser.h lexer.c
 	if [ -a $@ ]; then chmod 666 $@; fi;
 	python -m cogapp -d -o $@ $<
 	chmod 444 $@
 
-./src/lexer_symbols.c: ./templates/lexer_symbols.c.tpl $(REGEX) parser.h lexer.c CogUtils.py Token.py TokenManager.py
+./src/lexer_symbols.c: ./templates/lexer_symbols.c.tpl $(REGEX) $(SCRIPTS) parser.h lexer.c
 	if [ -a $@ ]; then chmod 666 $@; fi;
 	python -m cogapp -d -o $@ $<
 	chmod 444 $@
 
-./src/lexer_utils.c: ./templates/lexer_utils.c.tpl lexer_symbols.c lexer_symbols.h CogUtils.py Token.py TokenManager.py
+./src/lexer_utils.c: ./templates/lexer_utils.c.tpl lexer_symbols.c lexer_symbols.h $(SCRIPTS)
 	if [ -a $@ ]; then chmod 666 $@; fi;
 	python -m cogapp -d -o $@ $<
 	chmod 444 $@
 
-./grammar/parser.y: ./templates/parser.y.tpl.0 CogUtils.py Token.py TokenManager.py
+./grammar/parser.y: ./templates/parser.y.tpl.0 $(SCRIPTS)
 	if [ -a $@ ]; then chmod 666 $@; fi;
 	python -m cogapp -d -o $@ $<
 	chmod 444 $@
 
-./templates/parser.y.tpl.0: ./templates/parser.y.tpl $(GRAMMAR) CogUtils.py Token.py TokenManager.py
+./templates/parser.y.tpl.0: ./templates/parser.y.tpl $(GRAMMAR) $(SCRIPTS)
 	if [ -a $@ ]; then chmod 666 $@; fi;
 	python -m cogapp -d -o $@ $<
 	chmod 444 $@
@@ -114,27 +115,33 @@ lint:
 	-splint -I./logging/ -I./argparse/ -systemdirerrors -preproc lexer.c >> SplintReport.txt
 
 lextest: logilizer
-	logilizer -i samples/BASE_TS_00.txt
-	logilizer -i samples/BEGIN_TRIGGER_00.txt
-	logilizer -i samples/BEGIN_TRIGGER_01.txt
-	logilizer -i samples/CAN_00.txt
-	logilizer -i samples/CAN_01.txt
-	logilizer -i samples/CAN_02.txt
-	logilizer -i samples/CAN_STATUS_00.txt
-	logilizer -i samples/CAN_STATUS_01.txt
-	logilizer -i samples/COMMENT_00.txt
-	logilizer -i samples/DATE_00.txt
-	logilizer -i samples/END_TRIGGER_00.txt
-	logilizer -i samples/ERROR_FRAME_00.txt
-	logilizer -i samples/INTERNAL_EVENTS_00.txt
-	logilizer -i samples/LOG_DIRECT_00.txt
-	logilizer -i samples/NO_INTERNAL_EVENTS_00.txt
-	logilizer -i samples/START_OF_MEASURE_00.txt
-	logilizer -i samples/STATISTIC_00.txt
-	logilizer -i samples/SV_00.txt
-	logilizer -i samples/TFS_00.txt
-	logilizer -i samples/WATERMARK_00.txt
-	logilizer -i samples/WATERMARK_01.txt
+	logilizer -i ./samples/BASE_TS_00.txt
+	logilizer -i ./samples/BEGIN_TRIGGER_00.txt
+	logilizer -i ./samples/BEGIN_TRIGGER_01.txt
+	logilizer -i ./samples/CANFD_00.txt
+	logilizer -i ./samples/CANFD_01.txt
+	logilizer -i ./samples/CANFD_02.txt
+	logilizer -i ./samples/CAN_00.txt
+	logilizer -i ./samples/CAN_01.txt
+	logilizer -i ./samples/CAN_02.txt
+	logilizer -i ./samples/CAN_EXT_00.txt
+	logilizer -i ./samples/CAN_EXT_UDS_00.txt
+	logilizer -i ./samples/CAN_STATUS_00.txt
+	logilizer -i ./samples/CAN_STATUS_01.txt
+	logilizer -i ./samples/COMMENT_00.txt
+	logilizer -i ./samples/DATE_00.txt
+	logilizer -i ./samples/END_TRIGGER_00.txt
+	logilizer -i ./samples/ERROR_FRAME_00.txt
+	logilizer -i ./samples/INTERNAL_EVENTS_00.txt
+	logilizer -i ./samples/LOG_DIRECT_00.txt
+	logilizer -i ./samples/NO_INTERNAL_EVENTS_00.txt
+	logilizer -i ./samples/START_OF_MEASURE_00.txt
+	logilizer -i ./samples/STATISTIC_00.txt
+	logilizer -i ./samples/SV_00.txt
+	logilizer -i ./samples/SV_01.txt
+	logilizer -i ./samples/TFS_00.txt
+	logilizer -i ./samples/WATERMARK_00.txt
+	logilizer -i ./samples/WATERMARK_01.txt
 
 .PHONY: all clean lextest lint
 

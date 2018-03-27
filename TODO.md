@@ -22,3 +22,5 @@
 - [ ] Update to use strndup
 - [ ] Is it necessary to allocate memory for "fixed" strings. patterns that are matched but not variable.
 - [x] Fix bug in Cogutils readfile that if the file doesn't exist at all it crashes
+- [ ] Move argparse and logging into src and include?
+- [ ] Command line option to specify the location of parser.h (used in TokenManager.py)?
