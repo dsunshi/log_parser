@@ -1,3 +1,15 @@
+id(ID) ::= NUM(msg_id).
+{
+    ID = (char *) malloc( sizeof(char) * 10 );
+    snprintf(ID, 10, "%s", msg_id);
+}
+
+id(ID) ::= EXTENDED(msg_id).
+{
+    ID = (char *) malloc( sizeof(char) * 11 );
+    snprintf(ID, 11, "%s", msg_id);
+}
+
 /*[[[cog
 import cog
 import CogUtils as tools
@@ -16,7 +28,7 @@ for bytes_per_msg in range(0, 8):
 ]]]*/
 /*[[[end]]]*/
 
-can_message_info(message_info) ::= LENGTH SPACE EQUALS SPACE NUM(message_duration) SPACE BITCOUNT SPACE EQUALS SPACE NUM(message_length) SPACE ID SPACE EQUALS SPACE NUM(id_num).
+can_message_info(message_info) ::= LENGTH SPACE EQUALS SPACE NUM(message_duration) SPACE BITCOUNT SPACE EQUALS SPACE NUM(message_length) SPACE ID SPACE EQUALS SPACE id(id_num).
 {
     message_info = (char *) malloc( sizeof(char) * 100 );
     snprintf(message_info, 100, "Length = %s BitCount = %s ID = %s", message_duration, message_length, id_num);

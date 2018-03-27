@@ -72,18 +72,6 @@ dir(D) ::= TXRQ.
     snprintf(D, 5, "TxRq");
 }
 
-id(ID) ::= NUM(msg_id).
-{
-    ID = (char *) malloc( sizeof(char) * 10 );
-    snprintf(ID, 10, "%s", msg_id);
-}
-
-id(ID) ::= EXTENDED(msg_id).
-{
-    ID = (char *) malloc( sizeof(char) * 10 );
-    snprintf(ID, 10, "%s", msg_id);
-}
-
 frame_data(D) ::= frame_data(original) SPACE NUM(value).
 {
     size_t length = strlen(original) + 10;
