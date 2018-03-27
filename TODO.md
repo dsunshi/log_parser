@@ -11,7 +11,7 @@
 - [x] Auto-generate get_token_value, and create corresponding free_token_value
 - [ ] Base IDENTIFIER on parser state, so if IDENTIFIER is not allowed UNKOWN token is returned
 - [ ] Parser utils to help reduce code in grammar
-- [ ] Split grammar files into smaller files
+- [x] Split grammar files into smaller files
 - [ ] Rename files to imporve relationship with functionality
 - [x] debug and release make targets
 - [x] #define for NSANITY detection (extra checking not desired in release)
@@ -21,3 +21,4 @@
 - [ ] Improve allocation strategy in grammar so that strlen is not used
 - [ ] Update to use strndup
 - [ ] Is it necessary to allocate memory for "fixed" strings. patterns that are matched but not variable.
+- [ ] Fix bug in Cogutils readfile that if the file doesn't exist at all it crashes

@@ -119,6 +119,6 @@ in  ::= .
   import cog
   import CogUtils as tools
 
-  cog.out( tools.readfiles(["date.y", "Header.y", "Triggerblock.y", "Events.y"]) )
+  cog.out( tools.readfiles(["CanError.y", "CanMessage.y", "CanStatistics.y", "date.y", "Header.y", "Triggerblock.y", "Events.y", "LogEvents.y", "SystemVariables.y", "TestStructureEvents.y", "Watermark.y"]) )
 ]]]*/
 /*[[[end]]]*/

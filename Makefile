@@ -2,7 +2,7 @@
 CC = gcc
 CCFLAGS = -Wall -Wextra -ansi -std=c99 -I./logging/ -I./argparse/ -I./include
 
-GRAMMAR = grammar/date.y grammar/Events.y grammar/Header.y grammar/Triggerblock.y
+GRAMMAR = grammar/date.y grammar/Events.y grammar/Header.y grammar/Triggerblock.y grammar/CanError.y grammar/CanMessage.y grammar/CanStatistics.y grammar/LogEvents.y grammar/SystemVariables.y grammar/TestStructureEvents.y grammar/Watermark.y
 REGEX = regex/Events.re regex/Header.re regex/Month.re regex/Numerals.re regex/Punctuation.re regex/WeekDay.re regex/Whitespace.re
 
 vpath %.c src
