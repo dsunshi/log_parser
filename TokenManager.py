@@ -6,7 +6,7 @@ import csv
 from Token import Token
 
 TOKEN_FILE  = "tokens.dat"
-PARSER_FILE = "parser.h"
+PARSER_FILE = "include/parser.h"
 
 # Special lexer tokens that should NOT generate a warning
 no_lexer_only_warn = ["*"]

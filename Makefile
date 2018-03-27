@@ -1,6 +1,13 @@
 
 CC = gcc
-CCFLAGS = -Wall -Wextra -ansi -std=c99 -I./logging/ -I./argparse/
+CCFLAGS = -Wall -Wextra -ansi -std=c99 -I./logging/ -I./argparse/ -I./include
+
+GRAMMAR = grammar/date.y grammar/Events.y grammar/Header.y grammar/Triggerblock.y
+REGEX = regex/Events.re regex/Header.re regex/Month.re regex/Numerals.re regex/Punctuation.re regex/WeekDay.re regex/Whitespace.re
+
+vpath %.c src
+vpath %.h include
+vpath %.tpl templates
 
 all: logilizer
 
@@ -37,59 +44,62 @@ lexer.o: lexer.c lexer.h lemon_cfg.h lexer_symbols.h
 lexer_utils.o: lexer_utils.c lexer.h lemon_cfg.h parser.h lexer_symbols.h
 	$(CC) $(CCFLAGS) -c $<
 
-lexer.c.re: lexer.c.tpl.0 CogUtils.py Token.py TokenManager.py
+./templates/lexer.c.re: ./templates/lexer.c.tpl.0 CogUtils.py Token.py TokenManager.py
 	if [ -a $@ ]; then chmod 666 $@; fi;
 	python -m cogapp -d -o $@ $<
 	chmod 444 $@
 
-lexer.c.tpl.0: lexer.c.tpl ./regex/*.re CogUtils.py Token.py TokenManager.py
+./templates/lexer.c.tpl.0: ./templates/lexer.c.tpl ./regex/*.re CogUtils.py Token.py TokenManager.py
 	if [ -a $@ ]; then chmod 666 $@; fi;
 	python -m cogapp -d -o $@ $<
 	chmod 444 $@
 
-lexer.c: lexer.c.re
+./src/lexer.c: ./templates/lexer.c.re
 	if [ -a $@ ]; then chmod 666 $@; fi;
-	re2c -W -Werror --utf-8 -o lexer.c $<
-	chmod 444 lexer.c
+	re2c -W -Werror --utf-8 -o $@ $<
+	chmod 444 $@
 
-lexer_symbols.h: lexer_symbols.h.tpl ./regex/*.re parser.h lexer.c CogUtils.py Token.py TokenManager.py
+./include/lexer_symbols.h: ./templates/lexer_symbols.h.tpl $(REGEX) parser.h lexer.c CogUtils.py Token.py TokenManager.py
 	if [ -a $@ ]; then chmod 666 $@; fi;
 	python -m cogapp -d -o $@ $<
 	chmod 444 $@
 
-lexer_symbols.c: lexer_symbols.c.tpl ./regex/*.re parser.h lexer.c CogUtils.py Token.py TokenManager.py
+./src/lexer_symbols.c: ./templates/lexer_symbols.c.tpl $(REGEX) parser.h lexer.c CogUtils.py Token.py TokenManager.py
 	if [ -a $@ ]; then chmod 666 $@; fi;
 	python -m cogapp -d -o $@ $<
 	chmod 444 $@
 
-lexer_utils.c: lexer_utils.c.tpl lexer_symbols.c lexer_symbols.h CogUtils.py Token.py TokenManager.py
+./src/lexer_utils.c: ./templates/lexer_utils.c.tpl lexer_symbols.c lexer_symbols.h CogUtils.py Token.py TokenManager.py
 	if [ -a $@ ]; then chmod 666 $@; fi;
 	python -m cogapp -d -o $@ $<
 	chmod 444 $@
 
-parser.y: parser.y.tpl.0 CogUtils.py Token.py TokenManager.py
-	if [ -a $@ ]; then chmod 666 $@; fi;
-	python -m cogapp -d -o $@ $<
-	chmod 444 $@
-    
-parser.y.tpl.0: parser.y.tpl ./grammar/*.y CogUtils.py Token.py TokenManager.py Token.py TokenManager.py
+./grammar/parser.y: ./templates/parser.y.tpl.0 CogUtils.py Token.py TokenManager.py
 	if [ -a $@ ]; then chmod 666 $@; fi;
 	python -m cogapp -d -o $@ $<
 	chmod 444 $@
 
-parser.c parser.h: parser.y lempar.c lemon.exe
-	if [ -a parser.c ]; then chmod 666 parser.c; fi;
-	lemon $<
-	chmod 444 parser.c
+./templates/parser.y.tpl.0: ./templates/parser.y.tpl $(GRAMMAR) CogUtils.py Token.py TokenManager.py
+	if [ -a $@ ]; then chmod 666 $@; fi;
+	python -m cogapp -d -o $@ $<
+	chmod 444 $@
+
+./src/parser.c ./include/parser.h: ./grammar/parser.y ./templates/lempar.c lemon.exe
+	if [ -a ./src/parser.c ]; then chmod 666 ./src/parser.c; fi;
+	lemon -T./templates/lempar.c $<
+	mv ./grammar/parser.c ./src/parser.c
+	mv ./grammar/parser.h ./include/parser.h
+	mv ./grammar/parser.out ./parser.out
+	chmod 444 ./src/parser.c
 
 lemon: lemon_tool_src/lemon.c
 	$(CC) -Wall -Wextra -g -o $@ $<
 
 clean:
 	rm -rf *.o *.pyc logilizer.exe
-	rm -rf tokens.dat lexer.c.tpl.0 parser.y.tpl.0
-	rm -rf lexer.c  lexer.c.re lexer_symbols.h lexer_symbols.c lexer_utils.c
-	rm -rf parser.c parser.y parser.out parser.h parser.err
+	rm -rf tokens.dat ./templates/lexer.c.tpl.0 ./templates/parser.y.tpl.0
+	rm -rf ./src/lexer.c  ./templates/lexer.c.re ./include/lexer_symbols.h ./src/lexer_symbols.c ./src/lexer_utils.c
+	rm -rf ./src/parser.c parser.y parser.out ./include/parser.h parser.err
 	rm -rf log.txt  SplintReport.txt gmon.out
 
 gdb: debug
