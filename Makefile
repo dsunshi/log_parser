@@ -99,7 +99,7 @@ clean:
 	rm -rf *.o *.pyc logilizer.exe
 	rm -rf tokens.dat ./templates/lexer.c.tpl.0 ./templates/parser.y.tpl.0
 	rm -rf ./src/lexer.c  ./templates/lexer.c.re ./include/lexer_symbols.h ./src/lexer_symbols.c ./src/lexer_utils.c
-	rm -rf ./src/parser.c parser.y parser.out ./include/parser.h parser.err
+	rm -rf ./src/parser.c ./grammar/parser.y parser.out ./include/parser.h parser.err
 	rm -rf log.txt  SplintReport.txt gmon.out
 
 gdb: debug
@@ -138,6 +138,6 @@ lextest: logilizer
 
 .PHONY: all clean lextest debug lint
 
-.INTERMEDIATE: lexer.c.tpl.0 parser.y.tpl.0
+.INTERMEDIATE: ./templates/lexer.c.tpl.0 ./templates/parser.y.tpl.0
 
-.DELETE_ON_ERROR: tokens.dat lexer.c.re parser.y
+.DELETE_ON_ERROR: tokens.dat ./templates/lexer.c.re ./grammar/parser.y
