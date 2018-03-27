@@ -136,7 +136,7 @@ lextest: logilizer
 	logilizer -i samples/WATERMARK_00.txt
 	logilizer -i samples/WATERMARK_01.txt
 
-.PHONY: all clean lextest debug lint
+.PHONY: all clean lextest lint
 
 .INTERMEDIATE: ./templates/lexer.c.tpl.0 ./templates/parser.y.tpl.0
 
