@@ -17,10 +17,12 @@
 - [x] #define for NSANITY detection (extra checking not desired in release)
 - [x] new folder structure: src, include, templates
 - [x] correct makefile dependencies *.y -> *.tpl -> *.c
-- [ ] Fix bug that if there is a parser only token then the NUM_TOKEN define is incorrect.
+- [ ] Fix bug that if there is a parser only token then the NUM_TOKEN define is incorrect
 - [ ] Improve allocation strategy in grammar so that strlen is not used
 - [ ] Update to use strndup
-- [ ] Is it necessary to allocate memory for "fixed" strings. patterns that are matched but not variable.
+- [ ] Is it necessary to allocate memory for "fixed" strings. patterns that are matched but not variable
 - [x] Fix bug in Cogutils readfile that if the file doesn't exist at all it crashes
 - [ ] Move argparse and logging into src and include?
 - [ ] Command line option to specify the location of parser.h (used in TokenManager.py)?
+- [ ] Refactor and reorginze grammar to align and optimize to the ASC description
+- [ ] Make fixed string gammar items (e.g. Dir) an enum

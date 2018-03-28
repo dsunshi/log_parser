@@ -48,7 +48,7 @@ direct      = "direct";
 log_comment = "(" ([a-zA-Z_]+ | [a-zA-Z_][a-zA-Z_0-9 ]*) .* ")";
 
 // CAN Message Events
-length      = "Length";
+length      = [ ]+ "Length"; // The parser get's confused
 bitcount    = "BitCount";
 id          = "ID";
 
