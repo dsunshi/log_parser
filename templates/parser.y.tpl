@@ -9,7 +9,7 @@
 %default_type       {  YYSTYPE  }
 %default_destructor { free($$); }
 
-%right SPACE.
+%nonassoc SPACE.
 
 %extra_argument { ParserState *state }
 
@@ -19,8 +19,7 @@
 #include "lexer.h"
 #include "lexer_symbols.h"
 /* yy_pop_parser_stack requires assert */
-//#include <assert.h>
-#define assert(x) ((void)0)
+#include <assert.h>
 #define UNUSED(x) (void)(x)
 #include <stdio.h>
 #include <stdlib.h>
@@ -28,7 +27,7 @@
 
 %syntax_error {
     /* Clear the stack so we can shift in 'error's until a NEWLINE and hopefully recover */
-    while( yypParser->yytos>yypParser->yystack ) yy_pop_parser_stack(yypParser);
+    while( yypParser->yytos > yypParser->yystack ) yy_pop_parser_stack(yypParser);
 #ifndef NDEBUG
     int n;
     int i;
