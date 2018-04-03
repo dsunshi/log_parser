@@ -38,7 +38,10 @@ def readfile(filename):
         except IOError:
             pass
     if found:
-        text = file.read()
+        text += "//" + ("-" * 78) + "\n"
+        text += "// Content included from %s:\n" % filename
+        text += "//" + ("-" * 78) + "\n"
+        text += file.read()
         file.close()
         return text
     else:
