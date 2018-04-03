@@ -38,6 +38,9 @@ xr          = "XR";
 e           = "E";
 o           = "O";
 b           = "B";
+xx          = "XX";
+te          = "TE";
+wu          = "WU";
 
 // Log and Trigger Events
 ms          = "ms";
@@ -87,7 +90,7 @@ lowwatermark  = "LowWaterMark";
 //  tools.simple_token("level")
 //  tools.simple_token("active")
 //  tools.simple_token("can_fd")
-//  #tools.simple_token("canfd")
+//  tools.simple_token("canfd")
 //  tools.simple_token("statistic")
 //  tools.simple_token("queue")
 //  tools.simple_token("overrun")
@@ -98,6 +101,9 @@ lowwatermark  = "LowWaterMark";
 //  tools.simple_token("e")
 //  tools.simple_token("o")
 //  tools.simple_token("b")
+//  tools.simple_token("xx")
+//  tools.simple_token("te")
+//  tools.simple_token("wu")
 //  tools.simple_token("ms")
 //  tools.simple_token("trigger")
 //  tools.simple_token("event")
