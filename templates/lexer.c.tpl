@@ -6,7 +6,6 @@
 
 int lex(yyinput_t * input)
 {
-
         input->token = input->cursor;
 
         /*!re2c
@@ -25,7 +24,7 @@ int lex(yyinput_t * input)
             //
             //  tools.create_token("*", "UNKOWN")
             //
-            //  cog.outl("%s\t\t\t{ return %s; }" % ("\"\\x00\"", "exit_success(input)"))
+            //  cog.outl("%s               { return %s; }" % ("\"\\x00\"", "exit_success(input)"))
             //  tm.add(Token("end_of_input_stream", "END_OF_INPUT_STREAM"))
             //
             //  cog.out("\n")
