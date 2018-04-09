@@ -2,7 +2,9 @@
 CC = gcc
 CCFLAGS = -Wall -Wextra -ansi -std=c99 -I./logging/ -I./argparse/ -I./include
 
-GRAMMAR = grammar/date.y grammar/Events.y grammar/Header.y grammar/Triggerblock.y grammar/CanError.y grammar/CanMessage.y grammar/CanStatistics.y grammar/LogEvents.y grammar/SystemVariables.y grammar/TestStructureEvents.y grammar/Watermark.y
+GRAMMAR = grammar/date.y grammar/Events.y grammar/Header.y grammar/Triggerblock.y grammar/CanError.y
+GRAMMAR += grammar/CanMessage.y grammar/CanStatistics.y grammar/LogEvents.y grammar/SystemVariables.y
+GRAMMAR += grammar/TestStructureEvents.y grammar/Watermark.y grammar/Channel.y grammar/Dir.y grammar/Time.y grammar/MessageFlags.y
 REGEX = regex/Events.re regex/Header.re regex/Month.re regex/Numerals.re regex/Punctuation.re regex/WeekDay.re regex/Whitespace.re
 SCRIPTS = CogUtils.py Token.py TokenManager.py
 
@@ -15,7 +17,7 @@ all: logilizer
 debug: CCFLAGS += -g -pg
 debug: logilizer
 
-release: CCFLAGS += -Ofast -DNDEBUG -DNSANITY
+release: CCFLAGS += -Ofast -ffast-math -DNDEBUG -DNSANITY
 release: logilizer
 
 logilizer: main.o parser.o lexer_symbols.o log.o argparse.o logilizer.o lexer.o lexer_utils.o
@@ -60,12 +62,12 @@ lexer_utils.o: lexer_utils.c lexer.h lemon_cfg.h parser.h lexer_symbols.h
 	re2c -W -Werror --utf-8 -o $@ $<
 	chmod 444 $@
 
-./include/lexer_symbols.h: ./templates/lexer_symbols.h.tpl $(REGEX) $(SCRIPTS) parser.h lexer.c
+./include/lexer_symbols.h: ./templates/lexer_symbols.h.tpl $(REGEX) $(SCRIPTS) ./include/parser.h ./src/lexer.c
 	if [ -a $@ ]; then chmod 666 $@; fi;
 	python -m cogapp -d -o $@ $<
 	chmod 444 $@
 
-./src/lexer_symbols.c: ./templates/lexer_symbols.c.tpl $(REGEX) $(SCRIPTS) parser.h lexer.c
+./src/lexer_symbols.c: ./templates/lexer_symbols.c.tpl $(REGEX) $(SCRIPTS) ./include/parser.h ./src/lexer.c
 	if [ -a $@ ]; then chmod 666 $@; fi;
 	python -m cogapp -d -o $@ $<
 	chmod 444 $@
@@ -102,6 +104,7 @@ clean:
 	rm -rf ./src/lexer.c  ./templates/lexer.c.re ./include/lexer_symbols.h ./src/lexer_symbols.c ./src/lexer_utils.c
 	rm -rf ./src/parser.c ./grammar/parser.y parser.out ./include/parser.h parser.err
 	rm -rf log.txt  SplintReport.txt gmon.out
+	rm -rf ./grammar/parser.c ./grammar/parser.h ./grammar/parser.out
 
 gdb: debug
 	gdb -ex=r --args logilizer.exe -i samples/TFS_00.txt
@@ -147,4 +150,4 @@ lextest: logilizer
 
 .INTERMEDIATE: ./templates/lexer.c.tpl.0 ./templates/parser.y.tpl.0
 
-.DELETE_ON_ERROR: tokens.dat ./templates/lexer.c.re ./grammar/parser.y
+.DELETE_ON_ERROR: tokens.dat ./templates/lexer.c.re ./grammar/parser.y ./grammar/parser.c ./grammar/parser.h ./grammar/parser.out
