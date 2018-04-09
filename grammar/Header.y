@@ -14,22 +14,22 @@
  * Definition:  <""|no> internal events logged
  */
 
-base ::= BASE SPACE HEXADECIMAL. 
+base ::= set_event_general_base BASE SPACE HEXADECIMAL. 
 {
     fprintf(state->output, "base hex ");
 }
 
-base ::= BASE SPACE DECIMAL. 
+base ::= set_event_general_base BASE SPACE DECIMAL. 
 {
     fprintf(state->output, "base dec ");
 }
 
-timestamps ::= TIMESTAMPS SPACE ABSOLUTE.
+timestamps ::= set_event_general_timestamps TIMESTAMPS SPACE ABSOLUTE.
 {
     fprintf(state->output, "timestamps absolute\n");
 }
 
-timestamps ::= TIMESTAMPS SPACE RELATIVE.
+timestamps ::= set_event_general_timestamps TIMESTAMPS SPACE RELATIVE.
 {
     fprintf(state->output, "timestamps relative\n");
 }
@@ -44,7 +44,7 @@ logging ::= INTERNAL SPACE EVENTS SPACE LOGGED.
     fprintf(state->output, "internal events logged\n");
 }
 
-version ::= COMMENT SPACE VERSION SPACE NUM(major) DOT NUM(minor) DOT NUM(patch).
+version ::= COMMENT SPACE set_event_general_version VERSION SPACE NUM(major) DOT NUM(minor) DOT NUM(patch).
 {
     fprintf(state->output, "// version %s.%s.%s\n", major, minor, patch);
 }
