@@ -1,0 +1,42 @@
+
+#ifndef __EVENTS_H_
+#define __EVENTS_H_
+
+#define EVENT_BUS_CLASSIC    1
+#define EVENT_BUS_FD    2
+#define EVENT_MSG_STD    4
+#define EVENT_MSG_EXT    8
+#define EVENT_MSG_FD    C
+#define EVENT_CAN_MESSAGE    10
+#define EVENT_CAN_REMOTE    20
+#define EVENT_CAN_ERROR_FRAME    30
+#define EVENT_CAN_STATISTIC    40
+#define EVENT_CAN_ERROR    50
+#define EVENT_GENERAL_DATE    80
+#define EVENT_GENERAL_BASE    100
+#define EVENT_GENERAL_TIMESTAMPS    180
+#define EVENT_GENERAL_EVENT_LOGGING    200
+#define EVENT_GENERAL_VERSION    280
+#define EVENT_GENERAL_SPLIT    300
+#define EVENT_GENERAL_GPS_EVENT    380
+#define EVENT_GENERAL_COMMENT_EVENT    400
+#define EVENT_GENERAL_GLOBAL_MARKER_EVENT    480
+#define EVENT_GENERAL_WATERMARK    500
+#define EVENT_VAR_SV    800
+#define EVENT_VAR_ENV    1000
+#define EVENT_VAR_MACRO    1800
+#define EVENT_TEST_BEGIN    2000
+#define EVENT_TEST_END    4000
+#define EVENT_TEST_ABORT    6000
+#define EVENT_TRIGGER_BLOCK_BEGIN    8000
+#define EVENT_TRIGGER_BLOCK_END    10000
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
+
+#endif

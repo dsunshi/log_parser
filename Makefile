@@ -2,7 +2,7 @@
 CC = gcc
 CCFLAGS = -Wall -Wextra -ansi -std=c99 -I./logging/ -I./argparse/ -I./include
 
-GRAMMAR = grammar/date.y grammar/Events.y grammar/Header.y grammar/Triggerblock.y grammar/CanError.y
+GRAMMAR = grammar/date.y grammar/Events.y grammar/Header.y grammar/Triggerblock.y grammar/CanError.y grammar/set_events.y
 GRAMMAR += grammar/CanMessage.y grammar/CanStatistics.y grammar/LogEvents.y grammar/SystemVariables.y
 GRAMMAR += grammar/TestStructureEvents.y grammar/Watermark.y grammar/Channel.y grammar/Dir.y grammar/Time.y grammar/MessageFlags.y
 REGEX = regex/Events.re regex/Header.re regex/Month.re regex/Numerals.re regex/Punctuation.re regex/WeekDay.re regex/Whitespace.re
@@ -82,6 +82,11 @@ lexer_utils.o: lexer_utils.c lexer.h lemon_cfg.h parser.h lexer_symbols.h
 	python -m cogapp -d -o $@ $<
 	chmod 444 $@
 
+./grammar/set_events.y: ./templates/set_events.y.tpl $(SCRIPTS)
+	if [ -a $@ ]; then chmod 666 $@; fi;
+	python -m cogapp -d -o $@ $<
+	chmod 444 $@
+ 
 ./templates/parser.y.tpl.0: ./templates/parser.y.tpl $(GRAMMAR) $(SCRIPTS)
 	if [ -a $@ ]; then chmod 666 $@; fi;
 	python -m cogapp -d -o $@ $<
@@ -105,6 +110,7 @@ clean:
 	rm -rf ./src/parser.c ./grammar/parser.y parser.out ./include/parser.h parser.err
 	rm -rf log.txt  SplintReport.txt gmon.out
 	rm -rf ./grammar/parser.c ./grammar/parser.h ./grammar/parser.out
+	rm -rf ./grammar/set_events.y
 
 gdb: debug
 	gdb -ex=r --args logilizer.exe -i samples/TFS_00.txt

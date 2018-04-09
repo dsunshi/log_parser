@@ -18,6 +18,7 @@
 #include "log.h"
 #include "lexer.h"
 #include "lexer_symbols.h"
+#include "events.h"
 /* yy_pop_parser_stack requires assert */
 //#include <assert.h>
 #define assert(x) (void)(0)
@@ -120,6 +121,6 @@ in  ::= .
   import cog
   import CogUtils as tools
 
-  cog.out( tools.readfiles(["CanError.y", "CanMessage.y", "CanStatistics.y", "date.y", "Header.y", "Triggerblock.y", "Events.y", "LogEvents.y", "SystemVariables.y", "TestStructureEvents.y", "Watermark.y", "Channel.y", "Dir.y", "Time.y", "MessageFlags.y", "ID.y"]) )
+  cog.out( tools.readfiles(["CanError.y", "CanMessage.y", "CanStatistics.y", "date.y", "Header.y", "Triggerblock.y", "Events.y", "LogEvents.y", "SystemVariables.y", "TestStructureEvents.y", "Watermark.y", "Channel.y", "Dir.y", "Time.y", "MessageFlags.y", "ID.y", "set_events.y"]) )
 ]]]*/
 /*[[[end]]]*/

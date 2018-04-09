@@ -2,7 +2,7 @@
 /* Date 
  * Definition: date <WeekDay> <Month> <Date> <Fulltime> <Year>
 */
-date ::= DATE SPACE time_and_date(TD).
+date ::= set_event_general_date DATE SPACE time_and_date(TD).
 {
     /* Date line */
     fprintf(state->output, "date %s\n", TD);
