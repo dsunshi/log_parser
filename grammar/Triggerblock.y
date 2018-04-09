@@ -1,4 +1,3 @@
-
 /* Triggerblock */
 
 begin_triggerblock ::= BEGIN SPACE TRIGGERBLOCK.
