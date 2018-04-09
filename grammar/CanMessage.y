@@ -1,44 +1,76 @@
-id(ID) ::= NUM(msg_id).
+id_and_dir(id) ::= id(ID) SPACE dir(D).
 {
-    ID = (char *) malloc( sizeof(char) * 10 );
-    snprintf(ID, 10, "%s", msg_id);
+    id = (char *) malloc( sizeof(char) * 15 );
+    snprintf(id, 15, "%s %s", ID, D);
 }
 
-id(ID) ::= EXTENDED(msg_id).
+id_and_dir(id) ::= dir(D) SPACE id(ID).
 {
-    ID = (char *) malloc( sizeof(char) * 11 );
-    snprintf(ID, 11, "%s", msg_id);
+    id = (char *) malloc( sizeof(char) * 15 );
+    snprintf(id, 15, "%s %s", D, ID);
 }
 
-can_message_data(message_data) ::= time(T) SPACE channel(C) SPACE id(message_id) SPACE dir(D) SPACE D SPACE NUM(dlc) SPACE NUM(d0) SPACE frame_data(data).
+dlc_prefix(info) ::= D.
 {
-	size_t length = strlen(T) + strlen(C) + strlen(message_id) + strlen(D) + strlen(dlc) + 2 + strlen(data) + 50;
-	message_data = (char *) malloc( sizeof(char) * length );
-	snprintf(message_data, length, "%s %s %s %s d %s %s %s ", T, C, message_id, D, dlc, d0, data);
+    info = (char *) malloc( sizeof(char) * 2 );
+    snprintf(info, 2, "D");
 }
 
-can_message_info(message_info) ::= LENGTH SPACE EQUALS SPACE NUM(message_duration) SPACE BITCOUNT SPACE EQUALS SPACE NUM(message_length) SPACE ID SPACE EQUALS SPACE id(id_num).
+dlc_prefix(info) ::= NUM(brs) SPACE NUM(esi).
 {
-    message_info = (char *) malloc( sizeof(char) * 100 );
-    snprintf(message_info, 100, "Length = %s BitCount = %s ID = %s", message_duration, message_length, id_num);
+    info = (char *) malloc( sizeof(char) * 100 );
+    snprintf(info, 100, "%s %s", brs, esi);
 }
 
-can_message_info(message_info) ::= LENGTH SPACE EQUALS SPACE NUM(message_duration) SPACE BITCOUNT SPACE EQUALS SPACE NUM(message_length).
+dlc_length(length) ::= NUM(dlc).
 {
-    message_info = (char *) malloc( sizeof(char) * 100 );
-    snprintf(message_info, 100, "Length = %s BitCount = %s", message_duration, message_length);
+    length = (char *) malloc( sizeof(char) * 100 );
+    snprintf(length, 100, "%s", dlc);
 }
 
-can_message ::= can_message_data(message_data).
+dlc_length(length) ::= NUM(dlc) SPACE NUM(DataLength).
 {
-    fprintf(state->output, "%s\n", message_data);
+    length = (char *) malloc( sizeof(char) * 100 );
+    snprintf(length, 100, "%s %s", dlc, DataLength);
 }
 
-can_message ::= can_message_data(message_data) can_message_info(message_info).
+can_message_base(base_data) ::= time(T) SPACE channel(C) SPACE id_and_dir(id) SPACE dlc_prefix(info) SPACE dlc_length(length).
 {
-    fprintf(state->output, "%s %s\n", message_data, message_info);
+    base_data = (char *) malloc( sizeof(char) * 255 );
+    snprintf(base_data, 255, "%s %s %s %s %s", T, C, id, info, length);
 }
 
-/* CAN Events on CAN FD channel */
-/* <Time> CANFD <Channel> <Dir> <ID> <SymbolicName> <BRS> <ESI> <DLC> <DataLength> <D1> … <D8> <MessageDuration> <MessageLength> <Flags> <CRC> <BitTimingConfArb> <BitTimingConfData> <BitTimingConfExtArb> <BitTimingConfExtData> */
-/* <Time> CANFD <Channel> <Dir> <ID> <SymbolicName> <BRS> <ESI> <DLC> <DataLength> <D1> … <D8> <MessageDuration> <MessageLength> <Flags> <CRC> <BitTimingConfArb> <BitTimingConfData>> <BitTimingConfData> <Bit-TimingConfExtArb> <BitTimingConfExtData> */
+can_std_message_info(std_info) ::= LENGTH SPACE EQUALS SPACE NUM(message_duration) SPACE BITCOUNT SPACE EQUALS SPACE NUM(message_length).
+{
+    std_info = (char *) malloc( sizeof(char) * 255 );
+    snprintf(std_info, 255, "Length = %s BitCount = %s", message_duration, message_length);
+}
+
+can_std_message_info(std_info) ::= LENGTH SPACE EQUALS SPACE NUM(message_duration) SPACE BITCOUNT SPACE EQUALS SPACE NUM(message_length) SPACE ID SPACE EQUALS SPACE id(id_num).
+{
+    std_info = (char *) malloc( sizeof(char) * 255 );
+    snprintf(std_info, 255, "Length = %s BitCount = %s ID = %s", message_duration, message_length, id_num);
+}
+
+can_message_info(info) ::= message_flags(flags).
+{
+    info = (char *) malloc( sizeof(char) * 255 );
+    snprintf(info, 255, "%s", flags);
+}
+
+can_message_info(info) ::= can_std_message_info(std_info).
+{
+    info = (char *) malloc( sizeof(char) * 255 );
+    snprintf(info, 255, "%s", std_info);
+}
+
+can_message_info(info) ::= can_std_message_info(std_info) SPACE message_flags(flags).
+{
+    info = (char *) malloc( sizeof(char) * 255 );
+    snprintf(info, 255, "%s %s", std_info, flags);
+}
+
+can_message ::= can_message_base(base_data) NUM(D0) NUM(D1) can_message_info(info).
+{
+    fprintf(state->output, "%s %s %s %s", base_data, D0, D1, info); 
+}
