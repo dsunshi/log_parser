@@ -19,6 +19,7 @@
 #include "lexer.h"
 #include "lexer_symbols.h"
 #include "events.h"
+#include "lexer_utils.h"
 /* yy_pop_parser_stack requires assert */
 //#include <assert.h>
 #define assert(x) (void)(0)

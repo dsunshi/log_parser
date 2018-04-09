@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "lexer.h"
 #include "lexer_symbols.h"
+#include "lexer_utils.h"
 
 tok_t lex(yyinput_t * input)
 {

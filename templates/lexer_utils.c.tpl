@@ -58,7 +58,7 @@ void free_token(YYSTYPE token)
             log_error("Attempt to free a token that is probably statically allocated!");
         }
 #endif
-        //free(token);
+        free(token);
     }
 }
 

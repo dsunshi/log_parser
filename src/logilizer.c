@@ -13,6 +13,7 @@
 #include "lemon.h"
 #include "lemon_cfg.h"
 #include "lexer_symbols.h"
+#include "lexer_utils.h"
 
 /* Lexer */
 #define CACHE_SIZE              8192
