@@ -8,6 +8,10 @@ typedef struct
     int    id;
 } symbol_t;
 
+#define SIZE_OF_OVERFLOW_STR    15
+
+static char overflow_text[SIZE_OF_OVERFLOW_STR];
+
 static symbol_t LEXER_SYMBOL_TABLE[NUM_TOKENS] =
 {
     /*[[[cog
@@ -37,6 +41,8 @@ const char * get_token_name(const int token_id)
             }
         }
         
-        return "OVERFLOW";
+        snprintf(overflow_text, SIZE_OF_OVERFLOW_STR, "OVERFLOW (%d)", token_id);
+        
+        return overflow_text;
     }
 }
