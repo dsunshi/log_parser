@@ -100,6 +100,9 @@ yyinput_t * lexer_new(FILE * file, const size_t size, const size_t maxfill)
             input->size    = size;
             input->maxfill = maxfill;
             input->file    = file;
+            
+            input->token_length = 0;
+            input->parser_state = NULL;
         }
     }
     
@@ -114,9 +117,11 @@ yyinput_t * lexer_new(FILE * file, const size_t size, const size_t maxfill)
  *
  * For this reason the function is tuned to check for the most common tokens first.
  */
-YYSTYPE get_token_value(yyinput_t * input, tok_t token)
+YYSTYPE get_token_value(yyinput_t * input, tok_t token, size_t * yylength)
 {
     const size_t length = input->cursor - input->token;
+    
+    *yylength = length;
     
     if (token == TOKEN_NUM)
     {

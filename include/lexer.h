@@ -26,9 +26,12 @@ typedef struct input
     bool      eof;         /* Flag indicating if the End Of File has been reached */
     size_t    size;        /* Size of the input buffer */
     size_t    maxfill;     /* Additional padding bytes for the input string */
-    int       state;       /* */
+    //int       state;       /* */
     FILE *    file;        /* File to lex */
     size_t    line;        /* Line number in the file */
+    size_t    token_length;
+    ParserState * parser_state;   /* User-defined state of the parser */
+    bool msg_duration_found;
 } yyinput_t;
 
 /* Additional padding bytes for the input string.

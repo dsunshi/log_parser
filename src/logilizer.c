@@ -77,6 +77,9 @@ logilizer_t * logilizer_new(char * infile, char * outfile)
             }
             
             self->state.output = self->output;
+            
+            /* Link the lexer and the parser state */
+            self->lexer->parser_state = &(self->state);
         }
     }
     else
@@ -110,6 +113,7 @@ void logilizer_resolve(logilizer_t * self)
 {
     tok_t   token;
     YYSTYPE yylval;
+    size_t  yylength;
     
     /* Start with line 1 */
     self->lexer->line = 1;
@@ -117,7 +121,9 @@ void logilizer_resolve(logilizer_t * self)
     do
     {
         token  = lex(self->lexer);
-        yylval = get_token_value(self->lexer, token);
+        yylval = get_token_value(self->lexer, token, &yylength);
+        
+        self->lexer->token_length = yylength;
         
 #ifndef NDEBUG
         log_trace("%s(%d): %s", get_token_name(token), token, yylval);

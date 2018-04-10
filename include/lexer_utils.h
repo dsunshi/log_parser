@@ -12,7 +12,7 @@ void lexer_destroy(yyinput_t * lexer);
 bool fill(yyinput_t * input, const size_t need);
 
 tok_t   lex(yyinput_t * input);
-YYSTYPE get_token_value(yyinput_t * input, tok_t token);
+YYSTYPE get_token_value(yyinput_t * input, tok_t token, size_t * yylength);
 tok_t   exit_success(yyinput_t * input);
 
 void free_token(YYSTYPE token);

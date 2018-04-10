@@ -4,6 +4,24 @@
 #include "lexer.h"
 #include "lexer_symbols.h"
 #include "lexer_utils.h"
+#include "events.h"
+
+static inline tok_t resolve_message_duration(yyinput_t * input)
+{
+    if (    IS_CAN_FD_MESSAGE_EVENT(input->parser_state->event_type)
+         && (input->token_length == 2)
+         && (input->msg_duration_found == false)
+        )
+    {
+        input->msg_duration_found = true;
+        
+        return TOKEN_MESSAGE_DURATION;
+    }
+    else
+    {
+        return TOKEN_NUM;
+    }
+}
 
 tok_t lex(yyinput_t * input)
 {
