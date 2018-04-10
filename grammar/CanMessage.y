@@ -28,7 +28,7 @@ dlc_length(length) ::= NUM(dlc).
     snprintf(length, 100, "%s", dlc);
 }
 
-dlc_length(length) ::= NUM(dlc) SPACE NUM(DataLength).
+dlc_length(length) ::= NUM(dlc) DATA_LENGTH_(DataLength).
 {
     length = (char *) malloc( sizeof(char) * 100 );
     snprintf(length, 100, "%s %s", dlc, DataLength);
@@ -58,19 +58,21 @@ can_message_info(info) ::= message_flags(flags).
     snprintf(info, 255, "%s", flags);
 }
 
-can_message_info(info) ::= can_std_message_info(std_info).
+can_message_info(info) ::= SPACE can_std_message_info(std_info).
 {
     info = (char *) malloc( sizeof(char) * 255 );
     snprintf(info, 255, "%s", std_info);
 }
 
-can_message_info(info) ::= can_std_message_info(std_info) SPACE message_flags(flags).
+can_message_info(info) ::= SPACE can_std_message_info(std_info) SPACE message_flags(flags).
 {
     info = (char *) malloc( sizeof(char) * 255 );
     snprintf(info, 255, "%s %s", std_info, flags);
 }
 
-can_message ::= can_message_base(base_data) NUM(D0) NUM(D1) can_message_info(info).
+can_message_info ::= .
+
+can_message ::= can_message_base(base_data) SPACE NUM(D0) SPACE NUM(D1) can_message_info(info).
 {
-    fprintf(state->output, "%s %s %s %s", base_data, D0, D1, info); 
+    fprintf(state->output, "%s %s %s %s\n", base_data, D0, D1, info); 
 }

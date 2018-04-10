@@ -3,10 +3,10 @@ import cog
 import CogUtils as tools
 
 events = [
-#    'EVENT_BUS_CLASSIC',
-#    'EVENT_BUS_FD',
-#    'EVENT_MSG_STD',
-#    'EVENT_MSG_EXT',
+    'EVENT_BUS_CLASSIC',
+    'EVENT_BUS_FD',
+    'EVENT_MSG_STD',
+    'EVENT_MSG_EXT',
 #    'EVENT_MSG_FD',
 #    'EVENT_CAN_MESSAGE',
 #    'EVENT_CAN_REMOTE',
