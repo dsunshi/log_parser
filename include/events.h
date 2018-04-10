@@ -2,6 +2,8 @@
 #ifndef __EVENTS_H_
 #define __EVENTS_H_
 
+#define EVENT_NO_EVENT                                    0x0
+
 #define EVENT_BUS_CLASSIC                                 0x1
 #define EVENT_BUS_FD                                      0x2
 #define EVENT_MSG_STD                                     0x4

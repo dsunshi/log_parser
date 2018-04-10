@@ -23,6 +23,16 @@ static inline tok_t resolve_message_duration(yyinput_t * input)
     }
 }
 
+static inline void process_newline(yyinput_t * input)
+{
+    /* increment the over all line count */
+    (input->line)++;
+    
+    /* reset any information that was set during parsing this line */
+    input->parser_state->event_type = EVENT_NO_EVENT;
+    input->msg_duration_found = false;
+}
+
 tok_t lex(yyinput_t * input)
 {
     input->token = input->cursor;
